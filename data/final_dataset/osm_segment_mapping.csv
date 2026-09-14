@@ -1,0 +1,61 @@
+road_segment_id,road_name,area,road_type,latitude,longitude,number_of_lanes,speed_limit_kmh,road_length_km,osm_u,osm_v,osm_key,osm_distance_m,mapping_confidence,osm_highway,osm_name,osm_length_m
+RS0001,Outer Ring Road,Gachibowli,Collector,17.442922,78.343047,2,44,1.39,7669783399,11166293846,0,0.0,High,tertiary,,1692.81
+RS0002,NH 44,Gachibowli,Local,17.44005,78.346341,3,38,0.62,7669783399,11166293846,0,0.0,High,tertiary,,1692.81
+RS0003,Hitech City Main Road,Gachibowli,Arterial,17.443482,78.350303,3,65,2.02,6149168551,4663668290,0,0.0,High,secondary,ISB Road,285.56
+RS0004,Madhapur Main Road,Hitech City,Arterial,17.450935,78.39135,3,61,1.76,1302058386,1302063234,0,0.0,High,residential,60 Feet road,110.24
+RS0005,Kondapur Main Road,Hitech City,Collector,17.447836,78.390215,3,43,1.51,3602305582,1302202182,0,0.0,High,residential,Road Number 8,149.49
+RS0006,Kukatpally Main Road,Hitech City,Arterial,17.449538,78.392792,4,60,2.09,3670022016,1323546609,0,0.0,High,residential,Road Number 49,110.08
+RS0007,Miyapur Road,Madhapur,Collector,17.446159,78.392648,2,50,1.07,1323527210,3382684735,0,0.0,High,residential,Road Number 48,254.69
+RS0008,Ameerpet Main Road,Madhapur,Arterial,17.446127,78.392752,4,56,1.79,1323527210,3382684735,0,0.0,High,residential,Road Number 48,254.69
+RS0009,Punjagutta Road,Madhapur,Arterial,17.450229,78.388803,3,64,1.71,1302199773,1302199774,0,0.0,High,residential,,55.3
+RS0010,Begumpet Main Road,Kondapur,Collector,17.460614,78.367671,3,44,1.25,13251142841,1301947838,0,0.0,High,residential,,184.54
+RS0011,Sardar Patel Road,Kondapur,Arterial,17.459894,78.362629,5,55,2.07,11486610892,1215225983,0,0.0,High,residential,Kothaguda Village Road,332.31
+RS0012,Paradise Road,Kondapur,Collector,17.457175,78.371485,2,45,1.04,1334701775,11906690412,0,0.0,High,residential,,146.75
+RS0013,LB Nagar Main Road,Kukatpally,Collector,17.483895,78.414288,2,45,0.78,3602315248,3602315266,0,0.0,High,residential,,56.13
+RS0014,Dilsukhnagar Main Road,Kukatpally,Arterial,17.483854,78.412413,3,61,2.2,3602315241,3602315546,0,0.0,High,trunk,Kukkatpally Main Road - Mumbai Highway,91.13
+RS0015,Mehdipatnam Road,Kukatpally,Arterial,17.4815,78.411042,3,59,1.68,1437305358,3602314101,0,0.0,High,residential,,96.14
+RS0016,Jubilee Hills Road,Miyapur,Arterial,17.495618,78.357476,5,58,2.17,3164238260,4170739492,0,0.0,High,trunk,Miyapur - Allwyn Cross Road Mumbai Highway,141.52
+RS0017,Banjara Hills Road,Miyapur,Collector,17.494914,78.355911,2,44,1.31,3164238259,2231949522,0,0.0,High,residential,,71.85
+RS0018,Uppal Main Road,Miyapur,Highway,17.495492,78.357037,7,82,2.92,4170739492,3164238259,0,0.0,High,trunk,Miyapur - Allwyn Cross Road Mumbai Highway,143.84
+RS0019,Nagole Road,Ameerpet,Arterial,17.437205,78.44703,4,62,2.17,332444722,3598258847,0,0.0,High,secondary,Satyam Theatre road,143.08
+RS0020,Abids Main Road,Ameerpet,Collector,17.433532,78.445308,2,43,0.84,1754236143,353721835,0,0.0,High,residential,,64.92
+RS0021,Charminar Road,Ameerpet,Local,17.441398,78.447231,2,37,0.61,3146913654,2400182812,0,0.0,High,secondary,Sanjeeva Reddy Nagar Colony Main Road,189.63
+RS0022,Outer Ring Road,Punjagutta,Collector,17.42545,78.449883,3,44,1.15,354643919,354643920,0,0.0,High,residential,Hindu Nagar Road,60.72
+RS0023,NH 44,Punjagutta,Arterial,17.429013,78.449118,5,57,2.11,3598256573,3598256816,0,0.0,High,residential,,91.65
+RS0024,Hitech City Main Road,Punjagutta,Local,17.428998,78.450966,1,38,0.57,2857325757,1754245998,0,0.0,High,trunk,Ameerpet Road - Panjagutta Main Road,188.48
+RS0025,Madhapur Main Road,Begumpet,Arterial,17.444038,78.46296,3,62,1.74,1779056448,366531587,0,0.0,High,residential,Chikoti Gardens,241.03
+RS0026,Kondapur Main Road,Begumpet,Arterial,17.44789,78.458734,3,58,2.09,366528594,366528587,0,0.0,High,residential,,79.37
+RS0027,Kukatpally Main Road,Begumpet,Arterial,17.43937,78.464205,3,65,1.9,11478413934,366531860,0,0.0,High,residential,,103.51
+RS0028,Miyapur Road,Secunderabad,Highway,17.440841,78.500814,5,85,2.55,12074980627,3598259830,0,0.0,High,residential,Sebastian Road,66.06
+RS0029,Ameerpet Main Road,Secunderabad,Arterial,17.436931,78.491904,5,60,2.1,2855065425,2855065430,0,0.0,High,residential,,108.86
+RS0030,Punjagutta Road,Secunderabad,Arterial,17.438064,78.497878,5,58,1.9,4019171198,4015836127,0,0.0,High,residential,,50.19
+RS0031,Begumpet Main Road,Paradise,Collector,17.438993,78.482476,1,49,1.16,3598259229,3598259378,0,0.0,High,residential,,61.25
+RS0032,Sardar Patel Road,Paradise,Collector,17.447404,78.487891,1,43,1.27,4245749249,12045138236,0,0.01,High,residential,,2.96
+RS0033,Paradise Road,Paradise,Highway,17.439205,78.485324,6,85,2.5,11056189610,4273079224,0,0.0,High,residential,,85.74
+RS0034,LB Nagar Main Road,LB Nagar,Arterial,17.342991,78.554995,3,64,2.21,2249584972,2249584964,1,0.0,High,residential,,108.2
+RS0035,Dilsukhnagar Main Road,LB Nagar,Arterial,17.343736,78.553538,4,60,1.99,10610334480,1324402860,0,0.0,High,residential,Lalitha Nagar North Colony Street No 3,52.05
+RS0036,Mehdipatnam Road,LB Nagar,Highway,17.346218,78.556937,5,79,2.48,3598385779,1324618357,0,0.0,High,residential,,94.81
+RS0037,Jubilee Hills Road,Dilsukhnagar,Local,17.372718,78.525358,1,39,0.77,312810411,2241232482,0,0.0,High,residential,Bhavani Nagar Road,36.57
+RS0038,Banjara Hills Road,Dilsukhnagar,Collector,17.373407,78.52525,2,44,1.31,2241232560,2241232598,0,0.0,High,residential,road number 5a,107.18
+RS0039,Uppal Main Road,Dilsukhnagar,Local,17.373971,78.524161,3,32,1.11,2241232586,2241232731,0,0.0,High,residential,,88.22
+RS0040,Nagole Road,Mehdipatnam,Arterial,17.392216,78.43313,4,61,1.72,2859817480,2859817443,0,0.0,High,tertiary,,46.64
+RS0041,Abids Main Road,Mehdipatnam,Local,17.395913,78.435422,2,35,0.66,6443370153,6151723566,0,0.0,High,trunk,Golkonda Road,252.48
+RS0042,Charminar Road,Mehdipatnam,Highway,17.394754,78.42867,5,82,2.29,10731094595,2857730894,0,0.0,High,residential,,48.68
+RS0043,Outer Ring Road,Jubilee Hills,Arterial,17.435348,78.403121,4,57,1.92,11689992542,6994544958,0,0.0,High,primary,Jubilee Hills Road No 36,282.92
+RS0044,NH 44,Jubilee Hills,Highway,17.431147,78.406117,6,76,2.92,353759801,353759608,0,0.0,High,residential,,101.44
+RS0045,Hitech City Main Road,Jubilee Hills,Arterial,17.432136,78.405012,4,62,2.33,353759710,3670021812,0,0.0,High,residential,Road number 41,119.1
+RS0046,Madhapur Main Road,Banjara Hills,Highway,17.412347,78.434971,6,81,2.84,11043722956,1324169045,0,0.0,High,residential,,145.63
+RS0047,Kondapur Main Road,Banjara Hills,Arterial,17.41304,78.433838,3,65,2.47,1324015826,3579915056,0,0.0,High,residential,,133.53
+RS0048,Kukatpally Main Road,Banjara Hills,Arterial,17.419218,78.432513,4,63,2.08,3602298697,356344735,0,0.0,High,residential,,213.25
+RS0049,Miyapur Road,Uppal,Collector,17.402613,78.557512,2,42,1.16,6149319368,2912526831,0,0.0,High,trunk,Inner Ring Road,109.2
+RS0050,Ameerpet Main Road,Uppal,Arterial,17.400527,78.554699,5,59,1.98,3168263267,11085002111,0,0.0,High,tertiary,Areksoft Technologies Road,211.94
+RS0051,Punjagutta Road,Uppal,Arterial,17.411311,78.567815,3,57,1.73,2854456259,2854456268,0,0.0,High,residential,,47.92
+RS0052,Begumpet Main Road,Nagole,Highway,17.376486,78.564839,6,81,2.89,1595259716,1595259565,0,0.0,High,residential,,58.49
+RS0053,Sardar Patel Road,Nagole,Highway,17.370172,78.567399,7,85,2.91,11240720730,11240720721,0,0.0,High,residential,,161.06
+RS0054,Paradise Road,Nagole,Highway,17.371997,78.566134,6,75,2.73,1594515857,1594515910,0,0.0,High,tertiary,Nagole-Bandlaguda Main Road,95.88
+RS0055,LB Nagar Main Road,Abids,Arterial,17.394055,78.473159,4,62,2.04,13337856815,308775786,0,0.0,High,tertiary,Fateh Sultan Road,118.32
+RS0056,Dilsukhnagar Main Road,Abids,Local,17.392708,78.47928,3,39,0.78,11328574761,2847561356,0,0.0,High,residential,,90.22
+RS0057,Mehdipatnam Road,Abids,Arterial,17.389663,78.476573,5,59,1.81,308767068,308775900,0,0.0,High,secondary,Tilak Road,121.48
+RS0058,Jubilee Hills Road,Charminar,Highway,17.364382,78.476063,6,85,2.36,4034411304,2852574389,0,0.0,High,residential,,92.51
+RS0059,Banjara Hills Road,Charminar,Local,17.361757,78.473823,1,38,0.77,3612553405,11041674058,0,0.0,High,residential,,184.3
+RS0060,Uppal Main Road,Charminar,Highway,17.366014,78.467,7,80,2.84,3612554096,3612554135,0,0.0,High,residential,,78.71

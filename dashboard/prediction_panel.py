@@ -1,226 +1,511 @@
 """
 Prediction Panel.
-Interactive congestion prediction with SHAP explanations.
+
+Uses the final trained XGBoost model and the final ML dataset.
 """
 
-import streamlit as st
+from pathlib import Path
+from datetime import datetime
+
 import pandas as pd
 import plotly.graph_objects as go
+import streamlit as st
 
-from config import DATASET_PATH, PEAK_HOURS, WEATHER_CONDITIONS, CONGESTION_LABELS
-from models.predictor import predict_congestion, train_model, get_feature_importance
-from models.explainer import explain_prediction
-from database import insert_prediction
-from datetime import datetime
-from engine.reduction_engine import generate_mitigation_actions
+from engine.prediction.predictor import (
+    predict_from_row,
+    get_feature_importance,
+)
+
+from engine.prediction.explainer import explain_prediction
+
+# -------------------------------------------------------------------
+# Paths
+# -------------------------------------------------------------------
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+DATASET_PATH = PROJECT_ROOT / "data" / "final_dataset" / "ml_traffic_dataset.csv"
+
+
+# -------------------------------------------------------------------
+# Dataset loader
+# -------------------------------------------------------------------
+
+
+@st.cache_data
+def load_final_dataset():
+    """Load the final ML dataset."""
+
+    if not DATASET_PATH.exists():
+        raise FileNotFoundError(f"Final ML dataset not found: {DATASET_PATH}")
+
+    df = pd.read_csv(DATASET_PATH)
+
+    df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
+
+    return df
+
+
+# -------------------------------------------------------------------
+# SHAP feature-name formatter
+# -------------------------------------------------------------------
+
+
+def format_shap_feature(name):
+    """
+    Convert transformed preprocessing feature names into
+    readable names for the dashboard.
+    """
+
+    # Numerical feature
+    if name.startswith("num__"):
+        feature = name.replace("num__", "", 1)
+        return feature.replace("_", " ").title()
+
+    # Categorical / one-hot encoded feature
+    if name.startswith("cat__"):
+        feature = name.replace("cat__", "", 1)
+
+        categorical_features = [
+            "road_segment_id",
+            "traffic_signal",
+            "weather_condition",
+            "accident_severity",
+            "road_type",
+            "area",
+        ]
+
+        for column in categorical_features:
+            prefix = column + "_"
+
+            if feature.startswith(prefix):
+                value = feature[len(prefix) :]
+
+                return f"{column.replace('_', ' ').title()} = " f"{value}"
+
+        return feature.replace("_", " ").title()
+
+    return name.replace("_", " ").title()
+
+
+# -------------------------------------------------------------------
+# Prediction panel
+# -------------------------------------------------------------------
 
 
 def render_prediction_panel():
-    """Render the congestion prediction interface."""
+    """Render the final ML congestion prediction interface."""
+
     st.markdown("# 🔮 Congestion Prediction Engine")
-    st.markdown("Predict traffic congestion using AI (RandomForest + XGBoost ensemble)")
 
-    df = pd.read_csv(DATASET_PATH)
-    junctions = sorted(df["junction_id"].unique())
+    st.markdown(
+        "Predict future traffic congestion using the " "final trained XGBoost model."
+    )
 
-    # ─────────── Model Training ───────────
-    with st.expander("🧠 Model Training", expanded=False):
-        if st.button("🚀 Train / Retrain Models", type="primary"):
-            with st.spinner("Training models... This may take a minute."):
-                results = train_model(df)
-            st.success("✅ Models trained successfully!")
-            col1, col2 = st.columns(2)
-            with col1:
-                st.metric("RandomForest Accuracy", f"{results['rf_accuracy']:.2%}")
-            with col2:
-                if "xgb_accuracy" in results:
-                    st.metric("XGBoost Accuracy", f"{results['xgb_accuracy']:.2%}")
+    # ---------------------------------------------------------------
+    # Load dataset
+    # ---------------------------------------------------------------
+
+    try:
+        df = load_final_dataset()
+
+    except Exception as exc:
+        st.error(f"Unable to load final ML dataset: {exc}")
+        return
+
+    st.success(f"Final ML dataset loaded: {len(df):,} traffic records")
 
     st.divider()
 
-    # ─────────── Prediction Input ───────────
-    st.subheader("📝 Enter Traffic Parameters")
+    # ---------------------------------------------------------------
+    # Dataset information
+    # ---------------------------------------------------------------
 
-    col1, col2, col3 = st.columns(3)
+    st.subheader("📊 Final ML Dataset")
+
+    info_col1, info_col2, info_col3 = st.columns(3)
+
+    with info_col1:
+        st.metric("Road Segments", df["road_segment_id"].nunique())
+
+    with info_col2:
+        st.metric("Records", f"{len(df):,}")
+
+    with info_col3:
+        st.metric("Prediction Classes", "5")
+
+    st.divider()
+
+    # ---------------------------------------------------------------
+    # Prediction input
+    # ---------------------------------------------------------------
+
+    st.subheader("📝 Select Traffic Record")
+
+    road_segments = sorted(df["road_segment_id"].dropna().unique().tolist())
+
+    selected_segment = st.selectbox("🛣️ Road Segment", road_segments)
+
+    segment_df = df[df["road_segment_id"] == selected_segment].copy()
+
+    segment_df = segment_df.sort_values("timestamp")
+
+    min_date = segment_df["timestamp"].min().date()
+    max_date = segment_df["timestamp"].max().date()
+
+    selected_date = st.date_input(
+        "📅 Date", value=min_date, min_value=min_date, max_value=max_date
+    )
+
+    available_hours = sorted(
+        segment_df[segment_df["timestamp"].dt.date == selected_date]["timestamp"]
+        .dt.hour.dropna()
+        .unique()
+        .tolist()
+    )
+
+    if not available_hours:
+        st.warning("No traffic record is available for this road segment " "and date.")
+        return
+
+    selected_hour = st.selectbox("🕐 Hour", available_hours)
+
+    selected_timestamp = pd.Timestamp(selected_date) + pd.Timedelta(hours=selected_hour)
+
+    matching_rows = df[
+        (df["road_segment_id"] == selected_segment)
+        & (df["timestamp"] == selected_timestamp)
+    ]
+
+    if matching_rows.empty:
+        st.warning("No matching traffic record was found.")
+        return
+
+    row = matching_rows.iloc[0]
+
+    # ---------------------------------------------------------------
+    # Show selected traffic conditions
+    # ---------------------------------------------------------------
+
+    st.subheader("🚦 Traffic Conditions")
+
+    col1, col2, col3, col4 = st.columns(4)
+
     with col1:
-        junction = st.selectbox("🏢 Junction", junctions)
-        hour = st.slider("🕐 Hour of Day", 0, 23, 9)
+        st.metric("Vehicles", f"{row['vehicle_count']:.0f}")
+
     with col2:
-        vehicle_count = st.number_input("🚗 Vehicle Count", 10, 600, 200)
-        day_of_week = st.selectbox("📅 Day", list(range(7)),
-                                     format_func=lambda x: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"][x])
+        st.metric("Average Speed", f"{row['average_speed_kmh']:.1f} km/h")
+
     with col3:
-        avg_speed = st.number_input("⚡ Avg Speed (km/h)", 5.0, 80.0, 35.0, step=1.0)
-        weather = st.selectbox("🌤️ Weather", WEATHER_CONDITIONS)
+        st.metric("Occupancy", f"{row['occupancy_percent']:.1f}%")
 
-    is_peak = int(hour in PEAK_HOURS)
-    is_event = st.checkbox("🎉 Special Event", value=False)
-    is_construction = st.checkbox("🚧 Construction Zone", value=False)
+    with col4:
+        st.metric("Traffic Flow", f"{row['traffic_flow_vph']:.0f} vph")
 
-    # ─────────── Predict ───────────
-    if st.button("🔮 Predict Congestion", type="primary"):
-        features = {
-            "junction_id": junction,
-            "hour": hour,
-            "day_of_week": day_of_week,
-            "vehicle_count": vehicle_count,
-            "avg_speed": avg_speed,
-            "is_peak": is_peak,
-            "is_event": int(is_event),
-            "is_construction": int(is_construction),
-            "weather": weather,
+    # ---------------------------------------------------------------
+    # Accident information
+    # ---------------------------------------------------------------
+
+    accident_value = int(row["accident"])
+
+    if accident_value == 1:
+
+        accident_severity = row["accident_severity"]
+
+        st.warning(f"⚠️ Accident detected — Severity: " f"{accident_severity}")
+
+    else:
+
+        st.info("No accident recorded for this traffic record.")
+
+    # ---------------------------------------------------------------
+    # Prediction
+    # ---------------------------------------------------------------
+
+    if st.button("🔮 Predict Congestion", type="primary", use_container_width=True):
+
+        try:
+
+            with st.spinner("Running the final XGBoost prediction pipeline..."):
+
+                result = predict_from_row(row)
+
+        except Exception as exc:
+
+            st.error(f"Prediction failed: {exc}")
+
+            return
+
+        # -----------------------------------------------------------
+        # Result
+        # -----------------------------------------------------------
+
+        level = result["predicted_class"]
+        confidence = result["confidence"]
+        probabilities = result["probabilities"]
+
+        emoji_map = {
+            "Free Flow": "🟢",
+            "Low": "🟢",
+            "Moderate": "🟡",
+            "High": "🟠",
+            "Severe": "🔴",
         }
 
-        with st.spinner("Predicting..."):
-            result = predict_congestion(features)
-
-        # Display result
-        level = result["predicted_level"]
-        confidence = result["confidence"]
-        color_map = {"Low": "🟢", "Medium": "🟡", "High": "🔴"}
+        emoji = emoji_map.get(level, "⚪")
 
         st.markdown("---")
-        st.markdown(f"### {color_map.get(level, '⚪')} Predicted: **{level}** Congestion")
-        st.progress(confidence, text=f"Confidence: {confidence:.1%}")
 
-        # Probability bars
+        st.markdown(f"## {emoji} Predicted: **{level}** Congestion")
+
+        st.progress(confidence, text=f"Model confidence: {confidence:.1%}")
+
+        # -----------------------------------------------------------
+        # Prediction details
+        # -----------------------------------------------------------
+
+        result_col1, result_col2 = st.columns(2)
+
+        with result_col1:
+            st.metric("Predicted Class", level)
+
+        with result_col2:
+            st.metric("Confidence", f"{confidence:.1%}")
+
+        # -----------------------------------------------------------
+        # Probability chart
+        # -----------------------------------------------------------
+
         st.subheader("📊 Class Probabilities")
-        probs = result["probabilities"]
+
+        labels = list(probabilities.keys())
+        values = list(probabilities.values())
+
         fig = go.Figure()
-        colors = {"Low": "#4CAF50", "Medium": "#FF9800", "High": "#f44336"}
-        for label in CONGESTION_LABELS:
-            fig.add_trace(go.Bar(
-                x=[label], y=[probs[label]],
-                marker_color=colors[label],
-                text=[f"{probs[label]:.1%}"],
+
+        fig.add_trace(
+            go.Bar(
+                x=labels,
+                y=values,
+                text=[f"{value:.1%}" for value in values],
                 textposition="outside",
-                name=label,
-            ))
-        fig.update_layout(
-            yaxis_title="Probability", height=300,
-            showlegend=False, template="plotly_dark",
-            yaxis_range=[0, 1],
+            )
         )
+
+        fig.update_layout(
+            yaxis_title="Probability",
+            yaxis_range=[0, 1],
+            height=350,
+            showlegend=False,
+            template="plotly_dark",
+        )
+
         st.plotly_chart(fig, use_container_width=True)
 
-        # Store prediction
-        insert_prediction({
-            "junction_id": junction,
-            "predicted_level": level,
-            "confidence": confidence,
-            "probabilities": probs,
-            "model_used": result["model_used"],
-            "timestamp": datetime.now().isoformat(),
-        })
+        # -----------------------------------------------------------
+        # Actual class from dataset
+        # -----------------------------------------------------------
 
-        # ─────────── AI Mitigation Actions ───────────
-        mitigation = generate_mitigation_actions(
-            junction_id=junction,
-            predicted_level=level,
-            confidence=confidence,
-            vehicle_count=vehicle_count,
-            avg_speed=avg_speed,
-            time_window="next 1-2 hours"
+        actual_class = row["future_congestion_level"]
+
+        st.subheader("🔎 Dataset Comparison")
+
+        if level == actual_class:
+
+            st.success(f"Prediction matches the recorded class: " f"**{actual_class}**")
+
+        else:
+
+            st.info(
+                f"Recorded class: **{actual_class}**  \n"
+                f"Predicted class: **{level}**"
+            )
+
+        # -----------------------------------------------------------
+        # SHAP Explanation
+        # -----------------------------------------------------------
+
+        st.subheader("🧠 Prediction Explanation (SHAP)")
+
+        st.markdown(
+            f"SHAP explains which input features influenced the "
+            f"model's prediction of **{level}** congestion."
         )
 
-        st.markdown("---")
-        st.subheader("🎯 Suggested Mitigation Actions")
+        st.caption(
+            "Positive SHAP values push the prediction toward the "
+            "predicted class, while negative values push it away."
+        )
 
-        st.info(mitigation["summary"])
+        try:
 
-        col_a, col_b = st.columns(2)
+            with st.spinner("Calculating SHAP feature contributions..."):
 
-        with col_a:
-            st.metric(
-                "Estimated Congestion Reduction",
-                f"{mitigation['estimated_total_reduction']}%"
-            )
+                shap_result = explain_prediction(row, top_n=15)
 
-        with col_b:
-            st.metric(
-                "Recommended Actions",
-                len(mitigation["actions"])
-            )
+            if "error" in shap_result:
 
-        for action in mitigation["actions"]:
+                st.warning("SHAP explanation unavailable: " f"{shap_result['error']}")
 
-            priority_color = {
-                "Critical": "🔴",
-                "High": "🟠",
-                "Medium": "🟡",
-                "Low": "🟢"
-            }
-
-            icon = priority_color.get(action["priority"], "⚪")
-
-            with st.expander(
-                f"{icon} {action['action']} "
-                f"({action['expected_reduction']}% reduction)"
-            ):
-
-                st.markdown(
-                    f"**Priority:** {action['priority']}"
-                )
-
-                st.markdown(
-                    f"**Expected Reduction:** "
-                    f"{action['expected_reduction']}%"
-                )
-
-                st.markdown(
-                    f"**Confidence:** "
-                    f"{action['confidence']:.0%}"
-                )
-
-                st.markdown(
-                    f"**Category:** "
-                    f"{action['category']}"
-                )
-
-                st.markdown(
-                    f"**Why?** {action['explanation']}"
-                )
-
-
-        # SHAP Explanation
-        with st.expander("🧪 AI Explanation (SHAP)", expanded=True):
-            feature_values = [
-                features.get(f, 0) for f in [
-                    "hour", "day_of_week", "vehicle_count", "avg_speed",
-                    "is_peak", "is_event", "is_construction",
-                ]
-            ]
-            # Add encoded values
-            feature_values.extend([0, 0])  # weather_encoded, junction_encoded placeholder
-
-            explanation = explain_prediction(feature_values)
-            if "error" in explanation:
-                st.info(f"Explanation unavailable: {explanation['error']}")
             else:
-                st.markdown("**Feature Contributions:**")
-                contribs = explanation.get("contributions", {})
-                for feat, val in contribs.items():
-                    direction = "↑" if val > 0 else "↓"
-                    color = "red" if val > 0 else "green"
-                    st.markdown(
-                        f"- `{feat}`: **{direction} {abs(val):.3f}**"
+
+                contributions = shap_result["contributions"]
+
+                if contributions:
+
+                    shap_df = pd.DataFrame(
+                        {
+                            "Feature": list(contributions.keys()),
+                            "SHAP Value": list(contributions.values()),
+                        }
                     )
 
-    # ─────────── Feature Importance ───────────
+                    shap_df["Feature"] = shap_df["Feature"].apply(format_shap_feature)
+
+                    # Sort so the strongest positive/negative
+                    # contributions appear clearly.
+                    shap_df = shap_df.sort_values("SHAP Value")
+
+                    # Positive = supports predicted class
+                    # Negative = moves away from predicted class
+                    bar_values = shap_df["SHAP Value"].tolist()
+
+                    bar_labels = [
+                        "Positive" if value >= 0 else "Negative" for value in bar_values
+                    ]
+
+                    fig_shap = go.Figure()
+
+                    fig_shap.add_trace(
+                        go.Bar(
+                            x=bar_values,
+                            y=shap_df["Feature"],
+                            orientation="h",
+                            text=[f"{value:+.3f}" for value in bar_values],
+                            textposition="outside",
+                            customdata=bar_labels,
+                            hovertemplate=(
+                                "<b>%{y}</b><br>"
+                                "SHAP value: %{x:+.4f}<br>"
+                                "Effect: %{customdata}"
+                                "<extra></extra>"
+                            ),
+                        )
+                    )
+
+                    fig_shap.add_vline(x=0, line_width=1)
+
+                    fig_shap.update_layout(
+                        title=("Top 15 Features Influencing " f"{level} Prediction"),
+                        xaxis_title=("SHAP Value " "(Impact on Prediction)"),
+                        yaxis_title="Feature",
+                        height=650,
+                        showlegend=False,
+                        template="plotly_dark",
+                    )
+
+                    st.plotly_chart(fig_shap, use_container_width=True)
+
+                    st.caption(
+                        "Larger absolute SHAP values indicate a "
+                        "stronger influence on this individual "
+                        "prediction."
+                    )
+
+                    # ------------------------------------------------
+                    # SHAP contribution table
+                    # ------------------------------------------------
+
+                    with st.expander(
+                        "📋 View SHAP Contribution Values", expanded=False
+                    ):
+
+                        display_shap_df = shap_df.copy()
+
+                        display_shap_df["Direction"] = display_shap_df[
+                            "SHAP Value"
+                        ].apply(
+                            lambda value: (
+                                "Supports prediction"
+                                if value >= 0
+                                else "Opposes prediction"
+                            )
+                        )
+
+                        display_shap_df["SHAP Value"] = display_shap_df[
+                            "SHAP Value"
+                        ].round(6)
+
+                        st.dataframe(
+                            display_shap_df, use_container_width=True, hide_index=True
+                        )
+
+                else:
+
+                    st.info(
+                        "No SHAP contributions were returned " "for this prediction."
+                    )
+
+        except Exception as exc:
+
+            st.warning(f"Unable to generate SHAP explanation: {exc}")
+
+        # -----------------------------------------------------------
+        # Traffic record details
+        # -----------------------------------------------------------
+
+        with st.expander("📋 View Selected Record", expanded=False):
+
+            display_row = row.to_frame(name="Value")
+
+            st.dataframe(display_row, use_container_width=True)
+
+    # ---------------------------------------------------------------
+    # Feature importance
+    # ---------------------------------------------------------------
+
     st.divider()
-    with st.expander("📊 Feature Importance", expanded=False):
-        importance = get_feature_importance()
-        if importance:
-            fig = go.Figure(go.Bar(
-                x=list(importance.values()),
-                y=list(importance.keys()),
-                orientation="h",
-                marker_color="#667eea",
-            ))
-            fig.update_layout(
-                xaxis_title="Importance",
-                height=350, template="plotly_dark",
-            )
-            st.plotly_chart(fig, use_container_width=True)
-        else:
-            st.info("Train a model first to see feature importance.")
+
+    with st.expander("📊 XGBoost Feature Importance", expanded=False):
+
+        try:
+
+            importance = get_feature_importance()
+
+            if importance:
+
+                importance_df = pd.DataFrame(
+                    importance, columns=["Feature", "Importance"]
+                )
+
+                importance_df = importance_df.sort_values(
+                    "Importance", ascending=False
+                ).head(20)
+
+                fig = go.Figure(
+                    go.Bar(
+                        x=importance_df["Importance"],
+                        y=importance_df["Feature"],
+                        orientation="h",
+                    )
+                )
+
+                fig.update_layout(
+                    xaxis_title="Importance",
+                    yaxis_title="Feature",
+                    height=600,
+                    template="plotly_dark",
+                )
+
+                fig.update_yaxes(autorange="reversed")
+
+                st.plotly_chart(fig, use_container_width=True)
+
+            else:
+
+                st.info("Feature importance is unavailable.")
+
+        except Exception as exc:
+
+            st.warning(f"Unable to display feature importance: {exc}")

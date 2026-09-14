@@ -61,11 +61,17 @@ def initialize_app():
         )
         return {"dataset_ready": False, "models_ready": False}
 
-    # Check if models exist
-    models_ready = (
-        any(f.endswith(".joblib") for f in os.listdir(MODEL_DIR))
-        if os.path.exists(MODEL_DIR)
-        else False
+    # Check if the final model artifacts exist
+    required_model_files = [
+        "xgb_congestion_final.json",
+        "traffic_preprocessor.joblib",
+        "congestion_label_encoder.joblib",
+        "feature_columns.joblib",
+    ]
+
+    models_ready = os.path.exists(MODEL_DIR) and all(
+        os.path.exists(os.path.join(MODEL_DIR, filename))
+        for filename in required_model_files
     )
 
     return {"dataset_ready": True, "models_ready": models_ready}

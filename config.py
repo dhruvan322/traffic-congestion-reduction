@@ -10,7 +10,11 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 MODEL_DIR = os.path.join(BASE_DIR, "trained_models")
 DB_PATH = os.path.join(BASE_DIR, "traffic_intelligence.db")
-DATASET_PATH = os.path.join(DATA_DIR, "traffic_data.csv")
+DATASET_PATH = os.path.join(
+    DATA_DIR,
+    "final_dataset",
+    "ml_traffic_dataset.csv",
+)
 
 # Create directories if they don't exist
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -38,16 +42,22 @@ CONGESTION_THRESHOLDS = {
 }
 PEAK_HOURS = [8, 9, 10, 17, 18, 19]
 SPEED_LIMITS = {
-    "free_flow": 60,   # km/h
+    "free_flow": 60,  # km/h
     "moderate": 30,
     "congested": 15,
 }
 
 # ──────────────────────────── ML Models ────────────────────────────
 PREDICTION_FEATURES = [
-    "hour", "day_of_week", "vehicle_count", "avg_speed",
-    "is_peak", "is_event", "is_construction",
-    "weather_encoded", "junction_encoded",
+    "hour",
+    "day_of_week",
+    "vehicle_count",
+    "avg_speed",
+    "is_peak",
+    "is_event",
+    "is_construction",
+    "weather_encoded",
+    "junction_encoded",
 ]
 CONGESTION_LABELS = ["Low", "Medium", "High"]
 TEST_SIZE = 0.2
@@ -58,12 +68,12 @@ ANOMALY_CONTAMINATION = 0.05  # Expected proportion of anomalies
 ZSCORE_THRESHOLD = 3.0
 
 # ──────────────────────────── Clustering ────────────────────────────
-DBSCAN_EPS = 0.01          # ~1 km in lat/lon degrees
+DBSCAN_EPS = 0.01  # ~1 km in lat/lon degrees
 DBSCAN_MIN_SAMPLES = 5
 KMEANS_N_CLUSTERS = 5
 
 # ──────────────────────────── Route Optimization ────────────────────────────
-ROUTE_SPEED_FACTOR = 1.5   # Weight for traffic speed in edge cost
+ROUTE_SPEED_FACTOR = 1.5  # Weight for traffic speed in edge cost
 ROUTE_DISTANCE_FACTOR = 1.0
 
 # ──────────────────────────── Simulation ────────────────────────────

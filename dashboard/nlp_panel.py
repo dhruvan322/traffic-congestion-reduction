@@ -1,4 +1,4 @@
-"""
+﻿"""
 AI Chat Assistant Panel.
 Chat interface with intent detection and multilingual support.
 """
@@ -11,7 +11,6 @@ from config import DATASET_PATH, SUPPORTED_LANGUAGES
 from nlp.assistant import process_query, classify_intent, extract_entities
 from nlp.multilingual import get_language_name
 from database import get_chat_history
-from engine.osm_route_engine import find_osm_route, create_osm_route_map
 import folium
 from streamlit_folium import st_folium
 from models.hotspot_detector import get_hotspot_summary
@@ -66,7 +65,7 @@ def render_hotspot_map(df):
                 """),
         ).add_to(m)
 
-    st.markdown("### 🗺️ Hotspot Map")
+    st.markdown("### ðŸ—ºï¸ Hotspot Map")
 
     st_folium(
         m,
@@ -76,176 +75,211 @@ def render_hotspot_map(df):
     )
 
 
-def render_route_map(df, origin, destination):
-
-    junctions = (
-        df.groupby("junction_id")
-        .agg({"latitude": "first", "longitude": "first"})
-        .reset_index()
-    )
-
-    origin_row = junctions[junctions["junction_id"] == origin]
-
-    destination_row = junctions[junctions["junction_id"] == destination]
-
-    if origin_row.empty or destination_row.empty:
-        st.error("Unable to find junction coordinates.")
-        return
-
-    origin_lat = origin_row.iloc[0]["latitude"]
-    origin_lon = origin_row.iloc[0]["longitude"]
-
-    dest_lat = destination_row.iloc[0]["latitude"]
-    dest_lon = destination_row.iloc[0]["longitude"]
-
-    G, route = find_osm_route(origin_lat, origin_lon, dest_lat, dest_lon)
-
-    route_map = create_osm_route_map(G, route, origin, destination)
-
-    st.markdown("### 🗺️ Route Map")
-
-    st_folium(
-        route_map, height=550, width=None, key=f"osm_route_{origin}_{destination}"
-    )
-
-
 def render_nlp_panel():
     """Render the AI chat assistant panel."""
+
     st.markdown("# 🚦 AI Traffic Copilot")
     st.markdown(
         "Ask about traffic, congestion reduction, route optimization, "
-        "traffic management plans, anomalies, and predictions."
+        "traffic management plans, anomalies, predictions, and routes."
     )
 
+    # -------------------------------------------------------------
     # Session management
+    # -------------------------------------------------------------
+
     if "chat_session_id" not in st.session_state:
         st.session_state.chat_session_id = str(uuid.uuid4())[:8]
+
     if "chat_messages" not in st.session_state:
         st.session_state.chat_messages = []
 
-    # Language selector
+    # -------------------------------------------------------------
+    # Load project traffic context once per Streamlit session
+    # -------------------------------------------------------------
+
+    if "nlp_data_context" not in st.session_state:
+
+        try:
+            df = pd.read_csv(DATASET_PATH)
+
+            df["timestamp"] = pd.to_datetime(
+                df["timestamp"],
+                errors="coerce",
+            )
+
+            st.session_state.nlp_data_context = {
+                "traffic_data": df,
+                "total_records": len(df),
+            }
+
+        except Exception as e:
+            st.error(
+                "Unable to load the project traffic dataset."
+            )
+            st.exception(e)
+            return
+
+    data_context = st.session_state.nlp_data_context
+
+    # -------------------------------------------------------------
+    # Language selector / interface information
+    # -------------------------------------------------------------
+
     col1, col2 = st.columns([3, 1])
+
     with col2:
-        lang_display = {code: get_language_name(code) for code in SUPPORTED_LANGUAGES}
-        selected_lang = st.selectbox(
+
+        lang_display = {
+            code: get_language_name(code)
+            for code in SUPPORTED_LANGUAGES
+        }
+
+        st.selectbox(
             "🌐 Language",
-            SUPPORTED_LANGUAGES,
-            format_func=lambda x: lang_display[x],
+            options=list(lang_display.keys()),
+            format_func=lambda code: lang_display[code],
+            key="nlp_language",
         )
 
-    # Load data context
-    df = pd.read_csv(DATASET_PATH)
-    data_context = {
-        "traffic_data": df,
-        "total_records": len(df),
-        "avg_speed": df["avg_speed"].mean(),
-        "hotspots": get_hotspot_summary(df),
-        "anomalies": get_anomaly_report(df),
-    }
+    # -------------------------------------------------------------
+    # Display existing conversation
+    # -------------------------------------------------------------
 
-    # Display chat history
-    for msg in st.session_state.chat_messages:
+    for message in st.session_state.chat_messages:
 
-        with st.chat_message(msg["role"]):
+        with st.chat_message(message["role"]):
 
-            st.markdown(msg["content"])
+            st.markdown(message["content"])
 
-            if msg["role"] == "assistant" and msg.get("intent") == "hotspot_query":
-                render_hotspot_map(df)
+            if message["role"] == "assistant":
 
-            if msg["role"] == "assistant" and msg.get("intent") == "route_query":
-                entities = msg.get("entities", {})
+                with st.expander("🔍 Debug Info"):
 
-                origin = entities.get("origin")
-                destination = entities.get("destination")
+                    st.json(
+                        {
+                            "intent": message.get("intent"),
+                            "entities": message.get("entities"),
+                            "detected_language": message.get(
+                                "detected_language"
+                            ),
+                            "turn": message.get(
+                                "turn_number"
+                            ),
+                        }
+                    )
 
-                if origin and destination:
-                    render_route_map(df, origin, destination)
-
+    # -------------------------------------------------------------
     # Chat input
-    user_input = st.chat_input("Ask about traffic... (e.g., 'Traffic at HITEC City?')")
+    # -------------------------------------------------------------
 
-    if user_input:
-        # Display user message
-        st.session_state.chat_messages.append({"role": "user", "content": user_input})
+    query = st.chat_input(
+        "Ask about Hyderabad traffic..."
+    )
+
+    if query:
+
+        st.session_state.chat_messages.append(
+            {
+                "role": "user",
+                "content": query,
+            }
+        )
+
         with st.chat_message("user"):
-            st.markdown(user_input)
+            st.markdown(query)
 
-        # Process query
-        with st.chat_message("assistant"):
-            with st.spinner("Thinking..."):
-                result = process_query(
-                    user_input,
-                    st.session_state.chat_session_id,
-                    data_context,
-                )
+        try:
 
-            response = result["response"]
+            result = process_query(
+                query=query,
+                session_id=st.session_state.chat_session_id,
+                data_context=data_context,
+            )
 
-            # Better rendering for AI Copilot responses
-            formatted_response = response.replace("• ", "\n• ")
+            response = result.get(
+                "response",
+                "I could not generate a response.",
+            )
 
-            st.markdown(formatted_response)
+        except Exception as e:
 
-            if result["intent"] == "hotspot_query":
-                render_hotspot_map(df)
+            result = {
+                "intent": "error",
+                "entities": {},
+                "detected_language": "unknown",
+                "turn_number": len(
+                    st.session_state.chat_messages
+                ),
+            }
 
-            elif result["intent"] == "route_query":
-
-                origin = result["entities"].get("origin")
-                destination = result["entities"].get("destination")
-
-                if origin and destination:
-                    render_route_map(df, origin, destination)
-
-            # Debug info
-            with st.expander("🔍 Debug Info", expanded=False):
-                st.json(
-                    {
-                        "intent": result["intent"],
-                        "entities": result["entities"],
-                        "detected_language": result["detected_language"],
-                        "turn": result["turn_number"],
-                    }
-                )
+            response = (
+                "⚠️ An error occurred while processing "
+                "your request.\n\n"
+                f"Error: {str(e)}"
+            )
 
         st.session_state.chat_messages.append(
             {
                 "role": "assistant",
                 "content": response,
-                "intent": result["intent"],
-                "entities": result["entities"],
+                "intent": result.get("intent"),
+                "entities": result.get("entities", {}),
+                "detected_language": result.get(
+                    "detected_language"
+                ),
+                "turn_number": result.get(
+                    "turn_number"
+                ),
             }
         )
 
-    # Sidebar: example queries
+        st.rerun()
+
+    # -------------------------------------------------------------
+    # Example queries
+    # -------------------------------------------------------------
+
     with st.expander("💡 Example Queries"):
-        st.markdown("""
-    ### 🚦 Traffic Status
-    - What is the traffic at HITEC City?
-    - Is Ameerpet congested right now?
 
-    ### 🎯 Congestion Reduction
-    - How can congestion at HITEC City be reduced?
-    - Suggest actions for Gachibowli traffic.
+        st.markdown(
+            """
+### 🚦 Traffic Status
+- What is the traffic at HITEC City?
+- Is Ameerpet congested right now?
 
-    ### 📋 Traffic Management Plans
-    - Generate a traffic management plan for Kukatpally.
-    - What should traffic police do at Ameerpet?
+### 🎯 Congestion Reduction
+- How can congestion at HITEC City be reduced?
+- Suggest actions for Gachibowli traffic.
 
-    ### 🧠 Explanations
-    - Why is congestion expected at HITEC City?
-    - Explain the traffic prediction for Kukatpally.
+### 📋 Traffic Management
+- Generate a traffic management plan for Kukatpally.
+- What should traffic police do at Ameerpet?
 
-    ### ⚠️ Anomalies
-    - Any unusual traffic patterns detected?
+### 🧠 Explanations
+- Why is congestion expected at HITEC City?
+- Explain the traffic prediction for Kukatpally.
 
-    ### 🔥 Hotspots
-    - Which areas are most congested?
-    """)
+### ⚠️ Anomalies
+- Any unusual traffic patterns detected?
 
-    # Clear chat button
+### 🔥 Hotspots
+- Which areas are most congested?
+
+### 🗺️ Routes
+- Best route from Ameerpet to Gachibowli.
+- Route from HITEC City to Kukatpally.
+"""
+        )
+
+    # -------------------------------------------------------------
+    # Clear chat
+    # -------------------------------------------------------------
+
     if st.button("🗑️ Clear Chat"):
+
         st.session_state.chat_messages = []
         st.session_state.chat_session_id = str(uuid.uuid4())[:8]
+
         st.rerun()
+

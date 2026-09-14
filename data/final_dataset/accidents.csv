@@ -1,0 +1,601 @@
+accident_id,road_segment_id,timestamp,accident_type,severity,lanes_affected,clearance_time_minutes,traffic_impact_factor,description
+A0001,RS0027,2025-02-04 03:05:00,Pedestrian Incident,Minor,2,85,1.05,A pedestrian incident was reported on the road segment.
+A0002,RS0005,2025-05-20 17:34:00,Vehicle Breakdown,Minor,3,28,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0003,RS0050,2025-04-28 11:49:00,Vehicle Collision,Minor,1,53,1.05,A vehicle collision was reported on the road segment.
+A0004,RS0002,2025-02-11 16:49:00,Pedestrian Incident,Moderate,3,44,1.15,A pedestrian incident was reported on the road segment.
+A0005,RS0029,2025-09-17 02:30:00,Vehicle Breakdown,Critical,2,85,1.55,A vehicle breakdown was reported and may have caused a short delay.
+A0006,RS0048,2025-09-06 01:51:00,Vehicle Breakdown,Moderate,1,112,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0007,RS0007,2025-04-01 00:28:00,Vehicle Breakdown,Critical,1,99,1.55,A vehicle breakdown temporarily affected traffic flow.
+A0008,RS0022,2025-06-26 21:13:00,Multi-Vehicle Collision,Minor,3,99,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0009,RS0002,2025-01-12 11:15:00,Pedestrian Incident,Minor,2,58,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0010,RS0017,2025-12-16 23:45:00,Vehicle Breakdown,Minor,2,177,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0011,RS0033,2025-06-17 03:24:00,Pedestrian Incident,Moderate,3,90,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0012,RS0058,2025-12-19 03:13:00,Vehicle Breakdown,Minor,1,161,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0013,RS0053,2025-04-09 15:09:00,Pedestrian Incident,Moderate,3,82,1.15,A pedestrian-related incident temporarily affected traffic movement.
+A0014,RS0056,2025-07-25 03:40:00,Multi-Vehicle Collision,Moderate,2,159,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0015,RS0032,2025-02-15 12:55:00,Pedestrian Incident,Major,1,93,1.35,A pedestrian-related incident temporarily affected traffic movement.
+A0016,RS0012,2025-10-11 10:17:00,Multi-Vehicle Collision,Moderate,1,43,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0017,RS0041,2025-05-12 14:38:00,Vehicle Collision,Major,1,19,1.35,A two-vehicle collision temporarily affected traffic movement.
+A0018,RS0036,2025-04-02 21:34:00,Vehicle Breakdown,Moderate,3,64,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0019,RS0001,2025-09-26 13:06:00,Multi-Vehicle Collision,Major,2,39,1.35,A multi-vehicle collision caused a significant traffic disruption.
+A0020,RS0043,2025-01-20 10:22:00,Pedestrian Incident,Major,3,74,1.35,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0021,RS0004,2025-09-24 23:47:00,Vehicle Breakdown,Major,2,101,1.35,A broken-down vehicle reduced available road capacity.
+A0022,RS0016,2025-08-18 17:05:00,Vehicle Collision,Moderate,1,151,1.15,A two-vehicle collision temporarily affected traffic movement.
+A0023,RS0014,2025-07-20 12:42:00,Multi-Vehicle Collision,Major,1,135,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0024,RS0003,2025-02-15 21:51:00,Pedestrian Incident,Minor,1,21,1.05,A pedestrian incident was reported on the road segment.
+A0025,RS0008,2025-02-10 20:57:00,Vehicle Collision,Major,3,140,1.35,A vehicle collision caused a temporary traffic disruption.
+A0026,RS0043,2025-12-30 04:47:00,Vehicle Collision,Moderate,3,40,1.15,A vehicle collision was reported on the road segment.
+A0027,RS0028,2025-04-21 20:43:00,Multi-Vehicle Collision,Major,1,180,1.35,A multi-vehicle accident temporarily reduced traffic capacity.
+A0028,RS0038,2025-09-04 10:04:00,Multi-Vehicle Collision,Critical,2,173,1.55,A multi-vehicle accident temporarily reduced traffic capacity.
+A0029,RS0039,2025-11-05 08:32:00,Pedestrian Incident,Minor,1,78,1.05,A pedestrian incident was reported on the road segment.
+A0030,RS0021,2025-11-22 04:13:00,Pedestrian Incident,Minor,2,89,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0031,RS0023,2025-03-09 06:54:00,Vehicle Breakdown,Minor,2,142,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0032,RS0042,2025-05-01 14:10:00,Multi-Vehicle Collision,Minor,2,37,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0033,RS0027,2025-08-07 21:14:00,Vehicle Breakdown,Moderate,2,114,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0034,RS0026,2025-11-02 15:33:00,Vehicle Collision,Minor,1,40,1.05,A vehicle collision was reported on the road segment.
+A0035,RS0059,2025-05-14 04:22:00,Multi-Vehicle Collision,Major,1,116,1.35,A multi-vehicle collision caused a significant traffic disruption.
+A0036,RS0060,2025-07-04 14:59:00,Vehicle Collision,Major,2,157,1.35,A vehicle collision was reported on the road segment.
+A0037,RS0050,2025-11-05 09:26:00,Vehicle Collision,Moderate,1,70,1.15,A vehicle collision was reported on the road segment.
+A0038,RS0045,2025-07-28 20:23:00,Vehicle Collision,Minor,1,162,1.05,A vehicle collision caused a temporary traffic disruption.
+A0039,RS0055,2025-12-20 10:55:00,Vehicle Collision,Major,1,149,1.35,A vehicle collision caused a temporary traffic disruption.
+A0040,RS0054,2025-02-17 08:42:00,Pedestrian Incident,Moderate,1,24,1.15,A pedestrian-related incident temporarily affected traffic movement.
+A0041,RS0039,2025-11-11 14:00:00,Vehicle Breakdown,Moderate,1,133,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0042,RS0052,2025-02-12 23:55:00,Vehicle Collision,Critical,2,40,1.55,A vehicle collision was reported on the road segment.
+A0043,RS0008,2025-11-30 12:14:00,Pedestrian Incident,Critical,3,130,1.55,A pedestrian incident was reported on the road segment.
+A0044,RS0026,2025-03-29 01:31:00,Vehicle Collision,Moderate,1,139,1.15,A two-vehicle collision temporarily affected traffic movement.
+A0045,RS0039,2025-12-16 05:48:00,Vehicle Collision,Moderate,1,100,1.15,A vehicle collision caused a temporary traffic disruption.
+A0046,RS0031,2025-09-28 01:02:00,Pedestrian Incident,Critical,1,179,1.55,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0047,RS0006,2025-05-20 16:23:00,Pedestrian Incident,Minor,3,124,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0048,RS0016,2025-11-20 21:43:00,Pedestrian Incident,Minor,2,43,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0049,RS0016,2025-03-17 09:34:00,Vehicle Breakdown,Moderate,3,95,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0050,RS0012,2025-11-30 19:19:00,Multi-Vehicle Collision,Minor,2,164,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0051,RS0006,2025-09-05 16:09:00,Vehicle Collision,Minor,1,111,1.05,A vehicle collision caused a temporary traffic disruption.
+A0052,RS0021,2025-06-21 01:58:00,Multi-Vehicle Collision,Moderate,1,88,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0053,RS0032,2025-12-12 12:07:00,Pedestrian Incident,Minor,1,124,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0054,RS0059,2025-02-27 07:37:00,Multi-Vehicle Collision,Critical,1,177,1.55,A multi-vehicle accident temporarily reduced traffic capacity.
+A0055,RS0009,2025-12-20 14:09:00,Pedestrian Incident,Minor,3,132,1.05,A pedestrian incident was reported on the road segment.
+A0056,RS0001,2025-07-25 22:12:00,Multi-Vehicle Collision,Moderate,2,90,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0057,RS0035,2025-04-29 01:07:00,Vehicle Breakdown,Major,3,52,1.35,A broken-down vehicle reduced available road capacity.
+A0058,RS0026,2025-04-01 05:55:00,Vehicle Collision,Moderate,3,153,1.15,A vehicle collision was reported on the road segment.
+A0059,RS0033,2025-03-28 08:52:00,Vehicle Breakdown,Minor,2,110,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0060,RS0039,2025-04-17 18:30:00,Vehicle Collision,Major,1,138,1.35,A vehicle collision was reported on the road segment.
+A0061,RS0024,2025-09-19 06:56:00,Multi-Vehicle Collision,Major,1,20,1.35,A multi-vehicle collision caused a significant traffic disruption.
+A0062,RS0018,2025-05-03 07:14:00,Vehicle Collision,Minor,2,28,1.05,A vehicle collision was reported on the road segment.
+A0063,RS0049,2025-08-25 21:25:00,Vehicle Collision,Major,1,37,1.35,A vehicle collision was reported on the road segment.
+A0064,RS0039,2025-04-08 02:19:00,Pedestrian Incident,Moderate,2,43,1.15,A pedestrian-related incident temporarily affected traffic movement.
+A0065,RS0033,2025-03-13 01:34:00,Vehicle Collision,Major,3,76,1.35,A vehicle collision was reported on the road segment.
+A0066,RS0023,2025-02-01 21:52:00,Vehicle Breakdown,Major,1,84,1.35,A vehicle breakdown was reported and may have caused a short delay.
+A0067,RS0035,2025-03-13 03:06:00,Vehicle Collision,Minor,3,15,1.05,A vehicle collision caused a temporary traffic disruption.
+A0068,RS0051,2025-04-29 10:44:00,Pedestrian Incident,Moderate,2,49,1.15,A pedestrian-related incident temporarily affected traffic movement.
+A0069,RS0041,2025-01-16 15:06:00,Vehicle Breakdown,Minor,2,177,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0070,RS0051,2025-12-20 13:30:00,Multi-Vehicle Collision,Moderate,1,96,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0071,RS0030,2025-03-28 07:27:00,Pedestrian Incident,Moderate,1,62,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0072,RS0033,2025-08-16 13:50:00,Pedestrian Incident,Minor,1,45,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0073,RS0007,2025-04-06 20:20:00,Multi-Vehicle Collision,Minor,1,42,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0074,RS0007,2025-12-30 17:11:00,Multi-Vehicle Collision,Moderate,2,31,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0075,RS0032,2025-07-31 11:40:00,Multi-Vehicle Collision,Minor,1,90,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0076,RS0046,2025-06-01 23:16:00,Vehicle Breakdown,Moderate,2,39,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0077,RS0029,2025-11-18 04:38:00,Vehicle Collision,Minor,2,106,1.05,A vehicle collision caused a temporary traffic disruption.
+A0078,RS0033,2025-01-06 07:33:00,Vehicle Breakdown,Moderate,2,57,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0079,RS0005,2025-07-11 04:00:00,Vehicle Breakdown,Critical,3,105,1.55,A vehicle breakdown temporarily affected traffic flow.
+A0080,RS0040,2025-01-13 00:14:00,Multi-Vehicle Collision,Major,1,149,1.35,A multi-vehicle accident temporarily reduced traffic capacity.
+A0081,RS0010,2025-08-30 15:34:00,Vehicle Collision,Minor,3,33,1.05,A vehicle collision was reported on the road segment.
+A0082,RS0008,2025-11-17 06:38:00,Multi-Vehicle Collision,Minor,2,63,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0083,RS0008,2025-11-15 15:51:00,Multi-Vehicle Collision,Critical,1,120,1.55,A multi-vehicle accident temporarily reduced traffic capacity.
+A0084,RS0015,2025-03-06 15:28:00,Multi-Vehicle Collision,Moderate,2,99,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0085,RS0030,2025-06-25 19:22:00,Pedestrian Incident,Moderate,1,65,1.15,A pedestrian incident was reported on the road segment.
+A0086,RS0051,2025-06-05 15:57:00,Multi-Vehicle Collision,Minor,2,133,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0087,RS0004,2025-07-16 07:02:00,Multi-Vehicle Collision,Major,3,130,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0088,RS0057,2025-09-14 06:59:00,Pedestrian Incident,Major,3,49,1.35,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0089,RS0035,2025-04-07 02:42:00,Pedestrian Incident,Major,2,44,1.35,A pedestrian-related incident temporarily affected traffic movement.
+A0090,RS0053,2025-05-30 21:34:00,Pedestrian Incident,Minor,3,80,1.05,A pedestrian incident was reported on the road segment.
+A0091,RS0039,2025-07-14 14:55:00,Vehicle Breakdown,Minor,1,123,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0092,RS0035,2025-10-03 22:42:00,Pedestrian Incident,Moderate,2,43,1.15,A pedestrian-related incident temporarily affected traffic movement.
+A0093,RS0032,2025-06-05 03:15:00,Pedestrian Incident,Moderate,1,105,1.15,A pedestrian-related incident temporarily affected traffic movement.
+A0094,RS0001,2025-12-14 01:25:00,Multi-Vehicle Collision,Minor,2,69,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0095,RS0037,2025-04-04 11:11:00,Multi-Vehicle Collision,Moderate,1,119,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0096,RS0055,2025-10-21 07:27:00,Multi-Vehicle Collision,Moderate,2,130,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0097,RS0052,2025-03-15 06:30:00,Vehicle Breakdown,Moderate,2,77,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0098,RS0048,2025-11-03 08:28:00,Pedestrian Incident,Minor,2,168,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0099,RS0057,2025-09-15 04:51:00,Multi-Vehicle Collision,Major,3,132,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0100,RS0015,2025-11-29 20:03:00,Vehicle Breakdown,Moderate,3,51,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0101,RS0054,2025-05-15 15:30:00,Pedestrian Incident,Minor,2,145,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0102,RS0030,2025-06-16 08:47:00,Pedestrian Incident,Minor,2,103,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0103,RS0020,2025-11-21 04:42:00,Vehicle Collision,Major,2,100,1.35,A two-vehicle collision temporarily affected traffic movement.
+A0104,RS0036,2025-06-15 03:12:00,Multi-Vehicle Collision,Moderate,2,171,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0105,RS0039,2025-05-21 06:49:00,Pedestrian Incident,Minor,2,65,1.05,A pedestrian incident was reported on the road segment.
+A0106,RS0007,2025-12-01 17:47:00,Vehicle Breakdown,Minor,2,17,1.05,A broken-down vehicle reduced available road capacity.
+A0107,RS0019,2025-03-22 08:23:00,Pedestrian Incident,Minor,1,104,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0108,RS0017,2025-11-12 20:40:00,Pedestrian Incident,Moderate,1,72,1.15,A pedestrian incident was reported on the road segment.
+A0109,RS0044,2025-11-26 10:06:00,Pedestrian Incident,Moderate,3,150,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0110,RS0046,2025-07-17 22:52:00,Vehicle Collision,Moderate,1,118,1.15,A vehicle collision was reported on the road segment.
+A0111,RS0046,2025-09-24 17:49:00,Pedestrian Incident,Minor,2,64,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0112,RS0047,2025-09-21 08:53:00,Vehicle Breakdown,Major,2,125,1.35,A vehicle breakdown temporarily affected traffic flow.
+A0113,RS0054,2025-03-02 13:58:00,Vehicle Collision,Moderate,2,110,1.15,A vehicle collision caused a temporary traffic disruption.
+A0114,RS0034,2025-02-13 01:16:00,Vehicle Collision,Minor,2,118,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0115,RS0019,2025-08-14 08:52:00,Multi-Vehicle Collision,Minor,1,112,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0116,RS0050,2025-02-05 21:56:00,Pedestrian Incident,Major,1,165,1.35,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0117,RS0036,2025-03-09 19:45:00,Pedestrian Incident,Moderate,2,87,1.15,A pedestrian-related incident temporarily affected traffic movement.
+A0118,RS0021,2025-07-01 16:10:00,Pedestrian Incident,Major,2,70,1.35,A pedestrian incident was reported on the road segment.
+A0119,RS0042,2025-01-18 10:50:00,Multi-Vehicle Collision,Moderate,1,140,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0120,RS0024,2025-03-03 06:13:00,Vehicle Collision,Major,1,94,1.35,A vehicle collision caused a temporary traffic disruption.
+A0121,RS0003,2025-02-02 04:27:00,Vehicle Breakdown,Major,3,20,1.35,A vehicle breakdown was reported and may have caused a short delay.
+A0122,RS0046,2025-09-30 11:26:00,Vehicle Collision,Minor,3,166,1.05,A vehicle collision caused a temporary traffic disruption.
+A0123,RS0018,2025-12-06 20:32:00,Pedestrian Incident,Moderate,3,96,1.15,A pedestrian incident was reported on the road segment.
+A0124,RS0008,2025-03-19 22:44:00,Vehicle Breakdown,Critical,1,88,1.55,A broken-down vehicle reduced available road capacity.
+A0125,RS0021,2025-11-10 06:43:00,Vehicle Collision,Minor,2,74,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0126,RS0044,2025-04-07 20:54:00,Vehicle Breakdown,Critical,2,144,1.55,A vehicle breakdown was reported and may have caused a short delay.
+A0127,RS0020,2025-10-22 14:53:00,Pedestrian Incident,Minor,1,170,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0128,RS0001,2025-12-21 19:29:00,Pedestrian Incident,Major,2,45,1.35,A pedestrian-related incident temporarily affected traffic movement.
+A0129,RS0057,2025-07-14 20:14:00,Pedestrian Incident,Minor,3,36,1.05,A pedestrian incident was reported on the road segment.
+A0130,RS0051,2025-10-18 22:07:00,Vehicle Breakdown,Minor,2,154,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0131,RS0035,2025-06-18 15:51:00,Multi-Vehicle Collision,Minor,1,98,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0132,RS0051,2025-01-18 22:28:00,Multi-Vehicle Collision,Minor,3,74,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0133,RS0031,2025-02-12 10:16:00,Pedestrian Incident,Minor,1,132,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0134,RS0058,2025-01-27 14:57:00,Vehicle Breakdown,Moderate,1,70,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0135,RS0028,2025-11-18 02:01:00,Vehicle Breakdown,Critical,3,29,1.55,A broken-down vehicle reduced available road capacity.
+A0136,RS0052,2025-05-28 07:16:00,Vehicle Collision,Minor,2,57,1.05,A vehicle collision was reported on the road segment.
+A0137,RS0007,2025-09-30 13:31:00,Vehicle Breakdown,Major,2,133,1.35,A broken-down vehicle reduced available road capacity.
+A0138,RS0024,2025-10-26 03:11:00,Vehicle Collision,Minor,1,151,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0139,RS0051,2025-06-17 16:50:00,Vehicle Breakdown,Moderate,3,99,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0140,RS0019,2025-05-13 17:16:00,Vehicle Breakdown,Moderate,3,165,1.15,A broken-down vehicle reduced available road capacity.
+A0141,RS0034,2025-10-29 20:58:00,Pedestrian Incident,Minor,3,47,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0142,RS0037,2025-03-31 18:24:00,Multi-Vehicle Collision,Minor,1,36,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0143,RS0029,2025-08-20 20:52:00,Vehicle Collision,Minor,3,86,1.05,A vehicle collision caused a temporary traffic disruption.
+A0144,RS0022,2025-09-12 16:53:00,Vehicle Breakdown,Minor,2,133,1.05,A broken-down vehicle reduced available road capacity.
+A0145,RS0032,2025-08-30 05:44:00,Vehicle Breakdown,Minor,1,50,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0146,RS0030,2025-07-05 03:48:00,Pedestrian Incident,Major,2,164,1.35,A pedestrian incident was reported on the road segment.
+A0147,RS0052,2025-01-03 01:59:00,Multi-Vehicle Collision,Moderate,3,59,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0148,RS0012,2025-11-13 05:11:00,Multi-Vehicle Collision,Minor,1,34,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0149,RS0038,2025-06-11 18:27:00,Pedestrian Incident,Moderate,1,121,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0150,RS0049,2025-01-18 18:18:00,Multi-Vehicle Collision,Major,2,173,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0151,RS0030,2025-02-01 23:42:00,Vehicle Collision,Moderate,3,124,1.15,A vehicle collision was reported on the road segment.
+A0152,RS0010,2025-10-22 05:34:00,Multi-Vehicle Collision,Minor,3,76,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0153,RS0006,2025-06-26 23:16:00,Pedestrian Incident,Minor,2,110,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0154,RS0032,2025-09-01 22:08:00,Vehicle Breakdown,Minor,1,111,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0155,RS0046,2025-09-03 03:18:00,Vehicle Breakdown,Major,3,95,1.35,A vehicle breakdown temporarily affected traffic flow.
+A0156,RS0043,2025-05-15 14:53:00,Vehicle Breakdown,Moderate,1,91,1.15,A broken-down vehicle reduced available road capacity.
+A0157,RS0060,2025-01-17 03:32:00,Vehicle Breakdown,Moderate,1,37,1.15,A broken-down vehicle reduced available road capacity.
+A0158,RS0022,2025-10-26 18:37:00,Pedestrian Incident,Moderate,3,15,1.15,A pedestrian-related incident temporarily affected traffic movement.
+A0159,RS0021,2025-09-01 00:39:00,Pedestrian Incident,Minor,1,176,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0160,RS0012,2025-02-01 18:35:00,Vehicle Breakdown,Minor,2,130,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0161,RS0033,2025-06-26 20:02:00,Pedestrian Incident,Minor,2,101,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0162,RS0013,2025-04-20 20:11:00,Vehicle Collision,Minor,2,154,1.05,A vehicle collision caused a temporary traffic disruption.
+A0163,RS0007,2025-04-24 04:18:00,Pedestrian Incident,Minor,2,130,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0164,RS0036,2025-10-02 07:16:00,Pedestrian Incident,Minor,1,99,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0165,RS0048,2025-12-27 12:26:00,Vehicle Collision,Minor,3,72,1.05,A vehicle collision caused a temporary traffic disruption.
+A0166,RS0056,2025-09-13 20:50:00,Multi-Vehicle Collision,Minor,3,109,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0167,RS0043,2025-02-28 22:14:00,Vehicle Collision,Minor,1,178,1.05,A vehicle collision caused a temporary traffic disruption.
+A0168,RS0020,2025-03-22 08:43:00,Vehicle Collision,Minor,2,179,1.05,A vehicle collision was reported on the road segment.
+A0169,RS0042,2025-12-02 01:53:00,Vehicle Collision,Major,2,21,1.35,A two-vehicle collision temporarily affected traffic movement.
+A0170,RS0009,2025-12-28 02:33:00,Vehicle Breakdown,Moderate,2,68,1.15,A broken-down vehicle reduced available road capacity.
+A0171,RS0020,2025-02-21 15:39:00,Vehicle Breakdown,Minor,2,137,1.05,A broken-down vehicle reduced available road capacity.
+A0172,RS0057,2025-08-15 15:31:00,Vehicle Breakdown,Minor,3,148,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0173,RS0030,2025-08-17 04:27:00,Pedestrian Incident,Moderate,3,112,1.15,A pedestrian-related incident temporarily affected traffic movement.
+A0174,RS0021,2025-03-08 18:14:00,Pedestrian Incident,Minor,2,78,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0175,RS0043,2025-01-09 07:50:00,Multi-Vehicle Collision,Moderate,1,152,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0176,RS0033,2025-02-12 04:07:00,Vehicle Collision,Moderate,2,165,1.15,A vehicle collision was reported on the road segment.
+A0177,RS0031,2025-06-03 11:31:00,Vehicle Collision,Major,1,165,1.35,A vehicle collision caused a temporary traffic disruption.
+A0178,RS0054,2025-07-01 00:14:00,Multi-Vehicle Collision,Moderate,1,103,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0179,RS0016,2025-08-25 04:44:00,Multi-Vehicle Collision,Minor,1,50,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0180,RS0056,2025-04-06 23:30:00,Multi-Vehicle Collision,Minor,2,112,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0181,RS0024,2025-10-29 18:49:00,Pedestrian Incident,Moderate,1,130,1.15,A pedestrian incident was reported on the road segment.
+A0182,RS0018,2025-12-09 11:25:00,Pedestrian Incident,Minor,2,164,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0183,RS0032,2025-08-16 02:24:00,Pedestrian Incident,Major,1,74,1.35,A pedestrian-related incident temporarily affected traffic movement.
+A0184,RS0044,2025-04-15 14:17:00,Vehicle Breakdown,Minor,1,100,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0185,RS0031,2025-07-27 16:09:00,Pedestrian Incident,Minor,1,171,1.05,A pedestrian incident was reported on the road segment.
+A0186,RS0029,2025-12-17 18:27:00,Vehicle Collision,Moderate,2,44,1.15,A vehicle collision was reported on the road segment.
+A0187,RS0060,2025-11-24 08:23:00,Multi-Vehicle Collision,Major,2,159,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0188,RS0002,2025-09-19 12:33:00,Vehicle Collision,Minor,1,133,1.05,A vehicle collision was reported on the road segment.
+A0189,RS0052,2025-12-16 01:35:00,Vehicle Breakdown,Moderate,3,158,1.15,A broken-down vehicle reduced available road capacity.
+A0190,RS0024,2025-04-25 16:58:00,Vehicle Collision,Major,1,94,1.35,A vehicle collision was reported on the road segment.
+A0191,RS0032,2025-03-08 15:35:00,Pedestrian Incident,Minor,1,79,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0192,RS0008,2025-12-02 13:44:00,Vehicle Collision,Moderate,1,165,1.15,A vehicle collision was reported on the road segment.
+A0193,RS0033,2025-01-24 13:56:00,Vehicle Breakdown,Moderate,2,129,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0194,RS0010,2025-09-12 12:10:00,Vehicle Breakdown,Minor,3,98,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0195,RS0027,2025-08-21 14:31:00,Pedestrian Incident,Minor,2,164,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0196,RS0049,2025-03-23 20:09:00,Multi-Vehicle Collision,Moderate,1,137,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0197,RS0054,2025-06-29 01:54:00,Multi-Vehicle Collision,Critical,3,55,1.55,Multiple vehicles were involved in a collision on the road segment.
+A0198,RS0036,2025-09-21 16:27:00,Pedestrian Incident,Minor,3,45,1.05,A pedestrian incident was reported on the road segment.
+A0199,RS0044,2025-03-05 21:27:00,Vehicle Breakdown,Moderate,2,155,1.15,A broken-down vehicle reduced available road capacity.
+A0200,RS0053,2025-06-04 00:20:00,Pedestrian Incident,Critical,3,59,1.55,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0201,RS0032,2025-11-14 02:27:00,Vehicle Collision,Minor,1,82,1.05,A vehicle collision caused a temporary traffic disruption.
+A0202,RS0041,2025-07-04 02:48:00,Vehicle Breakdown,Minor,2,140,1.05,A broken-down vehicle reduced available road capacity.
+A0203,RS0012,2025-02-02 06:18:00,Vehicle Breakdown,Moderate,1,163,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0204,RS0004,2025-09-10 05:06:00,Pedestrian Incident,Minor,3,103,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0205,RS0051,2025-05-02 12:44:00,Vehicle Breakdown,Major,2,110,1.35,A vehicle breakdown was reported and may have caused a short delay.
+A0206,RS0020,2025-01-03 02:16:00,Vehicle Breakdown,Minor,1,66,1.05,A broken-down vehicle reduced available road capacity.
+A0207,RS0048,2025-09-18 18:45:00,Vehicle Collision,Minor,3,33,1.05,A vehicle collision caused a temporary traffic disruption.
+A0208,RS0057,2025-07-03 23:42:00,Multi-Vehicle Collision,Moderate,1,64,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0209,RS0013,2025-08-08 19:35:00,Vehicle Breakdown,Minor,2,135,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0210,RS0044,2025-07-08 04:13:00,Vehicle Breakdown,Moderate,2,121,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0211,RS0038,2025-06-01 13:28:00,Multi-Vehicle Collision,Minor,2,86,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0212,RS0033,2025-03-05 02:06:00,Vehicle Breakdown,Minor,1,117,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0213,RS0004,2025-02-18 22:16:00,Pedestrian Incident,Minor,2,159,1.05,A pedestrian incident was reported on the road segment.
+A0214,RS0049,2025-06-17 07:36:00,Vehicle Collision,Moderate,1,110,1.15,A vehicle collision was reported on the road segment.
+A0215,RS0042,2025-10-18 13:31:00,Pedestrian Incident,Moderate,2,103,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0216,RS0012,2025-07-31 13:05:00,Pedestrian Incident,Minor,2,132,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0217,RS0049,2025-06-08 00:35:00,Pedestrian Incident,Major,2,79,1.35,A pedestrian-related incident temporarily affected traffic movement.
+A0218,RS0054,2025-04-26 07:51:00,Vehicle Breakdown,Minor,3,123,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0219,RS0046,2025-12-28 02:10:00,Multi-Vehicle Collision,Minor,1,143,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0220,RS0008,2025-03-25 13:54:00,Vehicle Collision,Minor,1,17,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0221,RS0028,2025-12-28 01:02:00,Multi-Vehicle Collision,Minor,3,109,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0222,RS0036,2025-05-31 03:16:00,Vehicle Collision,Minor,1,49,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0223,RS0015,2025-01-30 01:24:00,Vehicle Breakdown,Major,1,136,1.35,A vehicle breakdown temporarily affected traffic flow.
+A0224,RS0010,2025-02-22 05:33:00,Multi-Vehicle Collision,Critical,3,55,1.55,A multi-vehicle collision caused a significant traffic disruption.
+A0225,RS0060,2025-05-20 21:49:00,Pedestrian Incident,Major,3,67,1.35,A pedestrian-related incident temporarily affected traffic movement.
+A0226,RS0060,2025-12-03 03:56:00,Vehicle Collision,Minor,3,158,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0227,RS0032,2025-10-08 18:36:00,Multi-Vehicle Collision,Moderate,1,32,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0228,RS0018,2025-12-31 10:31:00,Pedestrian Incident,Minor,1,134,1.05,A pedestrian incident was reported on the road segment.
+A0229,RS0054,2025-07-27 13:53:00,Pedestrian Incident,Moderate,3,177,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0230,RS0019,2025-01-19 13:53:00,Vehicle Collision,Moderate,3,173,1.15,A vehicle collision was reported on the road segment.
+A0231,RS0027,2025-09-07 23:08:00,Vehicle Breakdown,Major,1,128,1.35,A vehicle breakdown temporarily affected traffic flow.
+A0232,RS0046,2025-10-26 16:29:00,Vehicle Breakdown,Major,3,49,1.35,A vehicle breakdown was reported and may have caused a short delay.
+A0233,RS0011,2025-08-06 06:58:00,Vehicle Collision,Minor,1,16,1.05,A vehicle collision was reported on the road segment.
+A0234,RS0018,2025-07-25 20:30:00,Vehicle Collision,Minor,2,149,1.05,A vehicle collision was reported on the road segment.
+A0235,RS0039,2025-07-03 12:25:00,Vehicle Breakdown,Minor,1,87,1.05,A broken-down vehicle reduced available road capacity.
+A0236,RS0051,2025-08-15 01:07:00,Pedestrian Incident,Minor,2,152,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0237,RS0049,2025-08-13 23:50:00,Vehicle Breakdown,Moderate,2,116,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0238,RS0045,2025-08-06 12:13:00,Vehicle Collision,Minor,1,104,1.05,A vehicle collision was reported on the road segment.
+A0239,RS0015,2025-07-03 05:17:00,Pedestrian Incident,Moderate,1,60,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0240,RS0011,2025-07-18 18:30:00,Pedestrian Incident,Minor,2,15,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0241,RS0034,2025-06-07 02:29:00,Vehicle Breakdown,Moderate,2,98,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0242,RS0028,2025-09-01 16:31:00,Multi-Vehicle Collision,Minor,2,156,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0243,RS0007,2025-05-11 09:10:00,Multi-Vehicle Collision,Moderate,2,93,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0244,RS0057,2025-11-07 18:50:00,Multi-Vehicle Collision,Minor,1,167,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0245,RS0014,2025-03-01 01:51:00,Vehicle Collision,Minor,3,93,1.05,A vehicle collision was reported on the road segment.
+A0246,RS0053,2025-10-04 16:51:00,Pedestrian Incident,Minor,3,135,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0247,RS0001,2025-08-21 02:44:00,Pedestrian Incident,Minor,1,115,1.05,A pedestrian incident was reported on the road segment.
+A0248,RS0035,2025-10-28 14:57:00,Pedestrian Incident,Minor,2,136,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0249,RS0030,2025-05-16 21:44:00,Vehicle Breakdown,Major,3,82,1.35,A broken-down vehicle reduced available road capacity.
+A0250,RS0012,2025-03-18 07:20:00,Vehicle Collision,Moderate,2,64,1.15,A two-vehicle collision temporarily affected traffic movement.
+A0251,RS0052,2025-08-14 01:33:00,Multi-Vehicle Collision,Minor,1,114,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0252,RS0047,2025-09-05 22:36:00,Vehicle Collision,Moderate,2,131,1.15,A vehicle collision caused a temporary traffic disruption.
+A0253,RS0002,2025-11-28 22:11:00,Multi-Vehicle Collision,Major,3,44,1.35,A multi-vehicle accident temporarily reduced traffic capacity.
+A0254,RS0045,2025-01-11 23:41:00,Multi-Vehicle Collision,Major,2,63,1.35,A multi-vehicle collision caused a significant traffic disruption.
+A0255,RS0038,2025-05-10 21:25:00,Pedestrian Incident,Major,1,103,1.35,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0256,RS0033,2025-03-13 17:21:00,Vehicle Collision,Minor,1,156,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0257,RS0018,2025-12-18 16:51:00,Vehicle Collision,Moderate,3,176,1.15,A vehicle collision was reported on the road segment.
+A0258,RS0014,2025-01-14 13:08:00,Multi-Vehicle Collision,Minor,2,40,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0259,RS0050,2025-08-16 10:33:00,Vehicle Breakdown,Major,3,150,1.35,A vehicle breakdown was reported and may have caused a short delay.
+A0260,RS0025,2025-03-06 00:44:00,Vehicle Collision,Critical,1,67,1.55,A vehicle collision caused a temporary traffic disruption.
+A0261,RS0024,2025-12-12 04:52:00,Multi-Vehicle Collision,Minor,1,26,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0262,RS0050,2025-11-03 00:38:00,Pedestrian Incident,Major,1,136,1.35,A pedestrian incident was reported on the road segment.
+A0263,RS0009,2025-02-26 19:05:00,Vehicle Breakdown,Minor,3,171,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0264,RS0048,2025-05-25 07:18:00,Vehicle Collision,Moderate,1,175,1.15,A two-vehicle collision temporarily affected traffic movement.
+A0265,RS0019,2025-11-03 15:43:00,Vehicle Collision,Moderate,2,92,1.15,A vehicle collision caused a temporary traffic disruption.
+A0266,RS0015,2025-10-30 08:25:00,Vehicle Breakdown,Minor,3,72,1.05,A broken-down vehicle reduced available road capacity.
+A0267,RS0006,2025-02-08 16:45:00,Vehicle Breakdown,Major,3,16,1.35,A vehicle breakdown temporarily affected traffic flow.
+A0268,RS0023,2025-12-17 23:44:00,Vehicle Breakdown,Minor,2,55,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0269,RS0017,2025-01-20 11:43:00,Pedestrian Incident,Minor,1,133,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0270,RS0002,2025-09-01 06:53:00,Multi-Vehicle Collision,Minor,2,110,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0271,RS0016,2025-08-07 19:45:00,Pedestrian Incident,Moderate,3,117,1.15,A pedestrian incident was reported on the road segment.
+A0272,RS0013,2025-10-17 20:04:00,Vehicle Breakdown,Minor,2,175,1.05,A broken-down vehicle reduced available road capacity.
+A0273,RS0014,2025-06-21 03:48:00,Multi-Vehicle Collision,Minor,3,103,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0274,RS0060,2025-09-08 22:10:00,Vehicle Breakdown,Minor,3,39,1.05,A broken-down vehicle reduced available road capacity.
+A0275,RS0002,2025-04-20 02:11:00,Pedestrian Incident,Minor,2,109,1.05,A pedestrian incident was reported on the road segment.
+A0276,RS0012,2025-09-02 20:10:00,Pedestrian Incident,Minor,2,134,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0277,RS0057,2025-12-07 18:54:00,Pedestrian Incident,Minor,2,165,1.05,A pedestrian incident was reported on the road segment.
+A0278,RS0024,2025-03-24 03:18:00,Vehicle Collision,Major,1,105,1.35,A two-vehicle collision temporarily affected traffic movement.
+A0279,RS0057,2025-06-07 13:47:00,Vehicle Collision,Major,3,17,1.35,A two-vehicle collision temporarily affected traffic movement.
+A0280,RS0001,2025-06-11 00:04:00,Pedestrian Incident,Moderate,2,111,1.15,A pedestrian incident was reported on the road segment.
+A0281,RS0030,2025-07-20 21:39:00,Pedestrian Incident,Minor,1,112,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0282,RS0055,2025-05-02 09:11:00,Multi-Vehicle Collision,Moderate,3,16,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0283,RS0024,2025-08-19 08:44:00,Multi-Vehicle Collision,Moderate,1,56,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0284,RS0050,2025-10-25 00:37:00,Vehicle Breakdown,Critical,3,126,1.55,A broken-down vehicle reduced available road capacity.
+A0285,RS0009,2025-02-22 22:50:00,Multi-Vehicle Collision,Minor,1,116,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0286,RS0021,2025-01-10 09:20:00,Vehicle Collision,Moderate,1,119,1.15,A vehicle collision caused a temporary traffic disruption.
+A0287,RS0035,2025-07-07 18:47:00,Vehicle Collision,Minor,3,40,1.05,A vehicle collision was reported on the road segment.
+A0288,RS0010,2025-09-19 17:10:00,Multi-Vehicle Collision,Moderate,1,119,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0289,RS0006,2025-07-29 22:14:00,Vehicle Collision,Minor,1,29,1.05,A vehicle collision caused a temporary traffic disruption.
+A0290,RS0035,2025-12-02 02:57:00,Pedestrian Incident,Major,2,43,1.35,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0291,RS0029,2025-12-06 19:41:00,Pedestrian Incident,Moderate,2,151,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0292,RS0046,2025-07-21 12:31:00,Vehicle Breakdown,Critical,3,78,1.55,A vehicle breakdown was reported and may have caused a short delay.
+A0293,RS0055,2025-05-23 11:04:00,Multi-Vehicle Collision,Moderate,2,40,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0294,RS0019,2025-09-27 18:09:00,Multi-Vehicle Collision,Major,2,177,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0295,RS0054,2025-03-31 02:49:00,Pedestrian Incident,Moderate,2,133,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0296,RS0012,2025-08-02 15:13:00,Vehicle Collision,Moderate,1,160,1.15,A vehicle collision was reported on the road segment.
+A0297,RS0047,2025-08-22 07:50:00,Pedestrian Incident,Minor,1,75,1.05,A pedestrian incident was reported on the road segment.
+A0298,RS0055,2025-09-08 01:11:00,Pedestrian Incident,Major,2,93,1.35,A pedestrian incident was reported on the road segment.
+A0299,RS0001,2025-08-30 16:59:00,Vehicle Collision,Moderate,2,122,1.15,A vehicle collision caused a temporary traffic disruption.
+A0300,RS0017,2025-11-22 00:55:00,Pedestrian Incident,Minor,1,89,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0301,RS0035,2025-11-17 08:36:00,Multi-Vehicle Collision,Moderate,3,127,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0302,RS0055,2025-11-04 05:40:00,Vehicle Breakdown,Moderate,1,26,1.15,A broken-down vehicle reduced available road capacity.
+A0303,RS0058,2025-10-30 08:56:00,Vehicle Breakdown,Minor,1,56,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0304,RS0041,2025-05-02 10:46:00,Vehicle Collision,Minor,2,121,1.05,A vehicle collision caused a temporary traffic disruption.
+A0305,RS0026,2025-10-19 10:41:00,Pedestrian Incident,Minor,2,148,1.05,A pedestrian incident was reported on the road segment.
+A0306,RS0029,2025-04-24 17:34:00,Pedestrian Incident,Minor,1,55,1.05,A pedestrian incident was reported on the road segment.
+A0307,RS0037,2025-07-22 10:12:00,Vehicle Collision,Moderate,1,28,1.15,A vehicle collision caused a temporary traffic disruption.
+A0308,RS0058,2025-12-18 18:10:00,Multi-Vehicle Collision,Minor,2,132,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0309,RS0024,2025-11-15 20:16:00,Multi-Vehicle Collision,Moderate,1,18,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0310,RS0054,2025-11-12 18:55:00,Multi-Vehicle Collision,Major,2,58,1.35,A multi-vehicle collision caused a significant traffic disruption.
+A0311,RS0044,2025-06-06 14:28:00,Multi-Vehicle Collision,Minor,2,70,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0312,RS0031,2025-03-30 21:15:00,Vehicle Breakdown,Minor,1,171,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0313,RS0021,2025-12-20 07:49:00,Multi-Vehicle Collision,Minor,2,23,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0314,RS0036,2025-06-24 13:52:00,Vehicle Breakdown,Minor,3,30,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0315,RS0032,2025-07-28 18:25:00,Multi-Vehicle Collision,Minor,1,162,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0316,RS0036,2025-10-31 23:29:00,Vehicle Collision,Minor,2,73,1.05,A vehicle collision caused a temporary traffic disruption.
+A0317,RS0012,2025-07-05 12:37:00,Multi-Vehicle Collision,Minor,2,40,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0318,RS0053,2025-12-08 06:06:00,Pedestrian Incident,Minor,3,157,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0319,RS0038,2025-07-20 15:09:00,Pedestrian Incident,Moderate,2,168,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0320,RS0048,2025-05-10 02:29:00,Vehicle Breakdown,Minor,2,152,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0321,RS0007,2025-12-11 05:40:00,Vehicle Collision,Minor,1,113,1.05,A vehicle collision caused a temporary traffic disruption.
+A0322,RS0003,2025-09-30 23:17:00,Pedestrian Incident,Moderate,1,44,1.15,A pedestrian incident was reported on the road segment.
+A0323,RS0038,2025-08-20 06:44:00,Multi-Vehicle Collision,Moderate,2,123,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0324,RS0018,2025-12-02 22:32:00,Multi-Vehicle Collision,Moderate,3,117,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0325,RS0031,2025-09-11 06:09:00,Pedestrian Incident,Moderate,1,73,1.15,A pedestrian incident was reported on the road segment.
+A0326,RS0052,2025-09-23 06:22:00,Pedestrian Incident,Minor,2,46,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0327,RS0017,2025-12-13 16:05:00,Vehicle Breakdown,Minor,1,97,1.05,A broken-down vehicle reduced available road capacity.
+A0328,RS0008,2025-06-06 21:46:00,Vehicle Breakdown,Minor,2,139,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0329,RS0020,2025-08-29 23:02:00,Vehicle Breakdown,Moderate,2,43,1.15,A broken-down vehicle reduced available road capacity.
+A0330,RS0004,2025-09-21 02:15:00,Pedestrian Incident,Minor,3,66,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0331,RS0046,2025-01-29 05:44:00,Multi-Vehicle Collision,Moderate,2,130,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0332,RS0023,2025-07-29 12:15:00,Vehicle Breakdown,Minor,3,128,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0333,RS0002,2025-05-26 11:24:00,Multi-Vehicle Collision,Major,3,165,1.35,A multi-vehicle accident temporarily reduced traffic capacity.
+A0334,RS0006,2025-02-02 10:08:00,Vehicle Breakdown,Moderate,3,62,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0335,RS0059,2025-12-11 06:36:00,Pedestrian Incident,Major,1,173,1.35,A pedestrian-related incident temporarily affected traffic movement.
+A0336,RS0004,2025-08-01 07:40:00,Pedestrian Incident,Minor,3,69,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0337,RS0029,2025-02-03 20:46:00,Multi-Vehicle Collision,Minor,2,54,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0338,RS0053,2025-04-14 03:26:00,Multi-Vehicle Collision,Major,1,56,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0339,RS0008,2025-04-16 15:21:00,Multi-Vehicle Collision,Moderate,2,56,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0340,RS0006,2025-03-25 22:03:00,Vehicle Breakdown,Minor,1,170,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0341,RS0004,2025-09-26 15:29:00,Vehicle Breakdown,Minor,1,56,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0342,RS0035,2025-07-02 15:27:00,Pedestrian Incident,Minor,3,59,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0343,RS0004,2025-02-21 07:02:00,Vehicle Breakdown,Minor,3,56,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0344,RS0016,2025-08-15 07:11:00,Multi-Vehicle Collision,Minor,3,110,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0345,RS0021,2025-05-20 08:44:00,Vehicle Collision,Minor,2,130,1.05,A vehicle collision was reported on the road segment.
+A0346,RS0027,2025-01-22 09:38:00,Vehicle Breakdown,Minor,2,43,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0347,RS0059,2025-12-24 07:26:00,Vehicle Collision,Major,1,32,1.35,A vehicle collision caused a temporary traffic disruption.
+A0348,RS0058,2025-04-28 22:36:00,Pedestrian Incident,Minor,1,167,1.05,A pedestrian incident was reported on the road segment.
+A0349,RS0058,2025-04-21 16:05:00,Vehicle Breakdown,Major,2,159,1.35,A vehicle breakdown temporarily affected traffic flow.
+A0350,RS0031,2025-09-22 12:45:00,Vehicle Breakdown,Moderate,1,92,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0351,RS0004,2025-01-24 14:29:00,Multi-Vehicle Collision,Moderate,2,61,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0352,RS0036,2025-05-26 21:24:00,Vehicle Collision,Minor,3,49,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0353,RS0001,2025-10-27 23:44:00,Pedestrian Incident,Moderate,1,164,1.15,A pedestrian-related incident temporarily affected traffic movement.
+A0354,RS0006,2025-02-03 08:43:00,Vehicle Breakdown,Minor,3,160,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0355,RS0057,2025-08-09 15:34:00,Vehicle Collision,Minor,3,78,1.05,A vehicle collision was reported on the road segment.
+A0356,RS0002,2025-05-04 01:01:00,Vehicle Breakdown,Major,3,130,1.35,A broken-down vehicle reduced available road capacity.
+A0357,RS0034,2025-01-29 04:48:00,Pedestrian Incident,Major,2,109,1.35,A pedestrian-related incident temporarily affected traffic movement.
+A0358,RS0033,2025-10-16 03:25:00,Multi-Vehicle Collision,Minor,2,97,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0359,RS0007,2025-10-25 02:13:00,Vehicle Breakdown,Minor,1,74,1.05,A broken-down vehicle reduced available road capacity.
+A0360,RS0046,2025-03-21 06:11:00,Pedestrian Incident,Minor,1,21,1.05,A pedestrian incident was reported on the road segment.
+A0361,RS0042,2025-05-21 23:00:00,Multi-Vehicle Collision,Minor,2,59,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0362,RS0046,2025-01-15 00:35:00,Multi-Vehicle Collision,Minor,3,91,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0363,RS0050,2025-10-08 19:17:00,Pedestrian Incident,Critical,1,87,1.55,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0364,RS0048,2025-08-21 13:42:00,Vehicle Collision,Moderate,2,121,1.15,A vehicle collision caused a temporary traffic disruption.
+A0365,RS0004,2025-07-12 01:00:00,Vehicle Collision,Minor,1,134,1.05,A vehicle collision caused a temporary traffic disruption.
+A0366,RS0058,2025-11-22 04:27:00,Vehicle Collision,Moderate,3,38,1.15,A vehicle collision caused a temporary traffic disruption.
+A0367,RS0012,2025-10-28 11:13:00,Vehicle Breakdown,Minor,1,27,1.05,A broken-down vehicle reduced available road capacity.
+A0368,RS0013,2025-09-29 10:23:00,Vehicle Collision,Moderate,1,134,1.15,A two-vehicle collision temporarily affected traffic movement.
+A0369,RS0021,2025-05-30 15:21:00,Vehicle Collision,Moderate,1,38,1.15,A vehicle collision was reported on the road segment.
+A0370,RS0052,2025-12-27 12:01:00,Vehicle Breakdown,Minor,1,58,1.05,A broken-down vehicle reduced available road capacity.
+A0371,RS0031,2025-06-23 19:06:00,Vehicle Collision,Minor,1,54,1.05,A vehicle collision was reported on the road segment.
+A0372,RS0056,2025-01-04 05:48:00,Vehicle Breakdown,Major,3,142,1.35,A vehicle breakdown was reported and may have caused a short delay.
+A0373,RS0048,2025-08-23 17:10:00,Multi-Vehicle Collision,Minor,1,97,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0374,RS0050,2025-04-15 17:46:00,Multi-Vehicle Collision,Minor,3,78,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0375,RS0025,2025-01-04 10:56:00,Pedestrian Incident,Minor,1,162,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0376,RS0029,2025-10-16 10:33:00,Vehicle Breakdown,Moderate,3,38,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0377,RS0021,2025-07-09 17:56:00,Pedestrian Incident,Minor,1,76,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0378,RS0057,2025-07-21 19:49:00,Multi-Vehicle Collision,Major,3,158,1.35,A multi-vehicle collision caused a significant traffic disruption.
+A0379,RS0001,2025-01-01 12:02:00,Vehicle Collision,Minor,2,101,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0380,RS0042,2025-01-19 19:12:00,Vehicle Breakdown,Minor,3,129,1.05,A broken-down vehicle reduced available road capacity.
+A0381,RS0018,2025-07-14 18:05:00,Vehicle Breakdown,Major,3,113,1.35,A vehicle breakdown was reported and may have caused a short delay.
+A0382,RS0024,2025-09-22 09:21:00,Multi-Vehicle Collision,Major,1,60,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0383,RS0018,2025-07-29 04:13:00,Multi-Vehicle Collision,Major,3,113,1.35,A multi-vehicle accident temporarily reduced traffic capacity.
+A0384,RS0018,2025-12-21 13:20:00,Pedestrian Incident,Moderate,2,20,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0385,RS0012,2025-08-29 23:28:00,Vehicle Collision,Minor,1,70,1.05,A vehicle collision was reported on the road segment.
+A0386,RS0030,2025-12-27 03:33:00,Vehicle Collision,Major,3,169,1.35,A vehicle collision caused a temporary traffic disruption.
+A0387,RS0056,2025-07-12 09:22:00,Vehicle Breakdown,Moderate,1,143,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0388,RS0051,2025-07-15 23:17:00,Vehicle Collision,Moderate,3,27,1.15,A two-vehicle collision temporarily affected traffic movement.
+A0389,RS0006,2025-04-26 15:21:00,Multi-Vehicle Collision,Minor,3,70,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0390,RS0042,2025-11-08 04:18:00,Multi-Vehicle Collision,Moderate,2,97,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0391,RS0023,2025-02-21 17:05:00,Pedestrian Incident,Moderate,3,160,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0392,RS0054,2025-09-05 05:17:00,Multi-Vehicle Collision,Minor,3,96,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0393,RS0001,2025-03-25 04:24:00,Pedestrian Incident,Moderate,2,108,1.15,A pedestrian incident was reported on the road segment.
+A0394,RS0022,2025-09-28 09:10:00,Multi-Vehicle Collision,Major,1,51,1.35,A multi-vehicle collision caused a significant traffic disruption.
+A0395,RS0028,2025-03-03 16:45:00,Vehicle Breakdown,Minor,2,28,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0396,RS0059,2025-04-13 22:58:00,Vehicle Collision,Major,1,130,1.35,A two-vehicle collision temporarily affected traffic movement.
+A0397,RS0007,2025-11-27 14:43:00,Vehicle Collision,Minor,2,173,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0398,RS0007,2025-10-14 16:16:00,Vehicle Collision,Minor,2,85,1.05,A vehicle collision was reported on the road segment.
+A0399,RS0060,2025-10-05 10:00:00,Vehicle Collision,Moderate,1,26,1.15,A vehicle collision was reported on the road segment.
+A0400,RS0047,2025-02-09 01:43:00,Vehicle Collision,Moderate,1,160,1.15,A vehicle collision was reported on the road segment.
+A0401,RS0055,2025-03-29 07:21:00,Vehicle Collision,Major,3,150,1.35,A vehicle collision caused a temporary traffic disruption.
+A0402,RS0013,2025-12-17 15:28:00,Vehicle Breakdown,Minor,2,108,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0403,RS0044,2025-07-21 01:21:00,Pedestrian Incident,Major,3,122,1.35,A pedestrian-related incident temporarily affected traffic movement.
+A0404,RS0057,2025-06-22 19:02:00,Vehicle Collision,Moderate,3,117,1.15,A vehicle collision caused a temporary traffic disruption.
+A0405,RS0042,2025-01-05 10:13:00,Pedestrian Incident,Moderate,1,174,1.15,A pedestrian incident was reported on the road segment.
+A0406,RS0011,2025-10-12 01:34:00,Pedestrian Incident,Major,1,154,1.35,A pedestrian incident was reported on the road segment.
+A0407,RS0015,2025-08-10 22:44:00,Multi-Vehicle Collision,Minor,1,43,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0408,RS0055,2025-09-13 09:18:00,Multi-Vehicle Collision,Critical,3,18,1.55,Multiple vehicles were involved in a collision on the road segment.
+A0409,RS0027,2025-04-08 07:44:00,Pedestrian Incident,Minor,1,133,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0410,RS0039,2025-04-25 00:52:00,Vehicle Breakdown,Moderate,3,174,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0411,RS0013,2025-08-16 01:14:00,Multi-Vehicle Collision,Minor,1,178,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0412,RS0041,2025-11-06 21:56:00,Multi-Vehicle Collision,Moderate,1,176,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0413,RS0052,2025-12-28 18:12:00,Pedestrian Incident,Major,3,76,1.35,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0414,RS0026,2025-09-30 17:48:00,Vehicle Breakdown,Minor,3,91,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0415,RS0032,2025-02-18 19:44:00,Vehicle Breakdown,Moderate,1,57,1.15,A broken-down vehicle reduced available road capacity.
+A0416,RS0060,2025-02-11 20:26:00,Pedestrian Incident,Moderate,1,115,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0417,RS0001,2025-08-28 18:47:00,Vehicle Collision,Minor,2,112,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0418,RS0035,2025-04-13 04:53:00,Vehicle Breakdown,Major,1,19,1.35,A broken-down vehicle reduced available road capacity.
+A0419,RS0054,2025-09-08 06:15:00,Vehicle Collision,Moderate,3,175,1.15,A vehicle collision was reported on the road segment.
+A0420,RS0005,2025-11-06 07:52:00,Multi-Vehicle Collision,Major,1,51,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0421,RS0009,2025-12-31 11:21:00,Multi-Vehicle Collision,Minor,2,81,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0422,RS0020,2025-02-17 14:44:00,Multi-Vehicle Collision,Moderate,1,40,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0423,RS0006,2025-11-07 18:19:00,Vehicle Collision,Moderate,2,113,1.15,A vehicle collision was reported on the road segment.
+A0424,RS0002,2025-06-03 17:51:00,Multi-Vehicle Collision,Major,1,104,1.35,A multi-vehicle accident temporarily reduced traffic capacity.
+A0425,RS0034,2025-06-28 20:01:00,Multi-Vehicle Collision,Critical,3,91,1.55,A multi-vehicle accident temporarily reduced traffic capacity.
+A0426,RS0049,2025-10-23 23:29:00,Vehicle Breakdown,Minor,1,126,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0427,RS0004,2025-05-15 19:02:00,Multi-Vehicle Collision,Major,1,132,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0428,RS0025,2025-09-20 13:52:00,Pedestrian Incident,Minor,1,74,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0429,RS0031,2025-06-05 15:51:00,Vehicle Collision,Minor,1,37,1.05,A vehicle collision was reported on the road segment.
+A0430,RS0025,2025-11-13 20:27:00,Multi-Vehicle Collision,Minor,1,88,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0431,RS0003,2025-09-28 00:35:00,Pedestrian Incident,Minor,2,137,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0432,RS0048,2025-01-21 07:23:00,Vehicle Collision,Critical,2,175,1.55,A two-vehicle collision temporarily affected traffic movement.
+A0433,RS0029,2025-10-19 07:05:00,Vehicle Breakdown,Moderate,1,26,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0434,RS0053,2025-09-26 02:43:00,Vehicle Collision,Moderate,2,167,1.15,A vehicle collision was reported on the road segment.
+A0435,RS0027,2025-02-06 08:47:00,Vehicle Breakdown,Minor,2,66,1.05,A broken-down vehicle reduced available road capacity.
+A0436,RS0014,2025-08-07 14:35:00,Multi-Vehicle Collision,Moderate,1,165,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0437,RS0005,2025-08-03 22:01:00,Multi-Vehicle Collision,Major,2,101,1.35,A multi-vehicle collision caused a significant traffic disruption.
+A0438,RS0028,2025-05-31 23:22:00,Multi-Vehicle Collision,Major,1,76,1.35,A multi-vehicle accident temporarily reduced traffic capacity.
+A0439,RS0031,2025-03-20 12:35:00,Pedestrian Incident,Critical,1,102,1.55,A pedestrian incident was reported on the road segment.
+A0440,RS0046,2025-06-18 11:26:00,Pedestrian Incident,Minor,3,87,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0441,RS0053,2025-06-30 01:51:00,Pedestrian Incident,Moderate,3,35,1.15,A pedestrian-related incident temporarily affected traffic movement.
+A0442,RS0032,2025-06-06 00:12:00,Vehicle Breakdown,Minor,1,88,1.05,A broken-down vehicle reduced available road capacity.
+A0443,RS0021,2025-07-06 08:49:00,Multi-Vehicle Collision,Minor,1,128,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0444,RS0025,2025-08-03 18:47:00,Multi-Vehicle Collision,Major,1,172,1.35,A multi-vehicle accident temporarily reduced traffic capacity.
+A0445,RS0057,2025-08-05 05:47:00,Multi-Vehicle Collision,Minor,3,85,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0446,RS0021,2025-01-05 15:21:00,Multi-Vehicle Collision,Minor,1,53,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0447,RS0025,2025-10-08 04:08:00,Vehicle Collision,Minor,2,109,1.05,A vehicle collision caused a temporary traffic disruption.
+A0448,RS0024,2025-08-22 16:24:00,Multi-Vehicle Collision,Major,1,26,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0449,RS0028,2025-08-06 20:14:00,Pedestrian Incident,Moderate,1,180,1.15,A pedestrian-related incident temporarily affected traffic movement.
+A0450,RS0009,2025-05-26 21:00:00,Pedestrian Incident,Minor,3,37,1.05,A pedestrian incident was reported on the road segment.
+A0451,RS0028,2025-06-26 05:14:00,Vehicle Breakdown,Moderate,1,109,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0452,RS0014,2025-04-03 09:46:00,Multi-Vehicle Collision,Moderate,2,97,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0453,RS0036,2025-07-07 05:29:00,Multi-Vehicle Collision,Moderate,1,54,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0454,RS0011,2025-05-09 04:06:00,Vehicle Collision,Moderate,2,110,1.15,A vehicle collision caused a temporary traffic disruption.
+A0455,RS0060,2025-01-29 05:34:00,Vehicle Collision,Minor,1,37,1.05,A vehicle collision caused a temporary traffic disruption.
+A0456,RS0029,2025-06-24 06:29:00,Pedestrian Incident,Minor,2,99,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0457,RS0050,2025-09-29 00:04:00,Multi-Vehicle Collision,Minor,2,64,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0458,RS0017,2025-11-06 16:40:00,Vehicle Breakdown,Major,2,104,1.35,A vehicle breakdown temporarily affected traffic flow.
+A0459,RS0005,2025-09-23 14:54:00,Pedestrian Incident,Minor,3,26,1.05,A pedestrian incident was reported on the road segment.
+A0460,RS0009,2025-09-20 08:07:00,Vehicle Collision,Major,3,84,1.35,A vehicle collision caused a temporary traffic disruption.
+A0461,RS0053,2025-11-16 16:53:00,Multi-Vehicle Collision,Minor,2,138,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0462,RS0047,2025-07-28 10:46:00,Pedestrian Incident,Minor,2,22,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0463,RS0059,2025-12-28 00:55:00,Vehicle Breakdown,Major,1,28,1.35,A vehicle breakdown was reported and may have caused a short delay.
+A0464,RS0029,2025-02-27 18:00:00,Multi-Vehicle Collision,Major,3,155,1.35,A multi-vehicle collision caused a significant traffic disruption.
+A0465,RS0007,2025-10-01 02:36:00,Multi-Vehicle Collision,Major,1,150,1.35,A multi-vehicle accident temporarily reduced traffic capacity.
+A0466,RS0059,2025-03-22 03:48:00,Vehicle Breakdown,Critical,1,23,1.55,A vehicle breakdown was reported and may have caused a short delay.
+A0467,RS0021,2025-05-08 14:04:00,Pedestrian Incident,Minor,2,101,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0468,RS0042,2025-05-08 14:19:00,Vehicle Breakdown,Major,1,97,1.35,A vehicle breakdown temporarily affected traffic flow.
+A0469,RS0041,2025-04-02 23:28:00,Vehicle Breakdown,Moderate,1,133,1.15,A broken-down vehicle reduced available road capacity.
+A0470,RS0023,2025-06-05 00:38:00,Vehicle Breakdown,Minor,3,152,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0471,RS0038,2025-07-22 00:51:00,Vehicle Breakdown,Minor,2,175,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0472,RS0048,2025-04-28 04:06:00,Multi-Vehicle Collision,Minor,2,135,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0473,RS0006,2025-03-30 11:21:00,Pedestrian Incident,Minor,3,50,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0474,RS0011,2025-03-10 15:33:00,Vehicle Breakdown,Major,2,111,1.35,A broken-down vehicle reduced available road capacity.
+A0475,RS0053,2025-08-23 22:39:00,Pedestrian Incident,Minor,1,132,1.05,A pedestrian incident was reported on the road segment.
+A0476,RS0003,2025-01-19 11:33:00,Pedestrian Incident,Minor,1,96,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0477,RS0024,2025-08-06 15:26:00,Vehicle Collision,Minor,1,82,1.05,A vehicle collision caused a temporary traffic disruption.
+A0478,RS0030,2025-02-24 14:35:00,Multi-Vehicle Collision,Moderate,2,110,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0479,RS0004,2025-12-30 16:23:00,Multi-Vehicle Collision,Moderate,1,32,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0480,RS0003,2025-08-12 07:32:00,Vehicle Breakdown,Minor,1,163,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0481,RS0028,2025-07-08 14:35:00,Vehicle Collision,Major,1,63,1.35,A vehicle collision was reported on the road segment.
+A0482,RS0008,2025-10-10 18:46:00,Multi-Vehicle Collision,Minor,3,42,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0483,RS0003,2025-02-18 17:26:00,Multi-Vehicle Collision,Minor,1,34,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0484,RS0050,2025-06-21 20:09:00,Vehicle Collision,Minor,3,51,1.05,A vehicle collision was reported on the road segment.
+A0485,RS0041,2025-09-20 01:43:00,Multi-Vehicle Collision,Moderate,2,136,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0486,RS0008,2025-11-21 17:53:00,Pedestrian Incident,Minor,3,25,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0487,RS0010,2025-01-22 21:52:00,Vehicle Breakdown,Major,2,95,1.35,A vehicle breakdown was reported and may have caused a short delay.
+A0488,RS0027,2025-08-21 01:35:00,Vehicle Collision,Minor,3,145,1.05,A vehicle collision was reported on the road segment.
+A0489,RS0027,2025-02-27 02:14:00,Vehicle Collision,Moderate,3,166,1.15,A vehicle collision was reported on the road segment.
+A0490,RS0048,2025-07-27 09:41:00,Pedestrian Incident,Minor,3,114,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0491,RS0039,2025-07-05 03:07:00,Multi-Vehicle Collision,Minor,3,133,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0492,RS0006,2025-12-19 10:42:00,Vehicle Collision,Moderate,1,85,1.15,A two-vehicle collision temporarily affected traffic movement.
+A0493,RS0033,2025-11-11 17:42:00,Vehicle Breakdown,Moderate,2,100,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0494,RS0001,2025-03-04 11:59:00,Vehicle Breakdown,Moderate,2,122,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0495,RS0046,2025-04-25 09:12:00,Multi-Vehicle Collision,Minor,1,35,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0496,RS0019,2025-05-06 09:15:00,Multi-Vehicle Collision,Minor,1,47,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0497,RS0057,2025-03-30 17:35:00,Multi-Vehicle Collision,Minor,2,85,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0498,RS0044,2025-06-22 20:47:00,Pedestrian Incident,Minor,3,126,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0499,RS0015,2025-03-24 19:27:00,Vehicle Collision,Major,3,132,1.35,A vehicle collision caused a temporary traffic disruption.
+A0500,RS0015,2025-06-09 14:46:00,Vehicle Breakdown,Moderate,1,177,1.15,A broken-down vehicle reduced available road capacity.
+A0501,RS0043,2025-01-17 21:02:00,Multi-Vehicle Collision,Major,3,120,1.35,A multi-vehicle accident temporarily reduced traffic capacity.
+A0502,RS0034,2025-01-13 17:37:00,Pedestrian Incident,Minor,1,15,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0503,RS0027,2025-07-30 07:58:00,Pedestrian Incident,Moderate,3,77,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0504,RS0007,2025-04-21 02:31:00,Vehicle Breakdown,Minor,1,89,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0505,RS0026,2025-05-24 00:24:00,Vehicle Collision,Moderate,1,155,1.15,A vehicle collision was reported on the road segment.
+A0506,RS0059,2025-06-26 01:31:00,Multi-Vehicle Collision,Critical,1,38,1.55,A multi-vehicle accident temporarily reduced traffic capacity.
+A0507,RS0046,2025-05-13 06:09:00,Vehicle Collision,Minor,1,163,1.05,A vehicle collision was reported on the road segment.
+A0508,RS0047,2025-05-23 19:37:00,Multi-Vehicle Collision,Minor,2,84,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0509,RS0021,2025-10-07 19:36:00,Pedestrian Incident,Moderate,1,129,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0510,RS0031,2025-04-06 22:05:00,Multi-Vehicle Collision,Minor,1,89,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0511,RS0003,2025-11-17 02:20:00,Vehicle Collision,Minor,2,39,1.05,A vehicle collision caused a temporary traffic disruption.
+A0512,RS0010,2025-02-20 12:44:00,Vehicle Breakdown,Moderate,3,97,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0513,RS0058,2025-12-21 04:21:00,Vehicle Collision,Minor,2,43,1.05,A vehicle collision was reported on the road segment.
+A0514,RS0011,2025-09-22 10:09:00,Vehicle Collision,Minor,2,85,1.05,A vehicle collision caused a temporary traffic disruption.
+A0515,RS0043,2025-05-14 18:51:00,Multi-Vehicle Collision,Moderate,3,55,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0516,RS0002,2025-12-02 04:19:00,Vehicle Breakdown,Minor,2,50,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0517,RS0051,2025-07-06 11:57:00,Multi-Vehicle Collision,Moderate,1,171,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0518,RS0034,2025-06-01 10:22:00,Vehicle Collision,Minor,2,111,1.05,A vehicle collision caused a temporary traffic disruption.
+A0519,RS0052,2025-04-30 18:37:00,Vehicle Collision,Critical,2,19,1.55,A two-vehicle collision temporarily affected traffic movement.
+A0520,RS0011,2025-09-21 11:08:00,Multi-Vehicle Collision,Moderate,1,80,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0521,RS0031,2025-04-12 23:12:00,Pedestrian Incident,Minor,1,118,1.05,A pedestrian incident was reported on the road segment.
+A0522,RS0034,2025-05-12 13:53:00,Pedestrian Incident,Major,1,88,1.35,A pedestrian-related incident temporarily affected traffic movement.
+A0523,RS0044,2025-04-17 05:38:00,Pedestrian Incident,Major,3,154,1.35,A pedestrian-related incident temporarily affected traffic movement.
+A0524,RS0018,2025-09-15 06:12:00,Vehicle Collision,Minor,3,44,1.05,A vehicle collision was reported on the road segment.
+A0525,RS0023,2025-03-30 15:38:00,Multi-Vehicle Collision,Minor,3,136,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0526,RS0046,2025-09-16 04:56:00,Pedestrian Incident,Major,1,53,1.35,A pedestrian incident was reported on the road segment.
+A0527,RS0013,2025-04-26 00:55:00,Multi-Vehicle Collision,Major,2,125,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0528,RS0030,2025-03-25 18:42:00,Vehicle Collision,Moderate,1,73,1.15,A vehicle collision caused a temporary traffic disruption.
+A0529,RS0006,2025-04-22 06:39:00,Vehicle Collision,Moderate,2,48,1.15,A two-vehicle collision temporarily affected traffic movement.
+A0530,RS0026,2025-04-27 13:18:00,Vehicle Breakdown,Minor,2,46,1.05,A broken-down vehicle reduced available road capacity.
+A0531,RS0030,2025-03-17 20:38:00,Vehicle Collision,Minor,2,148,1.05,A vehicle collision was reported on the road segment.
+A0532,RS0054,2025-09-08 03:45:00,Multi-Vehicle Collision,Minor,1,40,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0533,RS0042,2025-01-25 22:19:00,Vehicle Collision,Major,1,75,1.35,A two-vehicle collision temporarily affected traffic movement.
+A0534,RS0015,2025-02-09 21:57:00,Vehicle Collision,Minor,3,48,1.05,A vehicle collision was reported on the road segment.
+A0535,RS0003,2025-12-30 16:59:00,Pedestrian Incident,Major,3,96,1.35,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0536,RS0057,2025-05-06 19:18:00,Pedestrian Incident,Major,3,169,1.35,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0537,RS0029,2025-05-19 15:44:00,Pedestrian Incident,Major,2,105,1.35,A pedestrian-related incident temporarily affected traffic movement.
+A0538,RS0055,2025-11-17 20:39:00,Pedestrian Incident,Critical,1,56,1.55,A pedestrian-related incident temporarily affected traffic movement.
+A0539,RS0036,2025-10-07 13:37:00,Vehicle Collision,Critical,2,26,1.55,A vehicle collision was reported on the road segment.
+A0540,RS0022,2025-04-27 04:36:00,Pedestrian Incident,Minor,3,175,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0541,RS0038,2025-02-04 04:09:00,Vehicle Collision,Moderate,2,116,1.15,A vehicle collision was reported on the road segment.
+A0542,RS0017,2025-03-07 12:47:00,Vehicle Breakdown,Minor,2,22,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0543,RS0023,2025-11-15 00:18:00,Multi-Vehicle Collision,Major,3,56,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0544,RS0048,2025-12-16 12:05:00,Vehicle Collision,Minor,1,141,1.05,A vehicle collision caused a temporary traffic disruption.
+A0545,RS0009,2025-03-27 22:51:00,Vehicle Breakdown,Moderate,1,96,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0546,RS0054,2025-04-30 16:32:00,Pedestrian Incident,Moderate,3,86,1.15,A pedestrian incident was reported on the road segment.
+A0547,RS0023,2025-03-18 04:52:00,Multi-Vehicle Collision,Minor,2,138,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0548,RS0014,2025-07-13 18:06:00,Multi-Vehicle Collision,Major,2,144,1.35,A multi-vehicle collision caused a significant traffic disruption.
+A0549,RS0035,2025-07-16 03:46:00,Vehicle Collision,Minor,3,133,1.05,A vehicle collision was reported on the road segment.
+A0550,RS0027,2025-05-15 15:22:00,Multi-Vehicle Collision,Critical,1,50,1.55,Multiple vehicles were involved in a collision on the road segment.
+A0551,RS0031,2025-06-21 00:44:00,Vehicle Collision,Moderate,1,177,1.15,A vehicle collision was reported on the road segment.
+A0552,RS0045,2025-11-22 20:15:00,Vehicle Breakdown,Critical,3,148,1.55,A vehicle breakdown temporarily affected traffic flow.
+A0553,RS0036,2025-03-26 16:40:00,Multi-Vehicle Collision,Major,3,50,1.35,A multi-vehicle collision caused a significant traffic disruption.
+A0554,RS0003,2025-10-26 00:21:00,Multi-Vehicle Collision,Moderate,1,78,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0555,RS0040,2025-02-12 08:15:00,Multi-Vehicle Collision,Minor,3,168,1.05,Multiple vehicles were involved in a collision on the road segment.
+A0556,RS0050,2025-10-16 22:43:00,Multi-Vehicle Collision,Minor,1,49,1.05,A multi-vehicle accident temporarily reduced traffic capacity.
+A0557,RS0008,2025-04-12 04:27:00,Pedestrian Incident,Major,3,107,1.35,A pedestrian incident was reported on the road segment.
+A0558,RS0037,2025-01-02 09:02:00,Vehicle Breakdown,Minor,1,125,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0559,RS0020,2025-11-11 15:50:00,Multi-Vehicle Collision,Major,1,16,1.35,Multiple vehicles were involved in a collision on the road segment.
+A0560,RS0033,2025-04-12 17:28:00,Multi-Vehicle Collision,Minor,2,79,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0561,RS0042,2025-10-21 02:42:00,Pedestrian Incident,Moderate,3,83,1.15,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0562,RS0039,2025-10-16 22:40:00,Vehicle Collision,Critical,1,137,1.55,A vehicle collision was reported on the road segment.
+A0563,RS0009,2025-07-23 13:04:00,Pedestrian Incident,Major,2,23,1.35,A pedestrian incident was reported on the road segment.
+A0564,RS0025,2025-12-05 06:30:00,Pedestrian Incident,Minor,1,104,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0565,RS0003,2025-04-14 04:41:00,Multi-Vehicle Collision,Moderate,1,143,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0566,RS0004,2025-06-08 01:31:00,Vehicle Collision,Minor,3,48,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0567,RS0058,2025-04-16 23:32:00,Vehicle Collision,Major,3,137,1.35,A two-vehicle collision temporarily affected traffic movement.
+A0568,RS0007,2025-07-25 16:29:00,Pedestrian Incident,Critical,2,35,1.55,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0569,RS0037,2025-04-29 07:21:00,Multi-Vehicle Collision,Moderate,1,177,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0570,RS0035,2025-02-20 13:06:00,Multi-Vehicle Collision,Moderate,2,171,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0571,RS0030,2025-08-03 22:54:00,Vehicle Collision,Moderate,3,156,1.15,A vehicle collision caused a temporary traffic disruption.
+A0572,RS0015,2025-03-16 08:48:00,Vehicle Collision,Minor,1,146,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0573,RS0032,2025-09-28 09:12:00,Pedestrian Incident,Major,1,171,1.35,A pedestrian incident was reported on the road segment.
+A0574,RS0031,2025-02-24 18:41:00,Vehicle Breakdown,Major,1,176,1.35,A vehicle breakdown temporarily affected traffic flow.
+A0575,RS0021,2025-02-23 01:07:00,Pedestrian Incident,Minor,2,119,1.05,A pedestrian-related incident temporarily affected traffic movement.
+A0576,RS0026,2025-05-26 19:54:00,Vehicle Breakdown,Moderate,2,46,1.15,A vehicle breakdown was reported and may have caused a short delay.
+A0577,RS0047,2025-08-08 09:52:00,Pedestrian Incident,Minor,3,57,1.05,A pedestrian incident was reported on the road segment.
+A0578,RS0021,2025-07-01 01:14:00,Vehicle Breakdown,Minor,1,167,1.05,A vehicle breakdown temporarily affected traffic flow.
+A0579,RS0007,2025-12-26 14:09:00,Pedestrian Incident,Critical,2,67,1.55,A pedestrian incident was reported on the road segment.
+A0580,RS0057,2025-05-28 10:00:00,Multi-Vehicle Collision,Moderate,1,153,1.15,Multiple vehicles were involved in a collision on the road segment.
+A0581,RS0013,2025-06-21 02:41:00,Vehicle Breakdown,Major,1,84,1.35,A broken-down vehicle reduced available road capacity.
+A0582,RS0004,2025-02-06 09:46:00,Multi-Vehicle Collision,Moderate,3,157,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0583,RS0058,2025-04-26 00:20:00,Multi-Vehicle Collision,Moderate,3,77,1.15,A multi-vehicle collision caused a significant traffic disruption.
+A0584,RS0041,2025-06-24 06:22:00,Vehicle Collision,Major,2,82,1.35,A two-vehicle collision temporarily affected traffic movement.
+A0585,RS0049,2025-03-23 01:29:00,Vehicle Collision,Minor,2,152,1.05,A two-vehicle collision temporarily affected traffic movement.
+A0586,RS0040,2025-04-21 15:17:00,Pedestrian Incident,Minor,1,36,1.05,A pedestrian-related disruption caused a temporary traffic slowdown.
+A0587,RS0038,2025-10-24 10:35:00,Vehicle Collision,Minor,1,92,1.05,A vehicle collision was reported on the road segment.
+A0588,RS0059,2025-10-04 06:22:00,Multi-Vehicle Collision,Minor,1,164,1.05,A multi-vehicle collision caused a significant traffic disruption.
+A0589,RS0012,2025-08-12 06:20:00,Pedestrian Incident,Minor,2,51,1.05,A pedestrian incident was reported on the road segment.
+A0590,RS0009,2025-08-20 07:54:00,Vehicle Breakdown,Minor,1,15,1.05,A broken-down vehicle reduced available road capacity.
+A0591,RS0060,2025-09-15 15:12:00,Vehicle Collision,Critical,2,19,1.55,A vehicle collision caused a temporary traffic disruption.
+A0592,RS0011,2025-04-15 21:38:00,Multi-Vehicle Collision,Critical,1,94,1.55,Multiple vehicles were involved in a collision on the road segment.
+A0593,RS0053,2025-12-28 01:37:00,Vehicle Breakdown,Minor,1,78,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0594,RS0059,2025-08-09 07:17:00,Pedestrian Incident,Moderate,1,54,1.15,A pedestrian incident was reported on the road segment.
+A0595,RS0012,2025-09-13 06:45:00,Vehicle Breakdown,Moderate,1,97,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0596,RS0003,2025-04-29 06:05:00,Vehicle Collision,Moderate,1,40,1.15,A vehicle collision was reported on the road segment.
+A0597,RS0056,2025-12-06 23:52:00,Vehicle Breakdown,Minor,2,133,1.05,A vehicle breakdown was reported and may have caused a short delay.
+A0598,RS0025,2025-11-03 08:07:00,Vehicle Breakdown,Moderate,3,144,1.15,A vehicle breakdown temporarily affected traffic flow.
+A0599,RS0004,2025-10-02 23:49:00,Multi-Vehicle Collision,Moderate,2,81,1.15,A multi-vehicle accident temporarily reduced traffic capacity.
+A0600,RS0030,2025-09-20 20:46:00,Pedestrian Incident,Minor,1,125,1.05,A pedestrian-related incident temporarily affected traffic movement.

@@ -10,6 +10,7 @@ import joblib
 
 try:
     import shap
+
     HAS_SHAP = True
 except ImportError:
     HAS_SHAP = False
@@ -83,14 +84,10 @@ def explain_prediction(feature_values: list, feature_names: list = None) -> dict
         sv = np.asarray(sv, dtype=float).flatten()
 
         if len(sv) > len(feature_names):
-            sv = sv[:len(feature_names)]
+            sv = sv[: len(feature_names)]
 
         if len(sv) < len(feature_names):
-            sv = np.pad(
-                sv,
-                (0, len(feature_names) - len(sv)),
-                mode="constant"
-            )
+            sv = np.pad(sv, (0, len(feature_names) - len(sv)), mode="constant")
 
         # ---------------------------------------------------------
         # Normalize base value
@@ -105,18 +102,13 @@ def explain_prediction(feature_values: list, feature_names: list = None) -> dict
 
         explanation = {
             "feature_names": feature_names,
-            "shap_values": [
-                round(float(v), 4)
-                for v in sv
-            ],
+            "shap_values": [round(float(v), 4) for v in sv],
             "base_value": round(base_value, 4),
             "predicted_class": pred_class,
             "contributions": {
                 name: round(float(val), 4)
                 for name, val in sorted(
-                    zip(feature_names, sv),
-                    key=lambda x: abs(x[1]),
-                    reverse=True
+                    zip(feature_names, sv), key=lambda x: abs(x[1]), reverse=True
                 )
             },
         }
@@ -129,8 +121,7 @@ def explain_prediction(feature_values: list, feature_names: list = None) -> dict
 
 
 def get_global_explanations(
-    X_sample: np.ndarray = None,
-    max_samples: int = 200
+    X_sample: np.ndarray = None, max_samples: int = 200
 ) -> dict:
     """
     Get global SHAP feature importance across a sample of data.
@@ -149,11 +140,7 @@ def get_global_explanations(
             return {"error": "No data provided for global explanation"}
 
         if len(X_sample) > max_samples:
-            indices = np.random.choice(
-                len(X_sample),
-                max_samples,
-                replace=False
-            )
+            indices = np.random.choice(len(X_sample), max_samples, replace=False)
             X_sample = X_sample[indices]
 
         explainer = shap.TreeExplainer(model)
@@ -163,30 +150,22 @@ def get_global_explanations(
         if isinstance(shap_values, list):
 
             mean_shap = np.mean(
-                [
-                    np.abs(np.asarray(sv)).mean(axis=0)
-                    for sv in shap_values
-                ],
-                axis=0
+                [np.abs(np.asarray(sv)).mean(axis=0) for sv in shap_values], axis=0
             )
 
         else:
 
-            mean_shap = np.abs(
-                np.asarray(shap_values)
-            ).mean(axis=0)
+            mean_shap = np.abs(np.asarray(shap_values)).mean(axis=0)
 
         mean_shap = np.asarray(mean_shap).flatten()
 
         if len(mean_shap) > len(PREDICTION_FEATURES):
-            mean_shap = mean_shap[:len(PREDICTION_FEATURES)]
+            mean_shap = mean_shap[: len(PREDICTION_FEATURES)]
 
         importance = {
             name: round(float(val), 4)
             for name, val in sorted(
-                zip(PREDICTION_FEATURES, mean_shap),
-                key=lambda x: x[1],
-                reverse=True
+                zip(PREDICTION_FEATURES, mean_shap), key=lambda x: x[1], reverse=True
             )
         }
 
@@ -195,4 +174,3 @@ def get_global_explanations(
     except Exception as e:
         logger.exception("Global SHAP explanation failed")
         return {"error": str(e)}
-
