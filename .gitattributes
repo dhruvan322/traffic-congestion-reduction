@@ -1,3 +1,4 @@
 data/final_dataset/traffic_data.csv filter=lfs diff=lfs merge=lfs -text
 data/final_dataset/ml_traffic_dataset.csv filter=lfs diff=lfs merge=lfs -text
 data/osm/hyderabad_drive.graphml filter=lfs diff=lfs merge=lfs -text
+trained_models/multihorizon/*/xgb_congestion.json filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,36 @@
+{
+  "horizon_hours": 2,
+  "target_source": "future_congestion_level shifted by 1 hourly records within road_segment_id",
+  "records": 525420,
+  "train_records": 367740,
+  "validation_records": 78840,
+  "test_records": 78840,
+  "feature_count_before_encoding": 28,
+  "transformed_feature_count": 117,
+  "split": {
+    "train_start": "2025-01-01 00:00:00",
+    "train_end": "2025-09-13 08:00:00",
+    "validation_start": "2025-09-13 09:00:00",
+    "validation_end": "2025-11-07 02:00:00",
+    "test_start": "2025-11-07 03:00:00",
+    "test_end": "2025-12-31 20:00:00"
+  },
+  "metrics": {
+    "accuracy": 0.6366,
+    "balanced_accuracy": 0.4889,
+    "macro_f1": 0.4932,
+    "weighted_f1": 0.621
+  },
+  "classes": [
+    "Free Flow",
+    "Low",
+    "Moderate",
+    "High",
+    "Severe"
+  ],
+  "artifacts": {
+    "model": "C:\\Users\\HP\\OneDrive\\Desktop\\minor_project\\trained_models\\multihorizon\\2h\\xgb_congestion.json",
+    "preprocessor": "C:\\Users\\HP\\OneDrive\\Desktop\\minor_project\\trained_models\\multihorizon\\2h\\traffic_preprocessor.joblib",
+    "label_encoder": "C:\\Users\\HP\\OneDrive\\Desktop\\minor_project\\trained_models\\multihorizon\\2h\\label_encoder.joblib"
+  }
+}

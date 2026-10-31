@@ -1,99 +1,94 @@
-import os
-import sys
+﻿"""Fast regression tests for the saved OSM road-segment mapping."""
+
+from pathlib import Path
 
 import pandas as pd
-
-# Allow imports from the project root when this test is run directly.
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-
-if PROJECT_ROOT not in sys.path:
-    sys.path.insert(0, PROJECT_ROOT)
+import pytest
 
 
-from engine.osm_traffic_mapper import (
-    load_hyderabad_osm_graph,
-    map_road_segments_to_osm,
-    get_mapping_summary,
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+ROAD_SEGMENTS_PATH = (
+    PROJECT_ROOT / "data" / "final_dataset" / "road_segments.csv"
 )
 
-DATASET_PATH = os.path.join(
-    PROJECT_ROOT,
-    "data",
-    "final_dataset",
-    "road_segments.csv",
+MAPPING_PATH = (
+    PROJECT_ROOT / "data" / "final_dataset" / "osm_segment_mapping.csv"
 )
 
-
-print("=" * 70)
-print("OSM TRAFFIC SEGMENT MAPPING TEST")
-print("=" * 70)
-
-print("\nLoading project road segments...")
-
-df = pd.read_csv(DATASET_PATH)
-
-print("ROAD SEGMENTS:", len(df))
-print("COLUMNS:", len(df.columns))
-
-print("\nLoading Hyderabad OSM network...")
-
-G = load_hyderabad_osm_graph()
-
-print("OSM NODES:", len(G.nodes))
-print("OSM EDGES:", len(G.edges))
-
-print("\nMapping road segments to OSM edges...")
-
-mapping_df = map_road_segments_to_osm(
-    df,
-    G,
-)
-
-summary = get_mapping_summary(mapping_df)
-
-print("\n" + "=" * 70)
-print("MAPPING SUMMARY")
-print("=" * 70)
-
-for key, value in summary.items():
-    print(f"{key}: {value}")
-
-print("\n" + "=" * 70)
-print("SEGMENT MAPPINGS")
-print("=" * 70)
-
-display_columns = [
+REQUIRED_MAPPING_COLUMNS = {
     "road_segment_id",
-    "road_name",
-    "latitude",
-    "longitude",
     "osm_u",
     "osm_v",
     "osm_key",
     "osm_distance_m",
     "mapping_confidence",
-    "osm_name",
-    "osm_highway",
-]
+}
 
-print(mapping_df[display_columns].sort_values("osm_distance_m").to_string(index=False))
+ALLOWED_CONFIDENCE_LEVELS = {"High", "Medium", "Low"}
 
-print("\n" + "=" * 70)
-print("QUALITY CHECKS")
-print("=" * 70)
 
-assert len(mapping_df) == len(df)
+@pytest.fixture(scope="module")
+def road_segments():
+    """Load the project's reference road segments."""
+    assert ROAD_SEGMENTS_PATH.is_file(), (
+        f"Road-segment dataset not found: {ROAD_SEGMENTS_PATH}"
+    )
+    return pd.read_csv(ROAD_SEGMENTS_PATH)
 
-assert mapping_df["osm_u"].notna().all()
-assert mapping_df["osm_v"].notna().all()
-assert mapping_df["osm_key"].notna().all()
-assert mapping_df["osm_distance_m"].notna().all()
 
-assert set(mapping_df["mapping_confidence"]).issubset({"High", "Medium", "Low"})
+@pytest.fixture(scope="module")
+def mapping():
+    """Load the already-generated OSM mapping without rebuilding it."""
+    assert MAPPING_PATH.is_file(), (
+        f"Saved OSM mapping not found: {MAPPING_PATH}. "
+        "Run tests/generate_osm_segment_mapping.py explicitly to generate it."
+    )
 
-print("ROW COUNT CHECK: PASS")
-print("OSM EDGE ID CHECK: PASS")
-print("DISTANCE CHECK: PASS")
-print("CONFIDENCE CHECK: PASS")
+    df = pd.read_csv(MAPPING_PATH)
 
-print("\nOSM TRAFFIC MAPPER TEST: PASS")
+    missing_columns = REQUIRED_MAPPING_COLUMNS - set(df.columns)
+    assert not missing_columns, (
+        f"Saved OSM mapping is missing columns: {sorted(missing_columns)}"
+    )
+
+    return df
+
+
+def test_saved_mapping_covers_all_road_segments(road_segments, mapping):
+    """Every project road segment should have exactly one mapping row."""
+    assert len(mapping) == len(road_segments)
+    assert mapping["road_segment_id"].is_unique
+
+    assert set(mapping["road_segment_id"]) == set(
+        road_segments["road_segment_id"]
+    )
+
+
+def test_saved_mapping_has_valid_osm_edge_ids(mapping):
+    """Mapped OSM edge identifiers must be present."""
+    for column in ("osm_u", "osm_v", "osm_key"):
+        assert mapping[column].notna().all(), (
+            f"Missing values found in {column}"
+        )
+
+
+def test_saved_mapping_has_valid_distances(mapping):
+    """Mapping distances must be numeric, finite, and non-negative."""
+    distances = pd.to_numeric(
+        mapping["osm_distance_m"],
+        errors="coerce",
+    )
+
+    assert distances.notna().all()
+    assert distances.map(lambda value: value < float("inf")).all()
+    assert (distances >= 0).all()
+
+
+def test_saved_mapping_has_valid_confidence_levels(mapping):
+    """Confidence labels must use the project's supported categories."""
+    assert mapping["mapping_confidence"].notna().all()
+
+    assert set(mapping["mapping_confidence"]).issubset(
+        ALLOWED_CONFIDENCE_LEVELS
+    )

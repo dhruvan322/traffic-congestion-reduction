@@ -3,6 +3,7 @@ Unit tests for ML models.
 """
 
 import os
+from pathlib import Path
 import sys
 import pytest
 import pandas as pd
@@ -34,7 +35,19 @@ def sample_df():
             "is_peak": np.random.randint(0, 2, n),
             "is_event": np.random.randint(0, 2, n),
             "is_construction": np.random.randint(0, 2, n),
+            # Legacy fields retained for backward compatibility.
             "congestion_level": np.random.choice(["Low", "Medium", "High"], n),
+
+            # Fields required by the current traffic-intelligence models.
+            "road_segment_id": np.random.choice(
+                [f"RS{i:04d}" for i in range(1, 21)], n
+            ),
+            "average_speed_kmh": np.random.uniform(5, 60, n).round(1),
+            "occupancy_percent": np.random.uniform(5, 95, n).round(1),
+            "traffic_flow_vph": np.random.randint(30, 1000, n),
+            "future_congestion_level": np.random.choice(
+                ["Free Flow", "Low", "Moderate", "High", "Severe"], n
+            ),
         }
     )
 
@@ -78,31 +91,55 @@ class TestAnomalyDetector:
         assert isinstance(result, list)
         if result:
             assert "risk_level" in result[0]
-            assert "junction_id" in result[0]
+            assert "road_segment_id" in result[0]
 
 
 class TestPredictor:
-    def test_predict_returns_dict(self, sample_df):
-        """Test prediction output format (may auto-train)."""
-        # Skip if dataset not available
-        if not os.path.exists(DATASET_PATH):
-            pytest.skip("Dataset not generated yet")
+    def test_predict_returns_dict(self):
+        """Verify predictions using the current trained model and dataset."""
+
+        project_root = Path(__file__).resolve().parents[1]
+        final_dataset_path = (
+            project_root
+            / "data"
+            / "final_dataset"
+            / "ml_traffic_dataset.csv"
+        )
+
+        if not final_dataset_path.exists():
+            pytest.skip("Final ML dataset not generated yet")
 
         from engine.prediction.predictor import predict_congestion
 
-        result = predict_congestion(
-            {
-                "hour": 9,
-                "day_of_week": 1,
-                "vehicle_count": 250,
-                "avg_speed": 25,
-                "is_peak": 1,
-                "is_event": 0,
-                "is_construction": 0,
-                "weather": "Clear",
-                "junction_id": "J001",
-            }
+        final_df = pd.read_csv(final_dataset_path)
+
+        if final_df.empty:
+            pytest.skip("Final ML dataset is empty")
+
+        # Pass a real record containing the model's current feature schema.
+        result = predict_congestion(final_df.iloc[[0]])
+
+        assert isinstance(result, dict)
+
+        assert {
+            "predicted_class",
+            "predicted_class_id",
+            "probabilities",
+            "confidence",
+        }.issubset(result)
+
+        expected_classes = {
+            "Free Flow", "Low", "Moderate", "High", "Severe"
+        }
+
+        assert result["predicted_class"] in expected_classes
+        assert isinstance(result["probabilities"], dict)
+        assert set(result["probabilities"]) == expected_classes
+
+        assert np.isclose(
+            sum(result["probabilities"].values()),
+            1.0,
+            atol=0.005,
         )
-        assert "predicted_level" in result
-        assert "confidence" in result
-        assert result["predicted_level"] in ["Low", "Medium", "High"]
+
+        assert 0.0 <= result["confidence"] <= 1.0

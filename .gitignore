@@ -43,3 +43,6 @@ Thumbs.db
 
 # Streamlit
 .streamlit/secrets.toml
+.venv-1/
+*.bak
+*.tmp

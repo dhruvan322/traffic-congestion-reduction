@@ -286,5 +286,10 @@ def main():
     print("=" * 70)
 
 
+def test_traffic_route_sensitivity():
+    """Expose the existing route sensitivity checks to pytest."""
+    main()
+
+
 if __name__ == "__main__":
     main()

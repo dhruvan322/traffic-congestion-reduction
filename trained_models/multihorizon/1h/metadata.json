@@ -1,0 +1,36 @@
+{
+  "horizon_hours": 1,
+  "target_source": "future_congestion_level",
+  "records": 525480,
+  "train_records": 367800,
+  "validation_records": 78840,
+  "test_records": 78840,
+  "feature_count_before_encoding": 28,
+  "transformed_feature_count": 117,
+  "split": {
+    "train_start": "2025-01-01 00:00:00",
+    "train_end": "2025-09-13 09:00:00",
+    "validation_start": "2025-09-13 10:00:00",
+    "validation_end": "2025-11-07 03:00:00",
+    "test_start": "2025-11-07 04:00:00",
+    "test_end": "2025-12-31 21:00:00"
+  },
+  "metrics": {
+    "accuracy": 0.636,
+    "balanced_accuracy": 0.4852,
+    "macro_f1": 0.4833,
+    "weighted_f1": 0.6182
+  },
+  "classes": [
+    "Free Flow",
+    "Low",
+    "Moderate",
+    "High",
+    "Severe"
+  ],
+  "artifacts": {
+    "model": "C:\\Users\\HP\\OneDrive\\Desktop\\minor_project\\trained_models\\multihorizon\\1h\\xgb_congestion.json",
+    "preprocessor": "C:\\Users\\HP\\OneDrive\\Desktop\\minor_project\\trained_models\\multihorizon\\1h\\traffic_preprocessor.joblib",
+    "label_encoder": "C:\\Users\\HP\\OneDrive\\Desktop\\minor_project\\trained_models\\multihorizon\\1h\\label_encoder.joblib"
+  }
+}

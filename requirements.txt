@@ -1,6 +1,8 @@
-# AI Traffic Intelligence Platform - Dependencies
+﻿# AI Traffic Intelligence Platform - Dependencies
 
 # Web Framework
+fastapi>=0.142.2
+uvicorn[standard]>=0.52.4
 streamlit>=1.30.0
 
 # Data Processing

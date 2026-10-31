@@ -1,4 +1,4 @@
-﻿"""
+"""
 OSM Traffic-Aware Route Optimizer Panel.
 
 Uses the project's final traffic dataset and Hyderabad OSM driving
@@ -114,18 +114,91 @@ def _build_route_map(
     )
 
     def route_coordinates(route):
+        """Build route coordinates from detailed OSM edge geometry."""
         coordinates = []
 
-        for node in route:
+        if not route:
+            return coordinates
 
-            node_data = graph.nodes[node]
+        for u, v in zip(route[:-1], route[1:]):
+            u_data = graph.nodes[u]
+            v_data = graph.nodes[v]
 
-            coordinates.append(
-                [
-                    float(node_data["y"]),
-                    float(node_data["x"]),
-                ]
+            u_xy = (
+                float(u_data["x"]),
+                float(u_data["y"]),
             )
+            v_xy = (
+                float(v_data["x"]),
+                float(v_data["y"]),
+            )
+
+            edge_options = graph.get_edge_data(u, v) or {}
+            edge_data = {}
+
+            if edge_options:
+                edge_data = min(
+                    edge_options.values(),
+                    key=lambda data: float(
+                        data.get("length", float("inf"))
+                    ),
+                )
+
+            geometry = edge_data.get("geometry")
+            edge_xy = []
+
+            if geometry is not None and hasattr(geometry, "coords"):
+                try:
+                    edge_xy = [
+                        (float(point[0]), float(point[1]))
+                        for point in geometry.coords
+                    ]
+                except (TypeError, ValueError):
+                    edge_xy = []
+
+            # Fall back to endpoint coordinates only when detailed
+            # geometry is unavailable for this edge.
+            if len(edge_xy) < 2:
+                edge_xy = [u_xy, v_xy]
+            else:
+                # OSM edge geometry can be stored in either direction.
+                # Orient it so that it follows the requested route u -> v.
+                forward_score = (
+                    abs(edge_xy[0][0] - u_xy[0])
+                    + abs(edge_xy[0][1] - u_xy[1])
+                    + abs(edge_xy[-1][0] - v_xy[0])
+                    + abs(edge_xy[-1][1] - v_xy[1])
+                )
+
+                reverse_score = (
+                    abs(edge_xy[-1][0] - u_xy[0])
+                    + abs(edge_xy[-1][1] - u_xy[1])
+                    + abs(edge_xy[0][0] - v_xy[0])
+                    + abs(edge_xy[0][1] - v_xy[1])
+                )
+
+                if reverse_score < forward_score:
+                    edge_xy.reverse()
+
+            # Folium expects [latitude, longitude], while OSM geometry
+            # stores coordinates as (longitude, latitude).
+            edge_latlon = [
+                [latitude, longitude]
+                for longitude, latitude in edge_xy
+            ]
+
+            # Avoid duplicate points where consecutive edges meet.
+            if coordinates and edge_latlon:
+                last_point = coordinates[-1]
+                first_point = edge_latlon[0]
+
+                if (
+                    abs(last_point[0] - first_point[0]) < 1e-8
+                    and abs(last_point[1] - first_point[1]) < 1e-8
+                ):
+                    edge_latlon = edge_latlon[1:]
+
+            coordinates.extend(edge_latlon)
 
         return coordinates
 

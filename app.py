@@ -108,15 +108,16 @@ def render_sidebar():
         page = st.radio(
             "Navigation",
             options=[
-                "📊 Overview",
-                "🔮 Predictions",
-                "🔥 Hotspots",
-                "🗺️ Route Optimizer",
-                "💬 AI Chat Assistant",
-                "🚨 Command Center",
-                "🎤 Voice Assistant",
-                "📋 Reports",
-                "⚠️ Anomaly Detection",
+                "Overview",
+                "Predictions",
+                "Multi-Horizon Forecast",
+                "Hotspots",
+                "Route Optimizer",
+                "AI Chat Assistant",
+                "Command Center",
+                "Voice Assistant",
+                "Reports",
+                "Anomaly Detection",
             ],
             label_visibility="collapsed",
         )
@@ -126,7 +127,7 @@ def render_sidebar():
         # Alert badge
         alert_count = get_alert_count()
         if alert_count > 0:
-            st.warning(f"🔔 **{alert_count}** active alerts")
+            st.warning(f"Active alerts: {alert_count}")
 
         # System status
         app_state = initialize_app()
@@ -134,17 +135,18 @@ def render_sidebar():
         col1, col2 = st.columns(2)
         with col1:
             if app_state["dataset_ready"]:
-                st.success("Data ✓", icon="📦")
+                st.success("Data OK")
             else:
-                st.error("No Data", icon="📦")
+                st.error("No Data")
+
         with col2:
             if app_state["models_ready"]:
-                st.success("Models ✓", icon="🧠")
+                st.success("Models OK")
             else:
-                st.warning("No Models", icon="🧠")
+                st.warning("No Models")
 
         st.divider()
-        st.caption("© 2026 Traffic Intelligence Platform")
+        st.caption("(C) 2026 Traffic Intelligence Platform")
 
     return page
 
@@ -152,47 +154,51 @@ def render_sidebar():
 # ──────────────────────────── Page Routing ────────────────────────────
 def route_to_page(page: str, data_context):
     """Route to the selected dashboard page."""
-    if page == "📊 Overview":
+    if page == "Overview":
         from dashboard.overview import render_overview
 
         safe_render("Overview Dashboard", render_overview)
 
-    elif page == "🔮 Predictions":
+    elif page == "Predictions":
         from dashboard.prediction_panel import render_prediction_panel
 
         safe_render("Prediction Engine", render_prediction_panel)
+    elif page == "Multi-Horizon Forecast":
+        from dashboard.forecast_panel import render_forecast_panel
 
-    elif page == "🔥 Hotspots":
+        safe_render("Multi-Horizon Forecast", render_forecast_panel)
+
+    elif page == "Hotspots":
         from dashboard.hotspot_panel import render_hotspot_panel
 
         safe_render("Hotspot Detection", render_hotspot_panel)
 
-    elif page == "🗺️ Route Optimizer":
+    elif page == "Route Optimizer":
         from dashboard.route_panel import render_route_panel
 
         safe_render("Route Optimizer", render_route_panel)
 
-    elif page == "💬 AI Chat Assistant":
+    elif page == "AI Chat Assistant":
         from dashboard.nlp_panel import render_nlp_panel
 
         safe_render("AI Chat Assistant", render_nlp_panel)
 
-    elif page == "🎤 Voice Assistant":
+    elif page == "Voice Assistant":
         from dashboard.voice_panel import render_voice_panel
 
         safe_render("Voice Assistant", render_voice_panel)
 
-    elif page == "📋 Reports":
+    elif page == "Reports":
         from dashboard.report_panel import render_report_panel
 
         safe_render("Report Center", render_report_panel)
 
-    elif page == "⚠️ Anomaly Detection":
+    elif page == "Anomaly Detection":
         from dashboard.anomaly_panel import render_anomaly_panel
 
         safe_render("Anomaly Detection", render_anomaly_panel)
 
-    elif page == "🚨 Command Center":
+    elif page == "Command Center":
         render_command_center(data_context)
 
 

@@ -21,6 +21,27 @@ def render_report_panel():
 
     df = pd.read_csv(DATASET_PATH)
 
+    # Normalize the current project schema for the report generator.
+    if "timestamp" in df.columns and "date" not in df.columns:
+        parsed_timestamps = pd.to_datetime(
+            df["timestamp"], errors="coerce"
+        )
+        df["date"] = parsed_timestamps.dt.strftime("%Y-%m-%d")
+
+    schema_aliases = {
+        "avg_speed": "average_speed_kmh",
+        "congestion_level": "future_congestion_level",
+        "junction_id": "road_segment_id",
+        "weather": "weather_condition",
+    }
+
+    for report_column, project_column in schema_aliases.items():
+        if (
+            report_column not in df.columns
+            and project_column in df.columns
+        ):
+            df[report_column] = df[project_column]
+
     # ─────────── Report Generator ───────────
     st.subheader("📝 Generate Report")
 
