@@ -5,17 +5,21 @@ Uses the project's final traffic dataset and Hyderabad OSM driving
 network to compare shortest-distance and traffic-aware routes.
 """
 
+import math
+
 import streamlit as st
 import pandas as pd
 import folium
 from streamlit_folium import st_folium
 
-from config import DATASET_PATH
+from dashboard.ui_theme import render_header
 from engine.osm_traffic_router import (
     load_traffic_dataset,
     load_osm_graph,
     compare_osm_routes,
 )
+
+ROUTE_TIME_COMPARISON_TOLERANCE_MINUTES = 0.1
 
 
 def _load_area_coordinates(df: pd.DataFrame) -> dict:
@@ -212,17 +216,23 @@ def _build_route_map(
 
     folium.PolyLine(
         shortest_coordinates,
+        color="#00F0FF" if traffic_route != shortest_route else "#00E5BC",
         weight=5,
-        opacity=0.75,
-        tooltip="Shortest-distance route",
+        opacity=0.9,
+        tooltip=(
+            "Shortest-distance route"
+            if traffic_route != shortest_route
+            else "Shortest and traffic-aware routes (same path)"
+        ),
     ).add_to(route_map)
 
     if traffic_route != shortest_route:
 
         folium.PolyLine(
             traffic_coordinates,
+            color="#00E5BC",
             weight=5,
-            opacity=0.8,
+            opacity=0.9,
             dash_array="10, 10",
             tooltip="Traffic-aware route",
         ).add_to(route_map)
@@ -233,6 +243,7 @@ def _build_route_map(
             origin_lon,
         ],
         tooltip=f"Origin: {origin_name}",
+        icon=folium.Icon(color="green", icon="play", prefix="fa"),
     ).add_to(route_map)
 
     folium.Marker(
@@ -241,7 +252,27 @@ def _build_route_map(
             destination_lon,
         ],
         tooltip=f"Destination: {destination_name}",
+        icon=folium.Icon(color="red", icon="flag-checkered", prefix="fa"),
     ).add_to(route_map)
+
+    legend_routes = (
+        '<span style="color:#00F0FF">━━━━</span> Shortest-distance route<br>'
+        '<span style="color:#00E5BC">┅┅┅┅</span> Traffic-aware route'
+        if traffic_route != shortest_route
+        else '<span style="color:#00E5BC">━━━━</span> Both routes (same path)'
+    )
+    legend = f"""
+    <div style="position:fixed; bottom:24px; left:24px; z-index:1000;
+        background:rgba(10,14,23,.94); border:1px solid rgba(0,240,255,.35);
+        border-radius:8px; padding:10px 14px; color:#F8FAFC;
+        font:12px/1.8 Inter,Arial,sans-serif; box-shadow:0 4px 16px #0008">
+        <strong>ROUTE LEGEND</strong><br>
+        {legend_routes}<br>
+        <span style="color:#34D399">●</span> Origin&nbsp;&nbsp;
+        <span style="color:#F87171">●</span> Destination
+    </div>
+    """
+    route_map.get_root().html.add_child(folium.Element(legend))
 
     route_map.fit_bounds(
         [
@@ -259,19 +290,205 @@ def _build_route_map(
     return route_map
 
 
+def _numeric_metric(metrics: dict, key: str) -> float | None:
+    value = metrics.get(key)
+    if value is None:
+        return None
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    return number if math.isfinite(number) else None
+
+
+def _format_metric(metrics: dict, key: str, precision: int, unit: str) -> str:
+    value = _numeric_metric(metrics, key)
+    if value is None:
+        return "N/A"
+    return f"{value:.{precision}f}{unit}"
+
+
+def _format_traffic_coverage(metrics: dict) -> str:
+    coverage = _numeric_metric(metrics, "traffic_coverage_percent")
+    covered = _numeric_metric(metrics, "traffic_covered_edges")
+    total = _numeric_metric(metrics, "total_edges")
+
+    if coverage is None and covered is not None and total is not None and total > 0:
+        coverage = covered / total * 100
+
+    if coverage is None:
+        return "N/A"
+    if covered is not None and total is not None:
+        return f"{coverage:.1f}% · {covered:.0f}/{total:.0f} edges"
+    return f"{coverage:.1f}%"
+
+
+def _render_route_card(title: str, tag: str, metrics: dict) -> None:
+    with st.container(border=True):
+        st.markdown(f"#### {title}")
+        st.caption(tag)
+        first_row, second_row = st.columns(2, gap="medium")
+        metric_values = (
+            (
+                first_row,
+                "Distance",
+                _format_metric(metrics, "distance_km", 2, " km"),
+            ),
+            (
+                first_row,
+                "Estimated travel time",
+                _format_metric(metrics, "estimated_time_minutes", 2, " min"),
+            ),
+            (
+                second_row,
+                "Average speed",
+                _format_metric(metrics, "average_speed_kmh", 1, " km/h"),
+            ),
+            (
+                second_row,
+                "Historical traffic coverage",
+                _format_traffic_coverage(metrics),
+            ),
+        )
+        for column, label, value in metric_values:
+            with column:
+                st.metric(label, value)
+
+
+def _render_route_recommendation(
+    shortest_route: list,
+    traffic_route: list,
+    shortest_metrics: dict,
+    traffic_metrics: dict,
+) -> None:
+    st.markdown("### Route recommendation")
+
+    if shortest_route == traffic_route:
+        st.info(
+            "Both routing algorithms selected the same route for the "
+            "selected historical traffic snapshot."
+        )
+        return
+
+    shortest_time = _numeric_metric(
+        shortest_metrics,
+        "estimated_time_minutes",
+    )
+    traffic_time = _numeric_metric(
+        traffic_metrics,
+        "estimated_time_minutes",
+    )
+    if shortest_time is None or traffic_time is None:
+        st.info(
+            "A route preference cannot be determined because one or both "
+            "historical estimated travel times are unavailable."
+        )
+        return
+
+    time_difference = abs(shortest_time - traffic_time)
+    if time_difference <= ROUTE_TIME_COMPARISON_TOLERANCE_MINUTES:
+        st.info(
+            "The routes have effectively similar estimated travel times "
+            "for this historical snapshot; no faster option is indicated."
+        )
+    elif traffic_time < shortest_time:
+        st.success(
+            f"The traffic-aware route has the lower estimated travel time "
+            f"({traffic_time:.2f} min vs {shortest_time:.2f} min) for this "
+            "historical snapshot. This is a model estimate, not a live "
+            "travel-time observation."
+        )
+    else:
+        st.info(
+            f"The shortest route has the lower estimated travel time "
+            f"({shortest_time:.2f} min vs {traffic_time:.2f} min) for this "
+            "historical snapshot. This is a model estimate, not a live "
+            "travel-time observation."
+        )
+
+
+def _render_route_analytics(shortest: dict, traffic_aware: dict) -> None:
+    analytics = (
+        (
+            "Distance",
+            _format_metric(shortest, "distance_km", 2, " km"),
+            _format_metric(traffic_aware, "distance_km", 2, " km"),
+        ),
+        (
+            "Estimated travel time",
+            _format_metric(shortest, "estimated_time_minutes", 2, " min"),
+            _format_metric(traffic_aware, "estimated_time_minutes", 2, " min"),
+        ),
+        (
+            "Historical traffic coverage",
+            _format_traffic_coverage(shortest),
+            _format_traffic_coverage(traffic_aware),
+        ),
+        (
+            "Average speed",
+            _format_metric(shortest, "average_speed_kmh", 1, " km/h"),
+            _format_metric(traffic_aware, "average_speed_kmh", 1, " km/h"),
+        ),
+    )
+
+    st.markdown("#### Route analytics")
+    for label, shortest_value, traffic_value in analytics:
+        st.markdown(f"**{label}**")
+        shortest_column, traffic_column = st.columns(2, gap="small")
+        with shortest_column:
+            st.caption("SHORTEST")
+            st.write(shortest_value)
+        with traffic_column:
+            st.caption("TRAFFIC-AWARE")
+            st.write(traffic_value)
+
+
+def _render_data_provenance(
+    timestamp: str,
+    shortest_metrics: dict,
+    traffic_metrics: dict,
+) -> None:
+    st.markdown("### Data provenance")
+    with st.container(border=True):
+        source_col, network_col, snapshot_col = st.columns(3, gap="medium")
+        with source_col:
+            st.markdown("**Historical observations**")
+            st.caption("Project synthetic traffic dataset; no live traffic feed.")
+        with network_col:
+            st.markdown("**Road network**")
+            st.caption("Hyderabad OpenStreetMap driving network.")
+        with snapshot_col:
+            st.markdown("**Selected traffic snapshot**")
+            st.caption(str(timestamp))
+
+        st.caption(
+            "Traffic coverage counts route edges matched to project road "
+            "segments. Unmapped OSM edges do not have project traffic "
+            "observations and use OSM speed data or the router's fallback."
+        )
+        coverage_columns = st.columns(2, gap="medium")
+        with coverage_columns[0]:
+            st.markdown(
+                f"**Shortest route:** "
+                f"{_format_traffic_coverage(shortest_metrics)}"
+            )
+        with coverage_columns[1]:
+            st.markdown(
+                f"**Traffic-aware route:** "
+                f"{_format_traffic_coverage(traffic_metrics)}"
+            )
+
+
 def render_route_panel():
     """
     Render the OSM traffic-aware route optimizer.
     """
 
-    st.markdown(
-        "# 🗺️ OSM Traffic-Aware Route Optimizer"
-    )
-
-    st.markdown(
-        "Compare the **shortest-distance** route with the "
-        "**traffic-aware** route using the Hyderabad OSM driving "
-        "network and the project's historical traffic observations."
+    render_header(
+        "Route Intelligence & Optimization",
+        "Compare distance-efficient and traffic-aware routes across Hyderabad's road network.",
+        badge_text="HISTORICAL DATASET",
+        badge_type="cyan",
     )
 
     # -------------------------------------------------------------
@@ -340,57 +557,54 @@ def render_route_panel():
     # Route input
     # -------------------------------------------------------------
 
-    st.subheader(
-        "📍 Select Origin & Destination"
-    )
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-
-        origin = st.selectbox(
-            "🟢 Origin Area",
-            areas,
-            index=0,
-            key="osm_route_origin",
+    with st.container(border=True):
+        st.markdown("#### Plan a route")
+        origin_column, destination_column, button_column = st.columns(
+            [1, 1, 1.15],
+            gap="medium",
+            vertical_alignment="bottom",
         )
-
-    with col2:
+        with origin_column:
+            origin = st.selectbox(
+                "Origin Area",
+                areas,
+                index=0,
+                key="osm_route_origin",
+            )
 
         destination_options = [
             area
             for area in areas
             if area != origin
         ]
-
         default_destination_index = min(
             len(destination_options) - 1,
             1,
         )
-
-        destination = st.selectbox(
-            "🔴 Destination Area",
-            destination_options,
-            index=default_destination_index,
-            key="osm_route_destination",
+        with destination_column:
+            destination = st.selectbox(
+                "Destination Area",
+                destination_options,
+                index=default_destination_index,
+                key="osm_route_destination",
+            )
+        with button_column:
+            find_routes = st.button(
+                "Find Best Routes",
+                type="primary",
+                width="stretch",
+            )
+        st.caption(f"Selected route: {origin} → {destination}")
+        st.caption(
+            "Uses the latest available historical traffic snapshot — "
+            "not live navigation."
         )
-
-    st.caption(
-        "Routing uses the latest available historical traffic "
-        "timestamp in the project dataset. It is not live navigation."
-    )
-
-    st.divider()
 
     # -------------------------------------------------------------
     # Route calculation
     # -------------------------------------------------------------
 
-    if st.button(
-        "🚀 Find Best Routes",
-        type="primary",
-        use_container_width=True,
-    ):
+    if find_routes:
 
         origin_coords = area_coordinates[origin]
 
@@ -464,132 +678,64 @@ def render_route_panel():
     traffic_route = result[
         "traffic_aware_route"
     ]
+    route_changed = shortest_route != traffic_route
 
-    route_changed = (
-        shortest_route != traffic_route
-    )
-
-    st.markdown("---")
-
-    st.subheader(
-        "📊 Route Comparison"
-    )
-
-    st.info(
-        f"Traffic data timestamp: "
-        f"{result['timestamp_requested']}"
-    )
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-
-        st.markdown(
-            "### 🚗 Shortest Route"
-        )
-
-        st.metric(
-            "Distance",
-            f"{shortest['distance_km']:.2f} km",
-        )
-
-        st.metric(
-            "Estimated Time",
-            f"{shortest['estimated_time_minutes']:.2f} min",
-        )
-
-        st.metric(
-            "Average Speed",
-            f"{shortest['average_speed_kmh']:.1f} km/h",
-        )
-
-        st.metric(
-            "Traffic Coverage",
-            (
-                f"{shortest['traffic_covered_edges']}/"
-                f"{shortest['total_edges']}"
-            ),
-        )
-
-    with col2:
-
-        st.markdown(
-            "### 🚦 Traffic-Aware Route"
-        )
-
-        st.metric(
-            "Distance",
-            f"{traffic_aware['distance_km']:.2f} km",
-        )
-
-        st.metric(
-            "Estimated Time",
-            f"{traffic_aware['estimated_time_minutes']:.2f} min",
-        )
-
-        st.metric(
-            "Average Speed",
-            f"{traffic_aware['average_speed_kmh']:.1f} km/h",
-        )
-
-        st.metric(
-            "Traffic Coverage",
-            (
-                f"{traffic_aware['traffic_covered_edges']}/"
-                f"{traffic_aware['total_edges']}"
-            ),
-        )
-
-    # -------------------------------------------------------------
-    # Recommendation
-    # -------------------------------------------------------------
-
-    st.markdown("---")
-
-    st.subheader(
-        "🧠 Route Recommendation"
-    )
-
-    if route_changed:
-
-        st.success(
-            "The traffic-aware route is different from the "
-            "shortest-distance route. The traffic-aware route "
-            "is recommended for the selected historical conditions."
-        )
-
-    else:
-
-        st.info(
-            "The shortest and traffic-aware routes are the same "
-            "for the selected historical traffic conditions."
-        )
-
+    st.markdown("### Route comparison")
     st.caption(
-        "This route optimizer provides decision-support using "
-        "historical project traffic observations and the Hyderabad "
-        "OSM driving network. It does not provide live navigation."
+        f"Historical traffic snapshot: {result['timestamp_requested']}"
     )
 
-    # -------------------------------------------------------------
-    # Route map
-    # -------------------------------------------------------------
-
-    if st.session_state.osm_route_map is not None:
-
-        st.markdown("---")
-
-        st.subheader(
-            "🗺️ Route Visualization"
+    route_columns = st.columns(2, gap="medium")
+    with route_columns[0]:
+        _render_route_card(
+            "Shortest Route",
+            "DISTANCE-OPTIMAL",
+            shortest,
+        )
+    with route_columns[1]:
+        _render_route_card(
+            "Traffic-Aware Route",
+            "TRAFFIC-WEIGHTED",
+            traffic_aware,
         )
 
-        st_folium(
-            st.session_state.osm_route_map,
-            width=None,
-            height=600,
-            returned_objects=[],
-            key="osm_route_optimizer_map",
+    with st.container(border=True):
+        _render_route_recommendation(
+            shortest_route,
+            traffic_route,
+            shortest,
+            traffic_aware,
         )
+        st.caption(
+            "Recommendations compare model-estimated travel times for "
+            "historical project data; they do not represent live conditions "
+            "or verified real-world travel-time savings."
+        )
+
+    st.markdown("### Hyderabad road network")
+    map_column, analytics_column = st.columns(
+        [1.7, 1],
+        gap="medium",
+        vertical_alignment="top",
+    )
+    with map_column:
+        if st.session_state.osm_route_map is not None:
+            st_folium(
+                st.session_state.osm_route_map,
+                width=None,
+                height=560,
+                returned_objects=[],
+                key="osm_route_optimizer_map",
+            )
+    with analytics_column:
+        with st.container(border=True):
+            _render_route_analytics(shortest, traffic_aware)
+
+    _render_data_provenance(
+        result["timestamp_requested"],
+        shortest,
+        traffic_aware,
+    )
 
     # -------------------------------------------------------------
     # Detailed route information

@@ -220,11 +220,46 @@ Base URL during local development:
 | GET | `/api/v1/traffic/{area}` | Returns the available traffic summary for an area. |
 | GET | `/api/v1/hotspots` | Returns hotspot analysis results. |
 | GET | `/api/v1/anomalies` | Returns detected anomaly records/summaries. |
-| POST | `/api/v1/predict` | Generates a congestion prediction for the supplied request. |
+| POST | `/api/v1/predict` | Predicts congestion for an area, with optional road segment and historical timestamp selection. |
 | POST | `/api/v1/route` | Calculates a route between supplied endpoints. |
 | POST | `/api/v1/forecast` | Generates multi-horizon forecasts for a road segment or area. |
 
-### 6.1 Example health check
+### 6.1 Prediction endpoint
+
+**Endpoint:** `POST /api/v1/predict`
+
+The prediction endpoint accepts the following request fields:
+
+| Field | Required | Description |
+|---|---|---|
+| `area` | Yes | Project traffic area, such as `Ameerpet`. |
+| `road_segment_id` | No | Road segment identifier, such as `RS0019`. If omitted, the first available segment is selected. |
+| `timestamp` | No | Historical traffic timestamp. If omitted, the latest available observation is used. |
+
+**Example request — latest observation:**
+
+```json
+{
+  "area": "Ameerpet",
+  "road_segment_id": "RS0019"
+}
+```
+
+**Example request — historical observation:**
+
+```json
+{
+  "area": "Ameerpet",
+  "road_segment_id": "RS0019",
+  "timestamp": "2025-12-31 20:00:00"
+}
+```
+
+The response includes the selected area, timestamp, road segment, predicted congestion class, class probabilities, confidence, vehicle count and average speed.
+
+The endpoint uses the project's saved ML model and historical synthetic dataset. It does not provide live traffic predictions.
+
+### 6.2 Example health check
 
 PowerShell:
 
@@ -243,7 +278,7 @@ The verified response was:
 }
 ```
 
-### 6.2 Example traffic request
+### 6.3 Example traffic request
 
 ```powershell
 Invoke-RestMethod -Uri "http://127.0.0.1:8000/api/v1/traffic/Hitech%20City" |
@@ -252,7 +287,7 @@ Invoke-RestMethod -Uri "http://127.0.0.1:8000/api/v1/traffic/Hitech%20City" |
 
 A previously verified response returned Hitech City records for timestamp `2025-12-31 21:00:00`, road segments `RS0004`, `RS0005` and `RS0006`, vehicle count 48, average speed 50.64 km/h and congestion level `Low`. This illustrates that the API is returning the historical project dataset, not live observations.
 
-### 6.3 API documentation UI
+### 6.4 API documentation UI
 
 When the API is running, FastAPI's interactive documentation is normally available at:
 
@@ -276,7 +311,6 @@ The current dashboard includes the following functional areas:
 - Route Optimizer
 - AI Chat Assistant
 - Command Center
-- Voice Assistant
 - Reports
 
 The dashboard is intended to present the data and model outputs through a single interface. The Streamlit application runs locally at:

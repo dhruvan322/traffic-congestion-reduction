@@ -1,6 +1,7 @@
-﻿from fastapi import FastAPI
+from fastapi import FastAPI
 
 from api.routes.anomalies import router as anomalies_router
+from api.routes.chat import router as chat_router
 from api.routes.hotspots import router as hotspots_router
 from api.routes.prediction import router as prediction_router
 from api.routes.routing import router as routing_router
@@ -47,6 +48,11 @@ app.include_router(
 
 app.include_router(
     anomalies_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    chat_router,
     prefix="/api/v1",
 )
 

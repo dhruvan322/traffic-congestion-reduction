@@ -1,4 +1,4 @@
-﻿from typing import Any
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -53,6 +53,21 @@ class AnomalyResponse(BaseModel):
     description: str
 
 
+class AnomalyAnalysisResponse(BaseModel):
+    summary: dict[str, int | float]
+    risk_counts: dict[str, int]
+    method_counts: dict[str, int]
+    monthly: list[dict[str, Any]]
+    segments: list[dict[str, Any]]
+    top_records: list[dict[str, Any]]
+    scatter_records: list[dict[str, Any]]
+    score_records: list[dict[str, float]]
+    recommendations: list[dict[str, Any]]
+    peak_month: int
+    peak_count: int
+    affected_segments: int
+    total_segments: int
+
 class PredictionRequest(BaseModel):
     area: str = Field(
         ...,
@@ -62,6 +77,13 @@ class PredictionRequest(BaseModel):
     road_segment_id: str | None = Field(
         default=None,
         description="Optional project road segment, e.g. RS0004",
+    )
+    timestamp: str | None = Field(
+        default=None,
+        description=(
+            "Optional historical traffic timestamp. "
+            "If omitted, the latest available observation is used."
+        ),
     )
 
 
@@ -119,3 +141,24 @@ class RouteResponse(BaseModel):
     shortest_route_nodes: int
     traffic_aware_route_nodes: int
     recommendation: str
+
+
+class ChatRequest(BaseModel):
+    query: str = Field(
+        ...,
+        min_length=1,
+        description="User's traffic-related question",
+    )
+    session_id: str = Field(
+        ...,
+        min_length=1,
+        description="Unique chat session identifier",
+    )
+
+
+class ChatResponse(BaseModel):
+    response: str
+    intent: str
+    entities: dict[str, Any]
+    detected_language: str
+    turn_number: int

@@ -42,10 +42,12 @@ The platform includes four independently trained XGBoost classifiers that foreca
 | Anomaly detection | Uses Isolation Forest and a z-score rule to flag unusual records for review. |
 | OSM route optimization | Calculates candidate routes over a stored OpenStreetMap road graph, applying traffic-related edge costs when mapped traffic data is available. |
 | Reports | Generates daily, weekly, and anomaly summaries from the available dataset. |
-| AI and voice assistants | Provides assistant interfaces for interacting with available project traffic information and functions. |
+| AI Chat Assistant | Provides a conversational interface for interacting with available project traffic information and functions. |
 | REST API | Exposes core traffic, prediction, forecasting, hotspot, anomaly, and routing functionality through FastAPI. |
 
 ## System architecture
+
+The application follows a hybrid architecture. Streamlit provides the user interface, while FastAPI exposes backend functionality through REST endpoints. The Traffic Predictions dashboard communicates with FastAPI for prediction requests. SHAP explanations and feature-importance calculations remain locally executed, and the other dashboards currently interact directly with their respective engine modules.
 
 ```mermaid
 flowchart TD
@@ -60,13 +62,22 @@ flowchart TD
     E2 --> F
     E3 --> F
     E4 --> F
+
     F --> G[Prediction and analytics engines]
     H[OSM road graph and segment mapping] --> I[OSM routing engine]
+
     G --> J[FastAPI backend]
     I --> J
-    G --> K[Streamlit dashboard]
-    I --> K
-    J <--> K
+
+    K[Streamlit dashboard] --> L[Traffic Predictions]
+    L -->|HTTP POST /api/v1/predict| J
+    J -->|JSON prediction response| L
+
+    K --> M[Other dashboards]
+    M -->|Direct engine calls| G
+    M -->|Direct engine calls| I
+
+    L --> N[Local SHAP explanations and feature importance]
 ```
 
 The training workflow is implemented in `engine/multihorizon_forecaster.py`. The application loads the saved artifacts for inference; model training is not required every time the dashboard starts.
@@ -183,7 +194,7 @@ minor_project/
 ├── engine/                       # Forecasting, routing, and decision-support engines
 │   └── multihorizon_forecaster.py # Current multi-horizon training implementation
 ├── models/                       # Prediction, explainability, hotspot, and anomaly modules
-├── nlp/                          # AI assistant, language, and voice modules
+├── nlp/                          # AI chat assistant and language modules
 ├── reports/                      # Report-generation logic
 ├── tests/                        # Automated tests and validation scripts
 ├── trained_models/
@@ -265,6 +276,8 @@ No broken requirements found.
 ## Run the application
 
 The application uses two processes. Start each service in a separate terminal, with both terminals opened at the project root and using the same virtual environment.
+
+The Traffic Predictions dashboard sends prediction requests to the FastAPI backend using `POST /api/v1/predict`. Both services must be running to use this functionality. Other dashboards currently call their respective engine modules directly.
 
 ### Terminal 1: FastAPI backend
 

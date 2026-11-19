@@ -42,7 +42,7 @@ minor_project/
 │   └── osm/                      # Hyderabad OpenStreetMap road graph files
 ├── engine/                       # Forecasting, routing and decision-support logic
 ├── models/                       # Prediction, hotspot and anomaly model logic
-├── nlp/                          # AI assistant and language/voice components
+├── nlp/                          # AI chat assistant and language components
 ├── reports/                      # Report generation logic
 ├── tests/                        # Automated and validation tests
 ├── trained_models/
@@ -176,6 +176,10 @@ No broken requirements found.
 
 The application has two processes: the FastAPI backend and the Streamlit dashboard. Start them in **separate PowerShell terminals**, both opened at the project root and using the same virtual environment.
 
+The Traffic Predictions dashboard sends prediction requests to the FastAPI backend through `POST /api/v1/predict`. Therefore, keep FastAPI running while using the Predictions page. Other dashboards continue to use their respective engine modules directly.
+
+The prediction endpoint supports an optional historical timestamp. If no timestamp is supplied, it uses the latest available observation. SHAP explanations and feature-importance calculations continue to run locally within Streamlit.
+
 ### 6.1 Start FastAPI
 
 In Terminal 1:
@@ -292,7 +296,7 @@ Inspect unusual traffic records and their anomaly indicators. An anomaly flag is
 
 Select route endpoints and inspect candidate paths on the OpenStreetMap-based road graph. Review the route distance, estimated travel metrics and traffic-data coverage. A route with insufficient mapped traffic coverage should not be described as validated traffic-aware navigation.
 
-### AI Chat Assistant and Voice Assistant
+### AI Chat Assistant
 
 Use the available assistant interfaces to ask questions about project traffic information and available functions. Their responses are limited by the data and integrations configured in the current application.
 

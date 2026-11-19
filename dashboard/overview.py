@@ -1,7 +1,7 @@
 ﻿"""
 Overview Dashboard Panel.
 
-Final-schema traffic intelligence overview using:
+Enterprise-grade traffic intelligence overview using:
 - project traffic dataset
 - hotspot detection
 - anomaly detection
@@ -14,12 +14,27 @@ import plotly.express as px
 from config import DATASET_PATH
 from models.hotspot_detector import get_hotspot_summary
 from models.anomaly_detector import get_anomaly_report
+from dashboard.ui_theme import (
+    render_header,
+    render_kpi_card,
+    apply_plotly_theme,
+    CONGESTION_COLOR_MAP,
+    COLOR_CYAN,
+    COLOR_TEAL,
+    COLOR_BLUE,
+    COLOR_AMBER,
+)
 
 
 def render_overview():
-    """Render the main traffic intelligence overview."""
+    """Render the main traffic intelligence operations overview."""
 
-    st.markdown("# 📊 Traffic Intelligence Overview")
+    render_header(
+        title="📊 Traffic Intelligence Overview",
+        subtitle="Historical traffic analytics, congestion distribution, hotspot detection and anomaly intelligence.",
+        badge_text="HISTORICAL DATASET",
+        badge_type="teal",
+    )
 
     # -------------------------------------------------------------
     # Load final dataset
@@ -43,44 +58,23 @@ def render_overview():
         "area",
     }
 
-    missing = sorted(
-        required_columns.difference(df.columns)
-    )
+    missing = sorted(required_columns.difference(df.columns))
 
     if missing:
-
-        st.error(
-            "The final traffic dataset is missing required columns."
-        )
-
+        st.error("The final traffic dataset is missing required columns.")
         st.write(missing)
-
         return
 
     # -------------------------------------------------------------
-    # KPI Cards
+    # KPI Calculations
     # -------------------------------------------------------------
 
     total_records = len(df)
+    monitored_segments = df["road_segment_id"].nunique()
+    avg_vehicles = df["vehicle_count"].mean()
+    avg_speed = df["average_speed_kmh"].mean()
 
-    monitored_segments = (
-        df["road_segment_id"]
-        .nunique()
-    )
-
-    avg_vehicles = (
-        df["vehicle_count"]
-        .mean()
-    )
-
-    avg_speed = (
-        df["average_speed_kmh"]
-        .mean()
-    )
-
-    congested_mask = df[
-        "future_congestion_level"
-    ].isin(
+    congested_mask = df["future_congestion_level"].isin(
         [
             "Moderate",
             "High",
@@ -89,49 +83,62 @@ def render_overview():
     )
 
     congested_pct = (
-        congested_mask.mean() * 100
-        if total_records > 0
-        else 0.0
+        congested_mask.mean() * 100 if total_records > 0 else 0.0
     )
+
+    # -------------------------------------------------------------
+    # Primary KPI Ribbon
+    # -------------------------------------------------------------
 
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
-
-        st.metric(
-            "📦 Total Records",
-            f"{total_records:,}",
+        render_kpi_card(
+            title="Total Records",
+            value=f"{total_records:,}",
+            status="cyan",
+            icon="📦",
+            subtitle="Historical observations",
         )
 
     with col2:
-
-        st.metric(
-            "🛣️ Monitored Segments",
-            f"{monitored_segments:,}",
+        render_kpi_card(
+            title="Monitored Segments",
+            value=f"{monitored_segments:,}",
+            status="teal",
+            icon="📍",
+            subtitle="Active road network",
         )
 
     with col3:
-
-        st.metric(
-            "⚡ Average Speed",
-            f"{avg_speed:.1f} km/h",
+        speed_status = "emerald" if avg_speed >= 35 else ("cyan" if avg_speed >= 25 else "amber")
+        render_kpi_card(
+            title="Average Speed",
+            value=f"{avg_speed:.1f} km/h",
+            status=speed_status,
+            icon="⚡",
+            subtitle=f"Flow: {avg_vehicles:.0f} veh/seg avg",
         )
 
     with col4:
-
-        st.metric(
-            "🔴 Moderate+ Congestion",
-            f"{congested_pct:.1f}%",
+        congested_status = "red" if congested_pct >= 40 else ("amber" if congested_pct >= 20 else "emerald")
+        render_kpi_card(
+            title="Moderate-to-Severe Congestion",
+            value=f"{congested_pct:.1f}%",
+            status=congested_status,
+            icon="🔴",
+            subtitle="Corridors under load",
         )
 
-    st.divider()
+    st.markdown("<div style='height: 1.25rem;'></div>", unsafe_allow_html=True)
 
     # -------------------------------------------------------------
-    # Traffic Summary
+    # Traffic Summary & Distribution
     # -------------------------------------------------------------
 
-    st.subheader(
-        "🚦 Traffic State Distribution"
+    st.markdown(
+        '<div class="ops-section-title">🚦 Traffic State Distribution</div>',
+        unsafe_allow_html=True,
     )
 
     congestion_order = [
@@ -152,9 +159,7 @@ def render_overview():
     )
 
     congestion_percent = (
-        congestion_counts
-        / total_records
-        * 100
+        congestion_counts / total_records * 100
         if total_records > 0
         else congestion_counts * 0
     )
@@ -167,37 +172,60 @@ def render_overview():
         }
     )
 
-    st.dataframe(
-        summary_df,
-        use_container_width=True,
-        hide_index=True,
-    )
+    dist_col1, dist_col2 = st.columns([5, 7])
 
-    fig_distribution = px.bar(
-        summary_df,
-        x="Congestion Level",
-        y="Observations",
-        text="Observations",
-    )
+    with dist_col1:
+        display_summary = summary_df.copy()
+        display_summary["Percentage"] = display_summary["Percentage"].map(
+            lambda v: f"{v:.1f}%"
+        )
+        display_summary["Observations"] = display_summary["Observations"].map(
+            lambda v: f"{v:,}"
+        )
+        st.dataframe(
+            display_summary,
+            use_container_width=True,
+            hide_index=True,
+        )
 
-    fig_distribution.update_layout(
-        height=350,
-        template="plotly_dark",
-        yaxis_title="Observations",
-        xaxis_title="Congestion Level",
-    )
+    with dist_col2:
+        fig_distribution = px.bar(
+            summary_df,
+            x="Congestion Level",
+            y="Observations",
+            color="Congestion Level",
+            color_discrete_map=CONGESTION_COLOR_MAP,
+            text="Observations",
+        )
 
-    st.plotly_chart(
-        fig_distribution,
-        use_container_width=True,
-    )
+        fig_distribution.update_traces(
+            texttemplate="%{text:,}",
+            textposition="outside",
+        )
+
+        fig_distribution.update_layout(
+            height=320,
+            showlegend=False,
+            yaxis_title="Observations",
+            xaxis_title="Congestion Level",
+        )
+
+        apply_plotly_theme(fig_distribution)
+
+        st.plotly_chart(
+            fig_distribution,
+            use_container_width=True,
+        )
+
+    st.markdown("<div style='height: 1.25rem;'></div>", unsafe_allow_html=True)
 
     # -------------------------------------------------------------
-    # Traffic speed vs vehicles
+    # Traffic speed vs vehicles correlation
     # -------------------------------------------------------------
 
-    st.subheader(
-        "🔬 Vehicle Count vs Average Speed"
+    st.markdown(
+        '<div class="ops-section-title">🔬 Vehicle Count vs Average Speed Correlation</div>',
+        unsafe_allow_html=True,
     )
 
     sample_size = min(
@@ -215,38 +243,42 @@ def render_overview():
         x="vehicle_count",
         y="average_speed_kmh",
         color="future_congestion_level",
+        color_discrete_map=CONGESTION_COLOR_MAP,
         hover_data=[
             "road_segment_id",
             "area",
             "hour",
         ],
-        opacity=0.6,
+        opacity=0.7,
     )
 
     fig_scatter.update_layout(
         xaxis_title="Vehicle Count",
         yaxis_title="Average Speed (km/h)",
         height=420,
-        template="plotly_dark",
+        legend_title="Congestion Level",
     )
+
+    apply_plotly_theme(fig_scatter)
 
     st.plotly_chart(
         fig_scatter,
         use_container_width=True,
     )
 
+    st.markdown("<div style='height: 1.25rem;'></div>", unsafe_allow_html=True)
+
     # -------------------------------------------------------------
     # Weather impact
     # -------------------------------------------------------------
 
-    st.subheader(
-        "🌤️ Weather Impact"
+    st.markdown(
+        '<div class="ops-section-title">🌤️ Meteorological Impact Analysis</div>',
+        unsafe_allow_html=True,
     )
 
     weather_stats = (
-        df.groupby(
-            "weather_condition"
-        )
+        df.groupby("weather_condition")
         .agg(
             average_vehicle_count=(
                 "vehicle_count",
@@ -268,63 +300,84 @@ def render_overview():
         )
     )
 
-    fig_weather = px.bar(
-        weather_stats,
-        x="weather_condition",
-        y="average_vehicle_count",
-        text="average_vehicle_count",
-    )
+    w_col1, w_col2 = st.columns([6, 6])
 
-    fig_weather.update_traces(
-        texttemplate="%{text:.0f}",
-        textposition="outside",
-    )
+    with w_col1:
+        fig_weather = px.bar(
+            weather_stats,
+            x="weather_condition",
+            y="average_vehicle_count",
+            text="average_vehicle_count",
+            color="weather_condition",
+            color_discrete_sequence=[COLOR_CYAN, COLOR_TEAL, COLOR_BLUE, COLOR_AMBER],
+        )
 
-    fig_weather.update_layout(
-        xaxis_title="Weather Condition",
-        yaxis_title="Average Vehicles",
-        height=350,
-        template="plotly_dark",
-    )
+        fig_weather.update_traces(
+            texttemplate="%{text:.0f}",
+            textposition="outside",
+        )
 
-    st.plotly_chart(
-        fig_weather,
-        use_container_width=True,
-    )
+        fig_weather.update_layout(
+            xaxis_title="Weather Condition",
+            yaxis_title="Avg Vehicle Count",
+            height=320,
+            showlegend=False,
+        )
 
-    st.dataframe(
-        weather_stats.rename(
+        apply_plotly_theme(fig_weather)
+
+        st.plotly_chart(
+            fig_weather,
+            use_container_width=True,
+        )
+
+    with w_col2:
+        w_display = weather_stats.rename(
             columns={
                 "weather_condition": "Weather",
                 "average_vehicle_count": "Avg Vehicles",
                 "average_speed_kmh": "Avg Speed (km/h)",
                 "observations": "Observations",
             }
-        ),
-        use_container_width=True,
-        hide_index=True,
-    )
+        ).copy()
+
+        w_display["Avg Vehicles"] = w_display["Avg Vehicles"].round(1)
+        w_display["Avg Speed (km/h)"] = w_display["Avg Speed (km/h)"].round(1)
+        w_display["Observations"] = w_display["Observations"].map(
+            lambda v: f"{v:,}"
+        )
+
+        st.dataframe(
+            w_display,
+            use_container_width=True,
+            hide_index=True,
+        )
+
+    st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
 
     # -------------------------------------------------------------
     # Hotspots
     # -------------------------------------------------------------
 
-    st.markdown("---")
+    hotspot_summaries = get_hotspot_summary(df)
+    hotspot_count = len(hotspot_summaries) if hotspot_summaries else 0
 
-    st.subheader(
-        "🔥 Detected Traffic Hotspots"
-    )
-
-    hotspot_summaries = get_hotspot_summary(
-        df
+    st.markdown(
+        f"""
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem;">
+            <div class="ops-section-title" style="margin: 0;">🔥 Spatial Hotspot Clustering</div>
+            <span class="ops-badge ops-badge-{'red' if hotspot_count > 0 else 'emerald'}">
+                {hotspot_count} Detected Clusters
+            </span>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 
     if hotspot_summaries:
-
         hotspot_rows = []
 
         for hotspot in hotspot_summaries:
-
             hotspot_rows.append(
                 {
                     "Cluster": hotspot["cluster_id"],
@@ -347,10 +400,7 @@ def render_overview():
                         1,
                     ),
                     "Peak Hours": ", ".join(
-                        str(hour)
-                        for hour in hotspot[
-                            "peak_hours"
-                        ]
+                        str(hour) for hour in hotspot["peak_hours"]
                     ),
                 }
             )
@@ -360,88 +410,74 @@ def render_overview():
             use_container_width=True,
             hide_index=True,
         )
-
     else:
+        st.info("No traffic hotspots were detected across the network.")
 
-        st.info(
-            "No traffic hotspots were detected."
-        )
+    st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
 
     # -------------------------------------------------------------
-    # Anomaly intelligence
+    # Anomaly Intelligence
     # -------------------------------------------------------------
 
-    st.markdown("---")
-
-    st.subheader(
-        "⚠️ Traffic Anomaly Intelligence"
+    st.markdown(
+        '<div class="ops-section-title">⚠️ Traffic Anomaly Intelligence</div>',
+        unsafe_allow_html=True,
     )
 
-    anomaly_rows = get_anomaly_report(
-        df
-    )
+    anomaly_rows = get_anomaly_report(df)
 
     if anomaly_rows:
-
-        anomaly_df = pd.DataFrame(
-            anomaly_rows
-        )
-
-        total_anomalies = len(
-            anomaly_df
-        )
-
+        anomaly_df = pd.DataFrame(anomaly_rows)
+        total_anomalies = len(anomaly_df)
         high_critical = int(
             anomaly_df[
-                anomaly_df["risk_level"].isin(
-                    [
-                        "High",
-                        "Critical",
-                    ]
-                )
+                anomaly_df["risk_level"].isin(["High", "Critical"])
             ].shape[0]
         )
-
         critical = int(
-            anomaly_df[
-                anomaly_df["risk_level"]
-                == "Critical"
-            ].shape[0]
+            anomaly_df[anomaly_df["risk_level"] == "Critical"].shape[0]
         )
-
-        unique_segments = anomaly_df[
-            "road_segment_id"
-        ].nunique()
+        unique_segments = anomaly_df["road_segment_id"].nunique()
 
         a1, a2, a3, a4 = st.columns(4)
 
         with a1:
-
-            st.metric(
-                "Total Anomalies",
-                f"{total_anomalies:,}",
+            render_kpi_card(
+                title="Total Anomalies",
+                value=f"{total_anomalies:,}",
+                status="amber",
+                icon="⚠️",
+                subtitle="Combined detections",
             )
 
         with a2:
-
-            st.metric(
-                "High/Critical",
-                f"{high_critical:,}",
+            render_kpi_card(
+                title="High / Critical",
+                value=f"{high_critical:,}",
+                status="red" if high_critical > 0 else "teal",
+                icon="🚨",
+                subtitle="Immediate attention",
             )
 
         with a3:
-
-            st.metric(
-                "Critical",
-                f"{critical:,}",
+            render_kpi_card(
+                title="Critical Severity",
+                value=f"{critical:,}",
+                status="red" if critical > 0 else "emerald",
+                icon="🔴",
+                subtitle="Highest risk events",
             )
 
         with a4:
-
-            st.metric(
-                "Affected Segments",
-                f"{unique_segments:,}",
+            render_kpi_card(
+                title="Affected Segments",
+                value=f"{unique_segments:,}",
+                status="cyan",
+                icon="📍",
+                subtitle="Spatial distribution",
             )
+
+        st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
 
         display_columns = [
             "road_segment_id",
@@ -455,15 +491,22 @@ def render_overview():
         ]
 
         available_display_columns = [
-            column
-            for column in display_columns
-            if column in anomaly_df.columns
+            column for column in display_columns if column in anomaly_df.columns
         ]
 
-        st.dataframe(
-            anomaly_df[
-                available_display_columns
-            ]
+        display_labels = {
+            "road_segment_id": "Road Segment",
+            "timestamp": "Timestamp",
+            "future_congestion_level": "Predicted Congestion",
+            "risk_level": "Risk Level",
+            "vehicle_count": "Vehicle Count",
+            "average_speed_kmh": "Average Speed (km/h)",
+            "occupancy_percent": "Occupancy (%)",
+            "anomaly_type": "Anomaly Type",
+        }
+
+        display_anomalies = (
+            anomaly_df[available_display_columns]
             .sort_values(
                 [
                     "risk_level",
@@ -474,27 +517,28 @@ def render_overview():
                     False,
                 ],
             )
-            .head(10),
+            .head(10)
+            .rename(columns=display_labels)
+        )
+
+        st.dataframe(
+            display_anomalies,
             use_container_width=True,
             hide_index=True,
         )
-
     else:
-
-        st.info(
-            "No traffic anomalies were detected."
-        )
+        st.info("No traffic anomalies were detected across current observations.")
 
     # -------------------------------------------------------------
     # Interpretation note
     # -------------------------------------------------------------
 
-    st.markdown("---")
+    st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
 
     st.caption(
         "Overview metrics are calculated from the project's final "
         "historical traffic dataset. Hotspot and anomaly sections "
-        "use the verified project detection engines. Congestion "
+        "use verified project detection engines. Congestion "
         "reduction figures are intentionally not presented here "
         "as measured outcomes because the project provides "
         "decision-support recommendations rather than observed "

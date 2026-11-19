@@ -30,6 +30,10 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+from dashboard.ui_theme import apply_theme
+
+apply_theme()
+
 
 # ──────────────────────────── Error Isolation ────────────────────────────
 def safe_render(panel_name: str, render_fn, **kwargs):
@@ -91,11 +95,15 @@ def render_sidebar():
     with st.sidebar:
         st.markdown(
             """
-            <div style='text-align: center; padding: 1rem 0;'>
-                <h1 style='font-size: 1.8rem; margin: 0;'>🚦</h1>
-                <h3 style='margin: 0.2rem 0;'>Traffic Intelligence</h3>
-                <p style='color: #888; font-size: 0.8rem; margin: 0;'>
-                    AI-Powered Platform
+            <div style='text-align: center; padding: 1rem 0 0.5rem 0;'>
+                <div style='display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; background: rgba(0, 240, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.3); font-size: 1.5rem; margin-bottom: 0.5rem;'>
+                    🚦
+                </div>
+                <h3 style='margin: 0; font-size: 1.15rem; font-weight: 700; color: #F8FAFC; letter-spacing: -0.01em;'>
+                    Traffic Intelligence
+                </h3>
+                <p style='color: #00F0FF; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin: 0.2rem 0 0 0;'>
+                    Operations Center
                 </p>
             </div>
             """,
@@ -115,7 +123,6 @@ def render_sidebar():
                 "Route Optimizer",
                 "AI Chat Assistant",
                 "Command Center",
-                "Voice Assistant",
                 "Reports",
                 "Anomaly Detection",
             ],
@@ -127,7 +134,7 @@ def render_sidebar():
         # Alert badge
         alert_count = get_alert_count()
         if alert_count > 0:
-            st.warning(f"Active alerts: {alert_count}")
+            st.warning(f"Unread stored alerts: {alert_count}")
 
         # System status
         app_state = initialize_app()
@@ -182,11 +189,6 @@ def route_to_page(page: str, data_context):
         from dashboard.nlp_panel import render_nlp_panel
 
         safe_render("AI Chat Assistant", render_nlp_panel)
-
-    elif page == "Voice Assistant":
-        from dashboard.voice_panel import render_voice_panel
-
-        safe_render("Voice Assistant", render_voice_panel)
 
     elif page == "Reports":
         from dashboard.report_panel import render_report_panel

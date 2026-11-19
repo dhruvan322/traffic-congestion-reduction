@@ -7,6 +7,7 @@ Pipeline: Detect → Predict → Recommend → Reduce
 """
 
 import logging
+import math
 import random
 import numpy as np
 import pandas as pd
@@ -20,6 +21,22 @@ from config import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+def _normalize_optional_route_time(value):
+    """Keep unavailable or invalid route estimates distinct from zero minutes."""
+    if value is None:
+        return None
+
+    try:
+        route_time = float(value)
+    except (TypeError, ValueError):
+        return None
+
+    if not math.isfinite(route_time) or route_time < 0:
+        return None
+
+    return route_time
 
 
 # ──────────────────────────── Junction Metadata ────────────────────────────
@@ -894,18 +911,29 @@ def generate_integrated_recommendations(
 
     anomaly_road_segment_id = str(anomaly.get("road_segment_id", "Unknown"))
 
-    alternative_available = bool(route_conditions.get("alternative_available", False))
-
-    shortest_time = float(route_conditions.get("shortest_time_minutes", 0.0))
-
-    traffic_time = float(route_conditions.get("traffic_aware_time_minutes", 0.0))
+    shortest_time = _normalize_optional_route_time(
+        route_conditions.get("shortest_time_minutes", 0.0)
+    )
+    traffic_time = _normalize_optional_route_time(
+        route_conditions.get("traffic_aware_time_minutes", 0.0)
+    )
+    alternative_available = (
+        bool(route_conditions.get("alternative_available", False))
+        and shortest_time is not None
+        and traffic_time is not None
+    )
 
     # -------------------------------------------------------------
     # Calculate route difference
     # -------------------------------------------------------------
 
     route_time_difference = (
-        traffic_time - shortest_time if shortest_time > 0 and traffic_time > 0 else 0.0
+        traffic_time - shortest_time
+        if shortest_time is not None
+        and traffic_time is not None
+        and shortest_time > 0
+        and traffic_time > 0
+        else None
     )
 
     # -------------------------------------------------------------
@@ -1140,7 +1168,7 @@ def generate_integrated_recommendations(
     if alternative_available:
         evidence.append("OSM alternative route available")
 
-        if route_time_difference != 0:
+        if route_time_difference is not None and route_time_difference != 0:
             evidence.append(
                 f"Traffic-aware route time difference: "
                 f"{route_time_difference:+.2f} minutes"
@@ -1165,17 +1193,16 @@ def generate_integrated_recommendations(
         },
         "route": {
             "alternative_available": alternative_available,
-            "shortest_time_minutes": round(
-                shortest_time,
-                2,
+            "shortest_time_minutes": (
+                round(shortest_time, 2) if shortest_time is not None else None
             ),
-            "traffic_aware_time_minutes": round(
-                traffic_time,
-                2,
+            "traffic_aware_time_minutes": (
+                round(traffic_time, 2) if traffic_time is not None else None
             ),
-            "time_difference_minutes": round(
-                route_time_difference,
-                2,
+            "time_difference_minutes": (
+                round(route_time_difference, 2)
+                if route_time_difference is not None
+                else None
             ),
         },
         "recommendations": recommendations,

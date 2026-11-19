@@ -1,4 +1,5 @@
-﻿from fastapi import APIRouter, HTTPException
+﻿import pandas as pd
+from fastapi import APIRouter, HTTPException
 
 from api.schemas import PredictionRequest, PredictionResponse
 from engine.osm_traffic_router import load_traffic_dataset
@@ -19,12 +20,14 @@ def predict_traffic(
     request: PredictionRequest,
 ) -> PredictionResponse:
     """
-    Predict congestion for the latest available observation
+    Predict congestion for a selected historical observation
     in a project area.
 
+    If timestamp is supplied, that timestamp is used.
+    Otherwise, the latest available timestamp is used.
+
     If road_segment_id is supplied, that segment is used.
-    Otherwise, the first available segment for the latest
-    timestamp is used.
+    Otherwise, the first available segment is selected.
     """
 
     df = load_traffic_dataset()
@@ -52,49 +55,73 @@ def predict_traffic(
             ),
         )
 
-    latest_timestamp = area_df[
-        "timestamp"
-    ].max()
+    # Select the requested timestamp or latest available timestamp.
+    if request.timestamp:
+        try:
+            selected_timestamp = pd.to_datetime(
+                request.timestamp,
+                errors="raise",
+            )
+        except (TypeError, ValueError):
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid timestamp format.",
+            )
 
-    latest_rows = area_df[
-        area_df["timestamp"]
-        == latest_timestamp
-    ].copy()
+        selected_rows = area_df[
+            area_df["timestamp"] == selected_timestamp
+        ].copy()
 
+        if selected_rows.empty:
+            raise HTTPException(
+                status_code=404,
+                detail=(
+                    f"No traffic record found for timestamp "
+                    f"'{request.timestamp}' in area '{request.area}'."
+                ),
+            )
+
+    else:
+        selected_timestamp = area_df["timestamp"].max()
+
+        selected_rows = area_df[
+            area_df["timestamp"] == selected_timestamp
+        ].copy()
+
+    # Filter by road segment if supplied.
     if request.road_segment_id:
-
-        latest_rows = latest_rows[
-            latest_rows["road_segment_id"]
+        selected_rows = selected_rows[
+            selected_rows["road_segment_id"]
             .astype(str)
+            .str.strip()
             .str.upper()
-            == request.road_segment_id
-            .strip()
-            .upper()
+            == request.road_segment_id.strip().upper()
         ]
 
-        if latest_rows.empty:
+        if selected_rows.empty:
             raise HTTPException(
                 status_code=404,
                 detail=(
                     f"Road segment '{request.road_segment_id}' "
-                    f"was not found in area '{request.area}'."
+                    f"was not found for the selected timestamp "
+                    f"in area '{request.area}'."
                 ),
             )
 
+    # Select the first matching road segment.
     row = (
-        latest_rows
+        selected_rows
         .sort_values("road_segment_id")
         .iloc[0]
     )
 
+    # Run the existing trained ML model.
     prediction = predict_from_row(row)
 
     return PredictionResponse(
         area=str(row["area"]),
-        timestamp=str(latest_timestamp),
-        road_segment_id=str(
-            row["road_segment_id"]
-        ),
+        timestamp=str(selected_timestamp),
+        road_segment_id=str(row["road_segment_id"]),
         predicted_class=str(
             prediction["predicted_class"]
         ),
@@ -103,22 +130,14 @@ def predict_traffic(
         ),
         probabilities={
             str(key): float(value)
-            for key, value in prediction[
-                "probabilities"
-            ].items()
+            for key, value in prediction["probabilities"].items()
         },
-        confidence=float(
-            prediction["confidence"]
-        ),
+        confidence=float(prediction["confidence"]),
         vehicle_count=int(
-            round(
-                float(row["vehicle_count"])
-            )
+            round(float(row["vehicle_count"]))
         ),
         average_speed_kmh=round(
-            float(
-                row["average_speed_kmh"]
-            ),
+            float(row["average_speed_kmh"]),
             2,
         ),
     )

@@ -80,6 +80,13 @@ ROUTE_DISTANCE_FACTOR = 1.0
 SIMULATION_INTERVAL_SEC = 2.0
 SIMULATION_INCIDENT_PROBABILITY = 0.05
 
+# FastAPI Backend
+API_BASE_URL = os.getenv(
+    "API_BASE_URL",
+    "http://127.0.0.1:8000",
+)
+API_TIMEOUT_SECONDS = 30
+
 # ──────────────────────────── LLM / Ollama ────────────────────────────
 OLLAMA_BASE_URL = "http://localhost:11434"
 OLLAMA_MODEL = "phi3:mini"

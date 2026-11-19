@@ -304,60 +304,59 @@ def _describe_anomaly(row: pd.Series) -> str:
 # -------------------------------------------------------------------
 
 
-def get_anomaly_report(
+def analyze_traffic_anomalies(
     df: pd.DataFrame,
-) -> list[dict]:
+) -> pd.DataFrame:
     """
     Run the complete anomaly-detection pipeline.
 
-    Pipeline:
-
-        Final Dataset
-              ↓
-        Isolation Forest
-              +
-           Z-score
-              ↓
-       Combined anomaly
-              ↓
-        Risk classification
-              ↓
-        Structured report
-
-    Returns anomaly records sorted by anomaly score.
+    Returns the complete dataset with detector flags,
+    combined anomaly status, and risk classification.
     """
 
     _validate_dataset(df)
 
-    df_iso = detect_anomalies(df)
+    df_detected = detect_anomalies(df)
+    df_detected = zscore_anomalies(df_detected)
 
-    df_detected = zscore_anomalies(df_iso)
-
-    # An observation is considered anomalous if either
-    # detection method flags it.
     df_detected["combined_anomaly"] = (
-        (df_detected["is_anomaly"] == 1) | (df_detected["zscore_anomaly"] == 1)
+        (df_detected["is_anomaly"] == 1)
+        | (df_detected["zscore_anomaly"] == 1)
     ).astype(int)
 
-    anomalies_df = df_detected[df_detected["combined_anomaly"] == 1].copy()
+    df_detected["risk_level"] = "Normal"
+
+    anomaly_mask = df_detected["combined_anomaly"] == 1
+
+    df_detected.loc[anomaly_mask, "risk_level"] = (
+        df_detected.loc[anomaly_mask].apply(classify_risk, axis=1)
+    )
+
+    return df_detected
+
+
+def get_anomaly_report(
+    df: pd.DataFrame,
+) -> list[dict]:
+    """
+    Run anomaly analysis and return structured anomaly records.
+    """
+
+    df_detected = analyze_traffic_anomalies(df)
+
+    anomalies_df = df_detected[
+        df_detected["combined_anomaly"] == 1
+    ].copy()
 
     if anomalies_df.empty:
         logger.info("No combined anomalies detected.")
         return []
 
-    anomalies_df["risk_level"] = anomalies_df.apply(
-        classify_risk,
-        axis=1,
-    )
-
     records = []
 
     for _, row in anomalies_df.iterrows():
 
-        timestamp = row.get(
-            "timestamp",
-            "",
-        )
+        timestamp = row.get("timestamp", "")
 
         if pd.isna(timestamp):
             timestamp = ""
@@ -374,7 +373,7 @@ def get_anomaly_report(
             "zscore_anomaly": int(row["zscore_anomaly"]),
             "anomaly_score": float(row["anomaly_score"]),
             "risk_level": str(row["risk_level"]),
-            "anomaly_type": ("isolation_forest+zscore"),
+            "anomaly_type": "isolation_forest+zscore",
             "detected_at": datetime.now().isoformat(),
             "description": _describe_anomaly(row),
         }
@@ -392,12 +391,6 @@ def get_anomaly_report(
     )
 
     return records
-
-
-# -------------------------------------------------------------------
-# Summary helper
-# -------------------------------------------------------------------
-
 
 def get_anomaly_summary(
     df_detected: pd.DataFrame,
