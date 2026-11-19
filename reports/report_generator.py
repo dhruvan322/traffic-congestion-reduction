@@ -1,4 +1,4 @@
-"""
+﻿"""
 Report Generator Module.
 Creates automated daily, weekly, and anomaly reports.
 """
@@ -108,7 +108,7 @@ def generate_daily_report(df: pd.DataFrame, date: str = None) -> dict:
     )
 
     lines = [
-        f"# Daily Traffic Report ? {date}",
+        f"# Daily Traffic Report - {date}",
         "",
         "Congestion categories reflect the dataset's "
         "future_congestion_level field.",
@@ -196,7 +196,7 @@ def generate_weekly_report(df: pd.DataFrame) -> dict:
     avg_speed = week_data["average_speed_kmh"].mean()
 
     lines = [
-        f"# Weekly Traffic Report ? {dates[0]} to {dates[-1]}",
+        f"# Weekly Traffic Report - {dates[0]} to {dates[-1]}",
         "",
         "Congestion percentages are calculated from the dataset's "
         "future_congestion_level field.",
@@ -321,3 +321,4 @@ def generate_anomaly_report(anomalies: list[dict]) -> dict:
 
     insert_report(report)
     return report
+

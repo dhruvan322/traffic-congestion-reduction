@@ -432,7 +432,7 @@ def _render_segment_map(segments: pd.DataFrame) -> None:
         color = RISK_COLORS.get(risk, COLOR_TEAL)
         radius = 5 + 9 * (row.anomaly_records / max_count) ** 0.5
         label = (
-            f"{row.road_segment_id} Â· {row.area} Â· {risk} Â· "
+            f"{row.road_segment_id} · {row.area} · {risk} · "
             f"{row.anomaly_records:,} anomaly records"
         )
         folium.CircleMarker(
@@ -487,7 +487,7 @@ def render_anomaly_panel():
         return
 
     st.caption(
-        f"Analysis source: {len(df):,} historical records Â· "
+        f"Analysis source: {len(df):,} historical records · "
         f"{df['road_segment_id'].nunique()} road segments"
     )
 
@@ -684,14 +684,14 @@ def render_anomaly_panel():
         x=peak_label,
         y=1,
         yref="paper",
-        text=f"Peak Â· {views['peak_count']:,}",
+        text=f"Peak · {views['peak_count']:,}",
         showarrow=False,
         yanchor="bottom",
         font=dict(color="#F8FAFC", size=11),
         bgcolor="rgba(19, 28, 46, 0.85)",
     )
     trend.update_layout(
-        xaxis_title="Month Â· 2025",
+        xaxis_title="Month · 2025",
         yaxis_title="Combined anomaly records",
         height=360,
         legend_title="Risk",
@@ -713,7 +713,7 @@ def render_anomaly_panel():
             risk_distribution["Records"] / total_anomalies * 100
         )
         risk_distribution["Label"] = risk_distribution.apply(
-            lambda row: f"{int(row['Records']):,}  Â·  {row['Percentage']:.1f}%",
+            lambda row: f"{int(row['Records']):,}  ·  {row['Percentage']:.1f}%",
             axis=1,
         )
         severity = px.bar(
@@ -778,13 +778,13 @@ def render_anomaly_panel():
         )
         st.plotly_chart(apply_plotly_theme(methods), use_container_width=True)
 
-    st.markdown("### Affected road segments Â· Hyderabad")
+    st.markdown("### Affected road segments · Hyderabad")
     st.caption(
         "Historical dataset coordinates; marker size represents anomaly count and "
         "color shows the dominant risk. This is not live monitoring."
     )
     legend = " &nbsp; ".join(
-        f'<span style="color:{RISK_COLORS[risk]}">â—</span> {risk}'
+        f'<span style="color:{RISK_COLORS[risk]}">●</span> {risk}'
         for risk in RISK_ORDER
     )
     st.markdown(legend, unsafe_allow_html=True)
@@ -905,7 +905,7 @@ def render_anomaly_panel():
             )
 
             score_chart.update_layout(
-                xaxis_title="Anomaly score Â· higher means more unusual",
+                xaxis_title="Anomaly score · higher means more unusual",
                 yaxis_title="Count",
                 height=320,
             )
@@ -930,7 +930,7 @@ def render_anomaly_panel():
     if anomaly_records:
         for index, anomaly in enumerate(anomaly_records[:5], start=1):
             title = (
-                f"Anomaly #{index} â€” {anomaly['road_segment_id']} "
+                f"Anomaly #{index} — {anomaly['road_segment_id']} "
                 f"({anomaly['risk_level']} Risk)"
             )
             with st.expander(title, expanded=(index == 1)):
